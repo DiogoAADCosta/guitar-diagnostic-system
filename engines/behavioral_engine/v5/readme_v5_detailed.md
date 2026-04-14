@@ -144,7 +144,7 @@ Version 5 represents the transition from:
 
 ---
 
-## Next Steps (Future Improvements)
+## Potential Improvements
 
 * Introduce weighted scoring system
 * Improve profile flexibility (partial matches)
