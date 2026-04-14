@@ -1,6 +1,6 @@
 # Guitar Diagnostic System — Version 5
 
-For a detailed breakdown, see [README_v5_detailed.md](./README_v5_detailed.md)
+For a detailed breakdown, see [readme_v5_detailed.md](./readme_v5_detailed.md)
 
 ## Overview
 
