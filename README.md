@@ -1,4 +1,4 @@
-# Python Studies
+# Guitar Skill Assessment System
 
 This repository documents my learning journey in Python, with a focus on logic, problem-solving, and system design.
 
