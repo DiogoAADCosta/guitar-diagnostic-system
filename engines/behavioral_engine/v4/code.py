@@ -122,7 +122,7 @@ for questao in lista_perguntas:
     for alternativa in questao['respostas']:
         print(f'{alternativa["resposta"]} - {alternativa["texto"]}')
 
-    # Capta a resposta do usuário - aqui não estou preocupado com validar a resposta pois na versão final o usuário não digitará. Ele clicará em uma das opções na tela. Será feito provavelmente em JavaScript
+    # Capture user input
     resposta_usuario = input('\nSua Resposta: ').strip().upper()
 
     if (questao['id'] == 3 and resposta_usuario == 'A') or (questao['id'] == 5 and resposta_usuario == 'A'):
@@ -140,7 +140,7 @@ for questao in lista_perguntas:
                 elif tipo == 'capacidade':
                     lista_capacidades_respostas_usuario.append(tag)
 
-# RESULTADOS
+# Collected raw results
 print(f'Lista de Limitadores: {lista_limitadores_respostas_usuario}')
 print(f'Lista de Capacidades: {lista_capacidades_respostas_usuario}')
 
@@ -196,20 +196,20 @@ lista_diagnostico = {
 }
 
 
-# Contabiliza a quantidade que cada tag apareceu
+# Count how many times each tag appears
 contador_limitadores = Counter(lista_limitadores_respostas_usuario)
 contador_capacidades = Counter(lista_capacidades_respostas_usuario)
 print(f'Limitadores: {contador_limitadores}')
 print(f'Capacidades: {contador_capacidades}')
 
-# Mostra a tag que apareceu mais vezes em cada lista
+# Identify the most frequent tag in each list
 limitadores_mais_frequentes = contador_limitadores.most_common(1)
 capacidades_mais_frequentes = contador_capacidades.most_common(1)
 
 print(f'O item mais frequente em limitadores é {limitadores_mais_frequentes}')
 print(f'O item mais frequente em capacidades é {capacidades_mais_frequentes}')
 
-# Isolando limitadores e capacidades para buscar a tag na lista_perguntas
+# Extract most frequent tags to map into diagnostic messages
 if limitadores_mais_frequentes:
     limitador = limitadores_mais_frequentes[0][0]
 else:
