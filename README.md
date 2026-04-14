@@ -1,6 +1,6 @@
 # Guitar Skill Assessment System
 
-This repository documents my learning journey in Python through the development of a real-world system, with a focus on logic, problem-solving, and system design.
+This repository documents the development of a real-world system as I build my programming and software engineering skills, with a focus on logic, problem-solving, and system design.
 
 Instead of collecting random exercises, the goal is to build and evolve a real-world system while improving programming fundamentals.
 
