@@ -20,25 +20,30 @@ A behavioral-based diagnostic system designed to evaluate guitar skills using st
 
 ## How the System Works
 
-The system follows a multi-step decision flow:
+The system follows a structured decision flow:
 
-1. The user selects their main goal (e.g., playing songs, improvising, etc.)
-2. Based on the goal, the system selects relevant skill pillars:
+1. The user selects their main goal  
+   (e.g., playing songs, improvising, creating music)
+
+2. Based on the goal, the system activates relevant skill pillars:
    - Fretboard Mapping
    - Musical Understanding
    - Ear Training
    - Technique
    - (Future) Musical Phrasing
 
-3. The user self-assesses their current level
-4. The system dynamically selects the appropriate starting point
+3. The user performs a self-assessment to indicate their current level
+
+4. The system dynamically determines the appropriate starting point
+
 5. The user completes one or more tests:
-   - Behavioral test (no right/wrong answers)
+   - Behavioral test (no right/wrong answers, pattern-based)
    - Knowledge-based test (with validation)
 
 6. Each test generates a partial diagnosis
-7. Diagnoses are combined into a final result
 
+7. All diagnoses are combined into a final result,
+   indicating strengths, limitations, and next steps
 ## System Design Focus
 
 This project is not just about coding — it focuses on:
