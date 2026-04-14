@@ -8,7 +8,8 @@
 # - alternativa['tag'][i][0]
 #
 # In this version:
-# - All tags are stored as a list of [type, value]
+# - All tags follow a consistent structure: [type, value]
+# - Tags are always stored as a list of pairs: [[type, value], ...]
 # - Iteration is done using tuple unpacking: for tipo, tag in ...
 #
 # This removes the need for index-based access and simplifies the logic.
