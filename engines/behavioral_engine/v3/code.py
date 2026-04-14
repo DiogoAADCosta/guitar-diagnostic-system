@@ -23,7 +23,7 @@ from collections import Counter
 # Each answer contains:
 # - 'resposta': identifier used for matching user input
 # - 'texto': display text shown to the user
-# - 'tag': list of [type, value] pairs for classification
+# - 'tag': list of [type, value] pairs (e.g., ['limitador', 'ritmo'])
 
 # 'resposta' is used for internal logic (matching user input)
 # 'texto' is used only for display purposes
@@ -93,7 +93,7 @@ lista_perguntas = [
                    {'resposta': 'D', 'tag': [['capacidade', 'continuidade']], 'texto': 'Consigo voltar a tocar com a música quase que imediatamente após o erro'}
                    ]
      },
-    {'pergunta': '9 - O que você acha mais difícil?',     # Essa pergunta permitirá mais de uma resposta. Não farei a lógica pra isso aqui em python, apenas em JavaScript
+    {'pergunta': '9 - O que você acha mais difícil?',     # This question will allow multiple answers (handled later in JavaScript)
      'respostas': [{'resposta': 'A', 'tag': [['limitador', 'montagem_de_acorde']], 'texto': 'Montar os acordes e soar limpos'},
                    {'resposta': 'B', 'tag': [['limitador', 'troca_de_acorde']], 'texto': 'Trocas rápidas de acordes'},
                    {'resposta': 'C', 'tag': [['limitador', 'base']], 'texto': 'Ler cifras e tablaturas'},
@@ -122,8 +122,8 @@ for questao in lista_perguntas:
     # Input validation intentionally omitted at this stage
     resposta_usuario = input('\nSua Resposta: ').strip().upper()
 
-    # Collects tags associated with the selected answer
-    # Each answer may contribute multiple tags
+    # Collect tags associated with the selected answer
+    # Multiple tags per answer allow richer behavioral classification
     for alternativa in questao['respostas']:
         if resposta_usuario == alternativa['resposta']:
             for tipo, tag in alternativa['tag']:
@@ -138,12 +138,12 @@ print(f'Lista de Limitadores: {lista_limitadores_respostas_usuario}')
 print(f'Lista de Capacidades: {lista_capacidades_respostas_usuario}')
 
 # Count frequency of each limitation and strength
-# This will be used to identify dominant patterns for diagnosis
+# Frequency is used as a simple scoring mechanism for diagnosis
 contador_limitadores = Counter(lista_limitadores_respostas_usuario)
 contador_capacidades = Counter(lista_capacidades_respostas_usuario)
 print(f'Limitadores: {contador_limitadores}')
 print(f'Capacidades: {contador_capacidades}')
 
-
+# Extract most frequent items (strongest signals for diagnosis)
 print(f'O item mais frequente em limitadores é {contador_limitadores.most_common(1)}')
 print(f'O item mais frequente em capacidades é {contador_capacidades.most_common(1)}')
