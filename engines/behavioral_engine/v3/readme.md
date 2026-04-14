@@ -29,7 +29,7 @@ Where:
 ## New Features
 
 - Frequency analysis using Counter
-- Identification of most frequent:
+- Identification of most frequent tags:
   - Limitations
   - Strengths
 
@@ -40,7 +40,7 @@ Where:
 3. Tags are counted using Counter
 4. Most frequent tags are extracted using most_common(1)
 5. The most frequent tags are used as the initial diagnostic signal,
-   representing the user's most prominent limitations and strengths
+   representing the user's most prominent strengths and limitations
 
 ## Impact
 
@@ -52,7 +52,7 @@ Where:
 
 | Aspect | Version 2 | Version 3 |
 |------|--------|--------|
-| Data | Simplified | Real dataset |
+| Data | Structured (example-based) | Real dataset |
 | Output | Raw tags | Frequency analysis |
 | Diagnosis | Not present | Initial form |
 | Complexity | Low | Moderate |
@@ -65,8 +65,7 @@ Where:
 
 ## Key Insight
 
-Once the data structure is well-defined,  
-it becomes possible to extract meaningful insights with simple tools.
+## Key Insight
 
-This version shows that once the data model is consistent,  
+Once the data structure is well-defined,  
 simple techniques like counting can produce meaningful behavioral insights.
