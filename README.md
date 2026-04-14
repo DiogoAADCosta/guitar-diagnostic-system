@@ -1,21 +1,16 @@
 # Python Studies
 
-This repository documents my learning journey in Python, focusing on logic, problem-solving, and system design.
+This repository documents my learning journey in Python, with a focus on logic, problem-solving, and system design.
 
-Instead of collecting random exercises, the goal is to track:
-
-- How I approach problem-solving
-- The decisions I make while coding
-- How my code evolves over time
-- How complexity increases as I refine solutions
+Instead of collecting random exercises, the goal is to build and evolve a real-world system while improving programming fundamentals.
 
 ## Structure
 
-This repository is divided into:
+This repository is organized as a system evolution log:
 
-- Fundamental Python exercises
-- Real-world projects
-- System design experiments
+- Core Project (Guitar Level Assessment System)
+- Engine Development (logic and architecture evolution)
+- Supporting Experiments (isolated tests when necessary)
 
 ## Main Project
 
@@ -23,15 +18,57 @@ This repository is divided into:
 
 A behavioral-based diagnostic system designed to evaluate guitar skills using structured questions and rule-based analysis.
 
-The project evolves through multiple versions, each improving:
+## How the System Works
+
+The system follows a multi-step decision flow:
+
+1. The user selects their main goal (e.g., playing songs, improvising, etc.)
+2. Based on the goal, the system selects relevant skill pillars:
+   - Fretboard Mapping
+   - Musical Understanding
+   - Ear Training
+   - Technique
+   - (Future) Musical Phrasing
+
+3. The user self-assesses their current level
+4. The system dynamically selects the appropriate starting point
+5. The user completes one or more tests:
+   - Behavioral test (no right/wrong answers)
+   - Knowledge-based test (with validation)
+
+6. Each test generates a partial diagnosis
+7. Diagnoses are combined into a final result
+
+## System Design Focus
+
+This project is not just about coding — it focuses on:
+
+- Behavioral modeling
+- Data structuring
+- Rule-based diagnosis systems
+- Scalability of logic
+- Separation between data collection and interpretation
+
+## Engine Design
+
+The system is built around reusable engines:
+
+- A response-based engine (captures user patterns)
+- A validation-based engine (checks correctness)
+
+These engines are designed to be reused across different goals and skill pillars.
+
+## Project Evolution
+
+Each version of the system improves:
 
 - Data structure design
+- Code readability
 - Logic clarity
 - Scalability
-- System architecture
 
-Each version is documented to show the evolution of the system.
+All versions are documented to show the evolution of the system.
 
 ---
 
-**Goal:** Build strong programming fundamentals and structured thinking.
+**Goal:** Build strong programming fundamentals while designing a real diagnostic system.
