@@ -4,7 +4,7 @@ For a detailed breakdown, see [readme_v5_detailed.md](./readme_v5_detailed.md)
 
 ## Overview
 
-A rule-based diagnostic system that analyzes guitar students' responses and generates structured feedback based on their technical limitations and strengths.
+A rule-based diagnostic system that analyzes guitar students' responses and generates structured, human-readable feedback based on their technical limitations and strengths.
 
 This version introduces a hybrid approach combining statistical analysis with pattern-based classification.
 
@@ -35,7 +35,7 @@ This version introduces a hybrid approach combining statistical analysis with pa
 
 ## Why This Matters
 
-Instead of relying on a single dominant issue, the system considers multiple signals simultaneously, producing more realistic and consistent diagnoses.
+Instead of relying on a single dominant issue, the system evaluates multiple signals simultaneously, resulting in more realistic and consistent diagnoses — closer to how a human teacher would assess a student.
 
 ---
 
