@@ -2,7 +2,7 @@
 
 ## Goal
 
-Improve the quality and fluency of the generated diagnostic text, making it more natural, varied, and closer to human feedback.
+Improve the quality and fluency of diagnostic text generation, making feedback more natural, varied, and closer to human communication.
 
 ---
 
@@ -22,7 +22,7 @@ Improve the quality and fluency of the generated diagnostic text, making it more
 
 1. User answers questions  
 2. Tags are collected (limitations and capabilities)  
-3. Tag frequency is calculated using Counter  
+3. Tag frequency is calculated using `Counter`  
 4. Only dominant tags with frequency >= 2 are considered  
 5. User level is determined based on balance between limitations and capabilities  
 6. System attempts to match a predefined profile  
@@ -36,7 +36,7 @@ Improve the quality and fluency of the generated diagnostic text, making it more
 
 - Output becomes more natural and less robotic  
 - Reduces repetition and improves readability  
-- Produces feedback closer to how a human teacher would speak  
+- Produces feedback closer to how a human teacher communicates    
 - Filters out weak signals, focusing on more relevant patterns  
 
 ---
@@ -53,7 +53,7 @@ Improve the quality and fluency of the generated diagnostic text, making it more
 ## Key Insight
 
 Once both data and language are structured,  
-the system moves beyond analysis and begins to simulate real communication.
+the system moves beyond analysis and begins to simulate human-like communication.
 
 This version marks the transition from:
 
