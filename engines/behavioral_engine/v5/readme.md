@@ -1,5 +1,7 @@
 # Guitar Diagnostic System — Version 5
 
+For a detailed breakdown, see [README_v5_detailed.md](./README_v5_detailed.md)
+
 ## Overview
 
 A rule-based diagnostic system that analyzes guitar students' responses and generates structured feedback based on their technical limitations and strengths.
