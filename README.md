@@ -1,6 +1,6 @@
 # Guitar Skill Assessment System
 
-This repository documents my learning journey in Python, with a focus on logic, problem-solving, and system design.
+This repository documents my learning journey in Python through the development of a real-world system, with a focus on logic, problem-solving, and system design.
 
 Instead of collecting random exercises, the goal is to build and evolve a real-world system while improving programming fundamentals.
 
@@ -14,7 +14,7 @@ This repository is organized as a system evolution log:
 
 ## Main Project
 
-### 🎸 Guitar Level Assessment System
+### 🎸 Guitar Skill Assessment System
 
 A behavioral-based diagnostic system designed to evaluate guitar skills using structured questions and rule-based analysis.
 
@@ -76,4 +76,4 @@ All versions are documented to show the evolution of the system.
 
 ---
 
-**Goal:** Build strong programming fundamentals while designing a real diagnostic system.
+**Goal:** Develop strong programming and system design skills by building and evolving a real diagnostic system from scratch.
