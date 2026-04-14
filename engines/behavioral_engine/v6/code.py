@@ -336,7 +336,7 @@ for tipo, descricao in perfis.items():
 
 
 # Additional observations (secondary signals - strengths)
-print('\n3 - CONSIDERAÇÕES ADICIONAIS PARTE 1------------------\n')
+print('\n2 - CONSIDERAÇÕES ADICIONAIS PARTE 1------------------\n')
 if 'resistencia' in lista_capacidades_respostas_usuario:
     print(conectores_cap[min(conectores_cap_contador, len(conectores_cap) - 1)], end='')
     print(f'{lista_diagnostico["resistencia"]["descricao_capacidade"]}{choice(conectores_causa_efeito)}{lista_diagnostico["resistencia"]["efeito_positivo"]}.')
@@ -350,7 +350,7 @@ if 'continuidade' in lista_capacidades_respostas_usuario:
 
 
 # Fallback to isolated diagnostic logic if no profile matches
-print('\n2 - DIAGNÓSTICOS ISOLADOS -----------------------\n')
+print('\n3 - DIAGNÓSTICOS ISOLADOS -----------------------\n')
 if perfil == '':
     for capacidade in capacidades_mais_frequentes:
         print(conectores_cap[min(conectores_cap_contador, len(conectores_cap) - 1)], end='')
@@ -417,7 +417,7 @@ def conector_lim(conectores_lim_contador):
         return conector
 
 # Additional observations (secondary signals - limitations)
-print('\n3 - CONSIDERAÇÕES ADICIONAIS PARTE 2------------------\n')
+print('\n4 - CONSIDERAÇÕES ADICIONAIS PARTE 2------------------\n')
 if 'resistencia' in lista_limitadores_respostas_usuario:
     if conectores_cap_contador == 0 and conectores_lim_contador == 0:
         print(conectores_lim[min(conectores_lim_contador, len(conectores_lim) - 1)], end='')
@@ -456,6 +456,6 @@ if 'continuidade' in lista_limitadores_respostas_usuario:
 
 
 # Final level diagnosis output
-print('\n4 - NÍVEL ------------\n')
+print('\n5 - NÍVEL ------------\n')
 print('Considerando seus pontos fortes e limitações, você se encontra no seguinte estágio:')
 print(choice(lista_nivel[nivel]))
