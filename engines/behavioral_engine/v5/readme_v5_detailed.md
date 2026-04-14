@@ -126,7 +126,7 @@ The system now follows this decision flow:
 ## Current Limitations
 
 * No weighting between different types of signals
-* Profile matching requires exact combinations
+* Profile matching currently requires exact combinations (no partial matching).
 * Diagnosis still depends on frequency rather than contextual depth
 * No persistence or historical tracking of user progress
 
