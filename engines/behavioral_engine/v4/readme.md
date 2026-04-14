@@ -42,6 +42,6 @@ Generate a structured diagnosis based on user responses.
 ## Key Insight
 
 Once data is structured and measurable,  
-it becomes possible to translate patterns into meaningful feedback.
+it becomes possible to translate patterns into consistent, rule-based feedback.
 
 This version marks the transition from data analysis to user-facing interpretation.
