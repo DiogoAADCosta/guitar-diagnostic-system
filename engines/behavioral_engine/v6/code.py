@@ -395,7 +395,6 @@ if perfil == '':
                 conectores_lim_contador += 1
                 print(conectores_lim[min(conectores_lim_contador, len(conectores_lim) - 1)], end='')
             else:
-                # Debug (used during connector behavior testing)
                 print(conectores_lim[min(conectores_lim_contador, len(conectores_lim) - 1)], end='')
             print(f'{lista_diagnostico[limitador]["descricao_limitacao"]}{choice(conectores_causa_efeito)}{lista_diagnostico[limitador]["efeito_negativo"]}.')
             conectores_lim_contador += 1
