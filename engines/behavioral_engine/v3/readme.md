@@ -39,11 +39,13 @@ Where:
 2. Tags associated with answers are collected
 3. Tags are counted using Counter
 4. Most frequent tags are extracted using most_common(1)
+5. The most frequent tags are used as the initial diagnostic signal,
+   representing the user's most prominent limitations and strengths
 
 ## Impact
 
 - System evolves from static structure to dynamic analysis
-- Enables basic diagnosis logic
+- Enables basic diagnosis based on frequency of behavioral patterns
 - Provides measurable output based on user behavior
 
 ## Comparison with Version 2
@@ -55,9 +57,16 @@ Where:
 | Diagnosis | Not present | Initial form |
 | Complexity | Low | Moderate |
 
+## Limitations
+
+- Diagnosis is based only on frequency (no weighting or prioritization)
+- Ties between tags are not handled
+- No combination of multiple signals yet
+
 ## Key Insight
 
 Once the data structure is well-defined,  
 it becomes possible to extract meaningful insights with simple tools.
 
-This version shows that even basic counting can generate valuable diagnostic signals.
+This version shows that once the data model is consistent,  
+simple techniques like counting can produce meaningful behavioral insights.
