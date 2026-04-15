@@ -1,12 +1,6 @@
-'''====================================================================================================================================================================================================
-Versão 1 - Mostrar as perguntas e embaralhar as alternativas
-====================================================================================================================================================================================================
-'''
+Version 1 - Question structure with randomized alternatives and basic answer validation
 
-'''
-# Autoavaliação
-# autoavaliacao_nivel = input('Qual seu nível? ')
-from random import choice, shuffle
+from random import shuffle
 
 
 lista_perguntas = [
@@ -46,30 +40,29 @@ lista_alternativas = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J']
 
 
 for questao in lista_perguntas:
-    # Mostra a pergunta
     print()
     print(questao['pergunta'])
     print()
 
-    # Cria uma cópia da lista de alternativas e embaralha
+    # Create a copy of the alternatives and shuffle them to randomize order
     alternativas_embaralhadas = (questao['alternativas'])[:]
     shuffle(alternativas_embaralhadas)
 
-    # Dicionário onde vamos guardar as letras das alternativas (A, B, C, etc) com as tags certo/errado para poder contabilizar os acertos.
+    # Map displayed options (A, B, C...) to their corresponding data
     mapa_respostas = {}
 
-    # Mostra as alternativas da lista embaralhada com as letras em ordem
+    # Display shuffled alternatives with corresponding letters
     for numero, resposta in enumerate(alternativas_embaralhadas):
         letra = lista_alternativas[numero]
         mapa_respostas[letra] = resposta
         print(f'{letra} - {resposta["texto"]}')
 
 
-    # Guarda a resposta do usuário - PRÓXIMA ETAPA - CONTABILIZAR OS ERROS E ACERTOS E GUARDAR AS TAGS.
+    # Capture user response (input validation is intentionally omitted;
+    # in the final version, interaction will be handled via UI buttons)
     resposta_usuario = input('\nQual a resposta certa? ').strip().upper()
 
     if mapa_respostas[resposta_usuario]['correção']:
         print('Você ACERTOU')
     else:
         print('Você ERROU')
-'''
