@@ -34,7 +34,7 @@ Attempt to reduce code repetition by abstracting sentence connector logic into r
 
 - Introduces an attempt at reducing repetition through abstraction  
 - Highlights challenges related to state management in functions  
-- Does not improve output quality compared to Version 6  
+- Does not provide consistent improvement over Version 6
 - Helps clarify limitations of the current architecture  
 
 ---
@@ -43,7 +43,7 @@ Attempt to reduce code repetition by abstracting sentence connector logic into r
 
 - Connector counters do not update outside function scope  
 - Abstraction does not work reliably in the current design  
-- Code complexity increased instead of decreasing  
+- Code complexity increased due to abstraction challenges
 - System becomes hybrid (functions + manual logic)  
 
 ---
