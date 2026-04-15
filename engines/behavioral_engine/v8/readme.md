@@ -25,7 +25,7 @@ Improve sentence flow by refining connector logic, ensuring more natural and con
 5. User level is determined based on balance between limitations and capabilities  
 6. System attempts to match a predefined profile  
 7. If no profile matches → fallback diagnostic is generated  
-8. Sentence connectors are selected dynamically based on current narrative state  
+8. Sentence connectors are selected dynamically based on previously constructed output (narrative state)
 9. Additional observations are appended in structured sections  
 
 ---
