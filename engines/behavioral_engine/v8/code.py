@@ -10,6 +10,7 @@
 # - Improved narrative flow between strengths and limitations
 # - Simplified connector handling without using function abstraction
 # - Stabilized sentence construction after failed abstraction attempt (Version 7)
+# - Adjusted limitation connectors to avoid unnatural sentence openings (e.g., avoiding contrast without prior context)
 #
 # Focus:
 # Failed abstraction → Direct control → Stable and coherent narrative flow
