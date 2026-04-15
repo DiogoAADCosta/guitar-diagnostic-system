@@ -18,15 +18,10 @@ Attempt to reduce code repetition by abstracting sentence connector logic into r
 
 ## How It Works
 
-1. User answers questions  
-2. Tags are collected (limitations and capabilities)  
-3. Tag frequency is calculated using `Counter`  
-4. Dominant tags are identified  
-5. User level is determined  
-6. System attempts to match a predefined profile  
-7. If no profile matches → fallback diagnostic is generated  
-8. Connector functions are used during sentence construction  
-9. Remaining cases fall back to manual conditional logic  
+This version attempts to abstract connector logic into reusable functions.
+
+Part of the sentence construction is handled by functions,  
+while the remaining cases still rely on conditional logic.
 
 ---
 
