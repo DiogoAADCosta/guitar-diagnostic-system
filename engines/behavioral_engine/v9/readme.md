@@ -36,7 +36,6 @@ Simplify connector handling by replacing index-based control with iterator-based
 - Simplifies connector access logic  
 - Eliminates manual index control and boundary checks  
 - Improves code readability and maintainability  
-- Preserves natural sentence flow from Version 8  
 - Reduces risk of connector misalignment  
 
 ---
