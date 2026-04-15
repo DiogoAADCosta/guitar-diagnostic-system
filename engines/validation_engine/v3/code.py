@@ -55,6 +55,7 @@ print(f'Taxa: {taxa:.1f}%')
 
 # Actions used by the rule engine to control level transitions and test flow
 def subir_nivel(nivel, rodada):
+    # Temporary debug prints to visualize level transitions during development
     print('Sobe de nível')
     print(f'Rodada: {rodada}\n')
     rodada = 1
