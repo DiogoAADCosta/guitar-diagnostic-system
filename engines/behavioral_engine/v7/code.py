@@ -6,11 +6,12 @@
 # In this version:
 # - Introduced functions to handle sentence connectors
 # - Attempted to centralize connector selection logic
-# - Partial reduction of direct conditional usage
+# - Attempted reduction of direct conditional usage
 #
 # Additionally:
 # - Debug statements were added to track connector behavior
 # - A hybrid approach was used (functions + manual conditions)
+# - Maintained minimum frequency threshold (>=2) for dominant signals
 #
 # Limitation:
 # - Connector counters do not update outside function scope
