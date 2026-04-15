@@ -5,9 +5,9 @@
 # which leads to repetition and limited scalability.
 
 
-# Simplified question structure used to support level-based progression logic
-# (each question is mapped by level and sequence number)
-# (differs from previous versions, which were focused on tag-based analysis)
+# Simplified question structure used to support level-based progression logic,
+# mapping each question by level and sequence number.
+# Differs from previous versions, which were designed for tag-based diagnostic analysis.
 lista_perguntas = [
     {'nível': 1, 'número': 1, 'pergunta': 'Pergunta 1'},
     {'nível': 1, 'número': 2, 'pergunta': 'Pergunta 2'},
