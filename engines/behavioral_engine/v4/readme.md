@@ -8,7 +8,7 @@ Generate a structured diagnosis based on user responses.
 
 ## What Changed
 
-- Introduced a diagnostic system based on tag frequency  
+- Introduced structured diagnostic generation based on tag frequency  
 - Mapped tags to predefined descriptive messages  
 - Implemented dynamic generation of diagnostic text  
 - Added conditional question flow using `skip_if`  
