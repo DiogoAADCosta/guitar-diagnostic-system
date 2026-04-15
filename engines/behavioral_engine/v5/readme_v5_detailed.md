@@ -1,4 +1,4 @@
-# Guitar Diagnostic System — Version 5
+# Guitar Diagnostic System — Version 5 - Detailed
 
 ## Overview
 
