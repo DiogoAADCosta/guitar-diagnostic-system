@@ -116,9 +116,6 @@ nao_sabe_pestana = False
 
 for questao in lista_perguntas:
 
-    # If the user does not know what a barre chord is, questions 5 and 7 are skipped.
-    # In this case, a 'base' limitation is automatically added.
-    # questao.get is used to safely check for 'skip_if' without raising errors.
     if nao_sabe_pestana == True and questao.get('skip_if') == 'nao_sabe_pestana':
         lista_limitadores_respostas_usuario.append('base')
         continue    
@@ -130,16 +127,14 @@ for questao in lista_perguntas:
     for alternativa in questao['respostas']:
         print(f'{alternativa['resposta']} - {alternativa['texto']}')
 
-    # Capture user input (validation is handled in the frontend in future versions)
+
     resposta_usuario = input('\nSua Resposta: ').strip().upper()
 
 
-    # Activate flag if user does not know what a barre chord is
     if (questao['id'] == 3 and resposta_usuario == 'A') or (questao['id'] == 5 and resposta_usuario == 'A'):
         nao_sabe_pestana = True
 
     for alternativa in questao['respostas']:
-        # Question 9 supports multiple answers, so multiple tags may be added
         if questao['id'] == 9:
             if alternativa['resposta'] in resposta_usuario:
                 lista_limitadores_respostas_usuario.append(alternativa['tag'][0][1])
@@ -270,7 +265,6 @@ conectores_causa_efeito = [
     '. Como consequência disso, '
 ]
 
-# Count tag frequency
 contador_limitadores = Counter(lista_limitadores_respostas_usuario)
 contador_capacidades = Counter(lista_capacidades_respostas_usuario)
 
@@ -347,7 +341,7 @@ for tipo, descricao in perfis.items():
 
 
 # Additional observations (capabilities)
-print('\n3 - CONSIDERAÇÕES ADICIONAIS PARTE 1------------------\n')
+print('\n2 - CONSIDERAÇÕES ADICIONAIS PARTE 1------------------\n')
 if 'resistencia' in lista_capacidades_respostas_usuario:
     print(conector_cap(conectores_cap_contador), end='')
     print(f'{lista_diagnostico["resistencia"]["descricao_capacidade"]}{choice(conectores_causa_efeito)}{lista_diagnostico["resistencia"]["efeito_positivo"]}.')
@@ -361,7 +355,7 @@ if 'continuidade' in lista_capacidades_respostas_usuario:
 
 
 # Fallback: no profile matched
-print('\n2 - DIAGNÓSTICOS ISOLADOS -----------------------\n')
+print('\n3 - DIAGNÓSTICOS ISOLADOS -----------------------\n')
 if perfil == '':
     for capacidade in capacidades_mais_frequentes:
         print(conector_cap(conectores_cap_contador), end='')
@@ -387,7 +381,7 @@ if perfil == '':
 
 
 # Additional observations (limitations)
-print('\n3 - CONSIDERAÇÕES ADICIONAIS PARTE 2------------------\n')
+print('\n4 - CONSIDERAÇÕES ADICIONAIS PARTE 2------------------\n')
 if 'resistencia' in lista_limitadores_respostas_usuario:
     print(conector_lim(conectores_lim_contador), end='')
     print(f'{lista_diagnostico["resistencia"]["descricao_limitacao"]}{choice(conectores_causa_efeito)}{lista_diagnostico["resistencia"]["efeito_negativo"]}.')
@@ -405,6 +399,6 @@ if 'continuidade' in lista_limitadores_respostas_usuario:
 
 
 # Level diagnosis
-print('\n4 - NÍVEL ------------\n')
+print('\n5 - NÍVEL ------------\n')
 print('Considerando seus pontos fortes e limitações, você se encontra no seguinte estágio:')
 print(choice(lista_nivel[nivel]))
