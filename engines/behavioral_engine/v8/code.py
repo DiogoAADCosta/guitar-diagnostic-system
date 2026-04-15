@@ -56,7 +56,7 @@ lista_perguntas = [
                    ]
      },
     {'id': 5,
-     'skip_if': 'nao_sabe_pestana',   # Pula essa pergunta se a pessoa não sabe pestana
+     'skip_if': 'nao_sabe_pestana',   # Skip this question if the user does not know what a barre chord is
      'pergunta': '5 - Ao fazer um Fá maior com pestana, você consegue ouvir o som das cordas 1, 2, 3?',
      'respostas': [{'resposta': 'A', 'tag': [['limitador', 'base']], 'texto': 'Não sei o que é pestana'},
                    {'resposta': 'B', 'tag': [['limitador', 'base']], 'texto': 'Não sei quais são as cordas 1, 2, 3'},
@@ -76,7 +76,7 @@ lista_perguntas = [
                    ]
      },
     {'id': 7,
-     'skip_if': 'nao_sabe_pestana',                          # Pula essa pergunta se a pessoa não sabe pestana
+     'skip_if': 'nao_sabe_pestana',     # Skip this question if the user does not know what a barre chord is
      'pergunta': '7 - Tocando uma música inteira com muitos acordes com pestana:',
      'respostas': [{'resposta': 'A', 'tag': [['limitador', 'base']], 'texto': 'Não sei o que é pestana'},
                    {'resposta': 'B', 'tag': [['limitador', 'montagem_de_acorde'], ['limitador', 'nao_consegue_pestana']], 'texto': 'Não consigo ainda fazer pestana'},
@@ -95,7 +95,7 @@ lista_perguntas = [
                    ]
      },
     {'id': 9,
-     'pergunta': '9 - O que você acha mais difícil?',      # Essa pergunta permitirá mais de uma resposta. Não farei a lógica pra isso aqui em python, apenas em JavaScript
+     'pergunta': '9 - O que você acha mais difícil?',      # This question allows multiple answers (parsed from user input)
      'respostas': [{'resposta': 'A', 'tag': [['limitador', 'montagem_de_acorde']], 'texto': 'Montar os acordes e soar limpos'},
                    {'resposta': 'B', 'tag': [['limitador', 'troca_de_acorde']], 'texto': 'Trocas rápidas de acordes'},
                    {'resposta': 'C', 'tag': [['limitador', 'base']], 'texto': 'Ler cifras e tablaturas'},
@@ -104,61 +104,48 @@ lista_perguntas = [
      }
 ]
 
-# Listas que guardarão as tags de cada resposta do usuário
 lista_limitadores_respostas_usuario = []
 lista_capacidades_respostas_usuario = []
 
-# Variável que será ativada quando o usuário não souber o que é pestana (Resposta A na pergunta 3 ou A na pergunta 5)
+# Flag activated when user does not know what a barre chord is
 nao_sabe_pestana = False
 
-# Para cada questão na lista de perguntas
 for questao in lista_perguntas:
 
-    # Se o usuário não sabe o que é pestana, as perguntas 5 e 7 não aparecem pois assume-se que as respostas seriam as mesmas. Dessa forma a tag 'base' é adicionada automaticamente na lista limitadores.
-    # O questao.get verifica se há um 'skip_if' nos dados para comparar. Se tiver ele compara. Se não tiver ele continua, sem dar erro.
+     # Skip dependent questions if the user does not know what a barre chord is
+     # Automatically adds 'base' limitation
     if nao_sabe_pestana == True and questao.get('skip_if') == 'nao_sabe_pestana':
         lista_limitadores_respostas_usuario.append('base')
-        continue    # Pula para a próxima iteração do loop. Ou seja, vai para a próxima questao em lista_perguntas.
+        continue    
 
-    # Mostre a pergunta
     print()
     print(questao['pergunta'])
     print()
 
     for alternativa in questao['respostas']:
-        # Mostre as alternativas
         print(f'{alternativa['resposta']} - {alternativa['texto']}')
 
-    # Capta a resposta do usuário - aqui não estou preocupado com validar a resposta pois na versão final o usuário não digitará. Ele clicará em uma das opções na tela. Será feito provavelmente em JavaScript
     resposta_usuario = input('\nSua Resposta: ').strip().upper()
 
 
-    # Se o usuário responde que não sabe o que é pestana nas perguntas 3 ou 5, ele ativa a variável nao_sabe_pestana, para evitar
     if (questao['id'] == 3 and resposta_usuario == 'A') or (questao['id'] == 5 and resposta_usuario == 'A'):
         nao_sabe_pestana = True
 
-# Compara a resposta do usuário com as alternativas de cada questão para guardar a tag correspondente daquela alternativa
     for alternativa in questao['respostas']:
-        # Aqui a questão 9 pode receber mais de uma resposta, logo guarda mais de uma tag.
         if questao['id'] == 9:
             if alternativa['resposta'] in resposta_usuario:
                 lista_limitadores_respostas_usuario.append(alternativa['tag'][0][1])
         else:
             if resposta_usuario == alternativa['resposta']:
 
-                # Varre todos os primeiros termos das tags para ver se são limitadores ou capacidades, para então guardar nas listas de limitadores ou capacidades
-                # Simplifiquei a forma de varrer os itens dentro da tag, não mais por índices [0], [1], etc
                 for tipo, tag in alternativa['tag']:
 
-                    # Lista limitadores
                     if tipo == 'limitador':
                         lista_limitadores_respostas_usuario.append(tag)
 
-                    # Lista capacidades
                     elif tipo == 'capacidade':
                         lista_capacidades_respostas_usuario.append(tag)
 
-# RESULTADOS
 print(f'Lista de Limitadores: {lista_limitadores_respostas_usuario}')
 print(f'Lista de Capacidades: {lista_capacidades_respostas_usuario}')
 
@@ -166,7 +153,6 @@ print(f'Lista de Capacidades: {lista_capacidades_respostas_usuario}')
 
 
 
-# Montando a estrutura do diagnóstico
 lista_diagnostico = {
     'montagem_de_acorde': {
         'descricao_capacidade': 'consegue montar acordes com clareza',
@@ -215,7 +201,7 @@ lista_diagnostico = {
 }
 
 lista_nivel = {
-    'iniciante': [ # 3 opções para escolher uma usando random.choice
+    'iniciante': [ 
         'Você ainda está construindo os fundamentos do instrumento, e isso faz com que várias etapas da execução pareçam mais difíceis do que deveriam.',
         'Neste momento, seu foco precisa estar em consolidar a base, pois é ela que vai facilitar todo o resto do seu desenvolvimento.',
         'O seu momento pede mais atenção aos fundamentos, pois são eles que vão destravar sua evolução daqui pra frente.'
@@ -232,32 +218,30 @@ lista_nivel = {
     ]
 }
 
-# Criando diferentes perfis baseados nas combinações entre tags
 perfis = {
     'perfil_equilibrado': {
-        'capacidades': {'troca_de_acorde', 'ritmo', 'montagem_de_acorde'},  # Diagnóstico: Desenvolvimento consistente, pronto para avançar - usando entre {} pois é um set, não depende de ordem
+        'capacidades': {'troca_de_acorde', 'ritmo', 'montagem_de_acorde'},  
         'limitadores': set(),
         'descricao': 'Você já é um guitarrista bem equilibrado, capaz de tocar várias músicas com fluidez.'
     },
     'perfil_falso_avancado': {
-        'capacidades': {'troca_de_acorde', 'ritmo', 'montagem_de_acorde'}, # Consegue executar, mas sem entender 👉 Diagnóstico: Vai travar ao tentar evoluir
+        'capacidades': {'troca_de_acorde', 'ritmo', 'montagem_de_acorde'},
         'limitadores': {'base'},
         'descricao': 'Você consegue tocar músicas inteiras sem se perder, porém ainda tem lacunas nos conhecimentos de base e isso pode travar sua evolução logo mais.'
     },
     'perfil_ritmo_travado': {
-        'capacidades': {'troca_de_acorde', 'montagem_de_acorde'}, # Toca bem os acordes, troca rápido, mas não encaixa na música
+        'capacidades': {'troca_de_acorde', 'montagem_de_acorde'},
         'limitadores': {'ritmo'},
         'descricao': 'Você tem familiaridade com acordes e consegue trocar com rapidez, mas ainda não consegue acompanhar músicas pois falta base em ritmo.'
     },
     'perfil_quase_equilibrado_ritmo': {
-        'capacidades': {'troca_de_acorde', 'ritmo', 'montagem_de_acorde'}, # Toca bem os acordes, troca rápido, mas não encaixa na música
+        'capacidades': {'troca_de_acorde', 'ritmo', 'montagem_de_acorde'},
         'limitadores': {'ritmo'},
         'descricao': 'Você está quase tocando músicas de forma equilibrada e com fluidez. Porém ainda há pequenas dificuldades de ritmo em alguns momentos.'
 
     }
 }
 
-# Lista de conectores de frases
 conectores_cap = [
     'Você já ',
     'Você também ',
@@ -282,41 +266,30 @@ conectores_causa_efeito = [
     '. Como consequência disso, '
 ]
 
-# Contabiliza a quantidade que cada tag apareceu
 contador_limitadores = Counter(lista_limitadores_respostas_usuario)
 contador_capacidades = Counter(lista_capacidades_respostas_usuario)
 print(f'Limitadores: {contador_limitadores}')
 print(f'Capacidades: {contador_capacidades}')
 
-# Pega apenas os valores dos dicionários contador_ e qual o valor máximo presente
 maior_frequencia_limitadores = max(contador_limitadores.values(), default=0)
 maior_frequencia_capacidades = max(contador_capacidades.values(), default=0)
 
-# Lista das principais tags. As outras são adicionais e entram como considerações adicionais
 limitadores_principais = ['base', 'troca_de_acorde', 'ritmo', 'montagem_de_acorde']
 capacidades_principais = ['troca_de_acorde', 'ritmo', 'montagem_de_acorde']
 
-# Cria uma lista com as tags correspondentes aos maiores valores. Ou seja, as tags que mais apareceram na lista
 limitadores_mais_frequentes = []
 for item, quantidade in contador_limitadores.items():
-    if quantidade == maior_frequencia_limitadores and quantidade >= 2 and item in limitadores_principais:  # Aqui eu estou limpando os limitadores que não são principais, pois entram como considerações adicionais mais abaixo.
+    if quantidade == maior_frequencia_limitadores and quantidade >= 2 and item in limitadores_principais:  
         limitadores_mais_frequentes.append(item)
 capacidades_mais_frequentes = []
 for item, quantidade in contador_capacidades.items():
-    if quantidade == maior_frequencia_capacidades and quantidade >= 2 and item in capacidades_principais: # Mesma coisa das considerações adicionais mas agora com capacidades.
+    if quantidade == maior_frequencia_capacidades and quantidade >= 2 and item in capacidades_principais: 
         capacidades_mais_frequentes.append(item)
 
-#Outro jeito de fazer o passo anterior - Resgatar apenas os itens de maior frequência na lista de limitadores e capacidades
-# limitadores_mais_frequentes_alternativa = [item for item, quantidade in contador_limitadores.items() if quantidade == maior_frequencia_limitadores]
-# print(limitadores_mais_frequentes_alternativa)
-# capacidades_mais_frequentes_alternativa = [item for item, quantidade in contador_capacidades.items() if quantidade == maior_frequencia_capacidades]
-# print(capacidades_mais_frequentes_alternativa)
 
-#Mostra os itens mais frequentes de cada lista - Apenas para conferência
 print(f'O item mais frequente em limitadores é {limitadores_mais_frequentes}')
 print(f'O item mais frequente em capacidades é {capacidades_mais_frequentes}')
 
-# Definindo se iniciante, intermediário ou avançado baseado na diferença da quantidade de tags entre limitadores e capacidades
 nivel = ''
 if (len(lista_limitadores_respostas_usuario) - len(lista_capacidades_respostas_usuario)) >= 2:
         nivel = 'iniciante'
@@ -325,7 +298,6 @@ elif abs(len(lista_limitadores_respostas_usuario) - len(lista_capacidades_respos
 elif (len(lista_limitadores_respostas_usuario) - len(lista_capacidades_respostas_usuario)) <= -2:
         nivel = 'avancado'
 
-# Diagnóstico final
 print()
 print('=' * 100)
 print(f'{"DIAGNÓSTICO FINAL":^100}')
@@ -333,31 +305,26 @@ print('=' * 100)
 print()
 
 
-# indicadores que irão alterar os inícios e conectores de frases
+# Counters used to control sentence flow and connector sequencing
 conectores_cap_contador = 0
 conectores_lim_contador = 0
+
+# Controls how limitation connectors are adjusted based on previous output
+# Prevents unnatural transitions (e.g., contrast without prior strengths)
 alterar_lista = True
 
-# o que eu quero é: se não tiver aparecido nenhuma capacidade, ele começa as limitações com 'você ainda não consegue fazer tal coisa'. Continuando aqui,
-# o próximo item da lista não pode ser 'por outro lado você...', senão parece que vou falar sobre as capacidades agora. Sendo assim o próximo item da lista
-# teria que ser 'além disso, você', ou seja, pula o 'por outro lado você'. Agora se já tiver aparecido capacidades no diagnóstico, a primeira frase das limitações
-# deve começar com 'por outro lado você', justamente para dar a entender que agora vêm limitações. E a partir daí segue a lista normal de conectores_lim
 
 
-
-
-# Diagnóstico baseado em perfis
 perfil = ''
 for tipo, descricao in perfis.items():
     if descricao['capacidades'] == set(capacidades_mais_frequentes) and descricao['limitadores'] == set(limitadores_mais_frequentes):
         perfil = tipo
         print('\n1 - PERFIS ----------------\n')
-        print(descricao['descricao'])   # Exemplo: 'Você já é um guitarrista bem equilibrado, capaz de tocar várias músicas com fluidez.'
+        print(descricao['descricao'])  
         conectores_cap_contador += 1
 
 
-# Considerações adicionais
-print('\n3 - CONSIDERAÇÕES ADICIONAIS PARTE 1------------------\n')
+print('\n2 - CONSIDERAÇÕES ADICIONAIS PARTE 1------------------\n')
 if 'resistencia' in lista_capacidades_respostas_usuario:
     print(conectores_cap[min(conectores_cap_contador, len(conectores_cap) - 1)], end='')
     print(f'{lista_diagnostico["resistencia"]["descricao_capacidade"]}{choice(conectores_causa_efeito)}{lista_diagnostico["resistencia"]["efeito_positivo"]}.')
@@ -370,23 +337,22 @@ if 'continuidade' in lista_capacidades_respostas_usuario:
 
 
 
-# Caso não se encaixe em nenhum perfil
-print('\n2 - DIAGNÓSTICOS ISOLADOS -----------------------\n')
+print('\n3 - DIAGNÓSTICOS ISOLADOS -----------------------\n')
 if perfil == '':
     for capacidade in capacidades_mais_frequentes:
         print(conectores_cap[min(conectores_cap_contador, len(conectores_cap) - 1)], end='')
         print(f'{lista_diagnostico[capacidade]["descricao_capacidade"]}{choice(conectores_causa_efeito)}{lista_diagnostico[capacidade]["efeito_positivo"]}.')
         conectores_cap_contador += 1
-    # alterando a lista de prefixos da lista conectores_lim após ter passado todas as capacidades
+    # Adjust limitation connectors after processing strengths
+    # Ensures correct narrative transition depending on whether strengths were shown
     if alterar_lista:
         conectores_lim = conectores_lim_original.copy()
-        if conectores_cap_contador == 0:  # Consegui simplificar bastante o uso dos conectores limitadores apenas tirando o conector certo dependendo se já foram mostradas capacidades ou não
+        if conectores_cap_contador == 0:  
             conectores_lim.pop(1)
             alterar_lista = False
         else:
             conectores_lim.pop(0)
             alterar_lista = False
-    #frase combinação e causa/efeito
     if 'montagem_de_acorde' in limitadores_mais_frequentes and 'troca_de_acorde' in limitadores_mais_frequentes:
         print(conectores_lim[min(conectores_lim_contador, len(conectores_lim) - 1)], end='')
         print('está consolidando a montagem dos acordes, o que impacta diretamente na velocidade de troca. A dificuldade na troca vem da montagem dos acordes ainda não estar automática.')
@@ -405,18 +371,17 @@ if perfil == '':
             print(f'{lista_diagnostico[limitador]["descricao_limitacao"]}{choice(conectores_causa_efeito)}{lista_diagnostico[limitador]["efeito_negativo"]}.')
             conectores_lim_contador += 1
 
-# Se não passar pelo bloco 2 - diagnósticos isolados (perfil != '') trocamos os prefixos da lista conectores_lim aqui
+# Ensure limitation connectors are adjusted even when profile-based diagnosis is used
 if alterar_lista:
     conectores_lim = conectores_lim_original.copy()
-    if conectores_cap_contador == 0:  # Consegui simplificar bastante o uso dos conectores limitadores apenas tirando o conector certo dependendo se já foram mostradas capacidades ou não
+    if conectores_cap_contador == 0:  
         conectores_lim.pop(1)
         alterar_lista = False
     else:
         conectores_lim.pop(0)
         alterar_lista = False
 
-# Considerações adicionais
-print('\n3 - CONSIDERAÇÕES ADICIONAIS PARTE 2------------------\n')
+print('\n4 - CONSIDERAÇÕES ADICIONAIS PARTE 2------------------\n')
 if 'resistencia' in lista_limitadores_respostas_usuario:
     print(conectores_lim[min(conectores_lim_contador, len(conectores_lim) - 1)], end='')
     print(f'{lista_diagnostico["resistencia"]["descricao_limitacao"]}{choice(conectores_causa_efeito)}{lista_diagnostico["resistencia"]["efeito_negativo"]}.')
@@ -433,8 +398,6 @@ if 'continuidade' in lista_limitadores_respostas_usuario:
 
 
 
-# Diagnóstico do nível
-print('\n4 - NÍVEL ------------\n')
+print('\n5 - NÍVEL ------------\n')
 print('Considerando seus pontos fortes e limitações, você se encontra no seguinte estágio:')
 print(choice(lista_nivel[nivel]))
-'''
