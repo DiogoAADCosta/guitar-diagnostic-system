@@ -1,6 +1,13 @@
+# Version 3.1 - Conditional Level Progression (Pre-Rule Engine)
+
+# This version introduces level progression based on user performance across rounds.
+# The logic is implemented using nested conditional statements,
+# which leads to repetition and limited scalability.
 
 
-
+# Simplified question structure used to support level-based progression logic
+# (each question is mapped by level and sequence number)
+# (differs from previous versions, which were focused on tag-based analysis)
 lista_perguntas = [
     {'nível': 1, 'número': 1, 'pergunta': 'Pergunta 1'},
     {'nível': 1, 'número': 2, 'pergunta': 'Pergunta 2'},
@@ -48,17 +55,18 @@ autoavaliacao_nivel = 2
 nivel = autoavaliacao_nivel
 rodada = 1
 
-# acertos = int(input('Quantos acertos? '))
-# total_perguntas = int(input('Total de perguntas? '))
-
+# Temporary values used to simulate user performance during development
 acertos = 2
 total_perguntas = 4
 taxa = (acertos / total_perguntas) * 100
 print(f'Taxa: {taxa:.1f}%')
 
+# The system evaluates user performance in rounds, progressively increasing question count
+# Main loop controlling level progression
 while rodada < 4:
     print(f'{" INICIANDO NÍVEL " + str(nivel) + " ":=^50}')
     for questao in lista_perguntas:
+        # Question limits are defined conditionally inside the loop (pre-refactor approach)
         if rodada == 1:
             pergunta_limite = 4
         elif rodada == 2:
@@ -67,13 +75,13 @@ while rodada < 4:
             pergunta_limite =  8
         if questao['nível'] == nivel:
             print(f'Nível {questao["nível"]} - {questao["pergunta"]}')
+            # Break statements interrupt the current flow to trigger level transitions or re-evaluation
             if questao['número'] == pergunta_limite:
                 print('CONFERIR SCORE')
-                # Verificar taxa de acertos
                 taxa = int(input('Qual a taxa? '))
-                if rodada == 1:                                 # Taxa de acertos na primeira rodada
-                    if taxa >= 80:  #100%
-                        # Sobe de nível
+                # Rule logic is implemented through nested conditionals (pre-rule-engine structure)
+                if rodada == 1:                               
+                    if taxa >= 80:  
                         print('Sobe de nível')
                         print(taxa)
                         print(f'Rodada: {rodada}\n')
@@ -85,26 +93,22 @@ while rodada < 4:
                             print('Confirma nível')
                             rodada = 4
                         break
-                    elif taxa > 50:   # 75%
-                        # Mais 2 perguntas
+                    elif taxa > 50:  
                         print('Mais 2 perguntas')
                         print(taxa)
                         print(f'Rodada: {rodada}\n')
                         rodada += 1
-                    elif taxa > 35:   # 50%
-                        # Mais 4 perguntas
+                    elif taxa > 35:  
                         print('Mais 4 perguntas')
                         print(taxa)
                         print(f'Rodada: {rodada}\n')
                         rodada += 2
-                    elif taxa > 0:    # 25%
-                        # Mais 2 perguntas
+                    elif taxa > 0:    
                         print('Mais 2 perguntas')
                         print(taxa)
                         print(f'Rodada: {rodada}\n')
                         rodada += 1
                     else:
-                        # Desce de nível
                         print('Desce de nível')
                         print(taxa)
                         print(f'Rodada: {rodada}\n')
@@ -116,9 +120,8 @@ while rodada < 4:
                             print('Confirma nível')
                             rodada = 4
                         break
-                elif rodada == 2:                               # Taxa de acertos na segunda rodada
-                    if taxa >= 80:  #100%
-                        # Sobe de nível
+                elif rodada == 2:                            
+                    if taxa >= 80: 
                         print('Sobe de nível')
                         print(taxa)
                         print(f'Rodada: {rodada}\n')
@@ -130,21 +133,18 @@ while rodada < 4:
                             print('Confirma nível')
                             rodada = 4
                         break
-                    elif taxa > 60:   # 66%
-                        # Mais 2 perguntas
+                    elif taxa > 60:  
                         print('Mais 2 perguntas')
                         print(taxa)
                         print(f'Rodada: {rodada}\n')
                         rodada += 1
-                    elif taxa >= 50:   # 50%
-                        # Confirma nível
+                    elif taxa >= 50:   
                         print('Confirma nível')
                         print(taxa)
                         print(f'Rodada: {rodada}\n')
                         rodada = 4
                         break
                     else:
-                        # Desce de nível
                         print('Desce de nível')
                         print(taxa)
                         print(f'Rodada: {rodada}\n')
@@ -156,9 +156,8 @@ while rodada < 4:
                             print('Confirma nível')
                             rodada = 4
                         break
-                elif rodada == 3:                               # Taxa de acertos na terceira rodada
-                    if taxa >= 75:  #75%
-                        # Sobe de nível
+                elif rodada == 3:                             
+                    if taxa >= 75:  
                         print('Sobe de nível')
                         print(taxa)
                         print(f'Rodada: {rodada}\n')
@@ -170,15 +169,13 @@ while rodada < 4:
                             print('Confirma nível')
                             rodada = 4
                         break
-                    elif 35 < taxa < 75:   # 75%
-                        # Confirma nível
+                    elif 35 < taxa < 75:   
                         print('Confirma nível')
                         print(taxa)
                         print(f'Rodada: {rodada}\n')
                         rodada = 4
                         break
                     else:
-                        # Desce de nível
                         print('Desce de nível')
                         print(taxa)
                         print(f'Rodada: {rodada}\n')
@@ -191,4 +188,5 @@ while rodada < 4:
                             rodada = 4
                         break
     else:
+        # Exit loop if no matching question flow continues
         break
