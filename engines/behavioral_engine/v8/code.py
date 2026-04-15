@@ -1,17 +1,18 @@
-# Version 8 - Stabilized Connector Logic with Functional Abstraction
+# Version 8 - Dynamic Connector Control and Narrative Flow Adjustment
 #
 # Goal:
-# Improve connector handling by introducing functional abstraction
-# while maintaining stable and predictable behavior.
+# Improve sentence flow by refining connector logic,
+# ensuring more natural transitions between strengths and limitations.
 #
 # In this version:
-# - Introduced function for sentence connector selection
-# - Simplified connector logic compared to previous version
-# - Removed unreliable abstraction attempts from Version 7
-# - Restored predictable behavior in sentence construction
+# - Refined connector behavior using existing counters
+# - Introduced contextual adjustment of limitation connectors based on prior output
+# - Improved narrative flow between strengths and limitations
+# - Simplified connector handling without using function abstraction
+# - Stabilized sentence construction after failed abstraction attempt (Version 7)
 #
 # Focus:
-# Failed abstraction → Simplified design → Stable implementation
+# Failed abstraction → Direct control → Stable and coherent narrative flow
 
 from collections import Counter
 from random import choice
