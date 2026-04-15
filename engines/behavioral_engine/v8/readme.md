@@ -18,15 +18,11 @@ Improve sentence flow by refining connector logic, ensuring more natural and con
 
 ## How It Works
 
-1. User answers questions  
-2. Tags are collected (limitations and capabilities)  
-3. Tag frequency is calculated using `Counter`  
-4. Only dominant tags with frequency >= 2 are considered  
-5. User level is determined based on balance between limitations and capabilities  
-6. System attempts to match a predefined profile  
-7. If no profile matches → fallback diagnostic is generated  
-8. Sentence connectors are selected dynamically based on previously constructed output (narrative state)
-9. Additional observations are appended in structured sections  
+This version refines connector behavior by adjusting transitions  
+based on the narrative state (previously generated output).
+
+Connector selection is now context-aware,  
+ensuring more natural transitions between strengths and limitations.
 
 ---
 
