@@ -25,6 +25,7 @@ This version builds directly on Version 5.
 The diagnostic pipeline remains unchanged,  
 but sentence construction is now handled through dynamic connectors,  
 allowing variation and more natural phrasing.
+
 ---
 
 ## Impact
