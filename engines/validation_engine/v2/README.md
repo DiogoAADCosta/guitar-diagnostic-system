@@ -24,7 +24,7 @@ In addition to validating answers, the system now tracks:
 - Number of incorrect answers  
 - Total number of questions  
 
-Each response also contributes associated tags:
+Each response now contributes associated tags to structured lists:
 
 - Correct answers → capability tags  
 - Incorrect answers → limitation tags  
@@ -45,7 +45,7 @@ and outputs both performance metrics and collected tags.
 ## Limitations
 
 - Tags are collected but not yet analyzed  
-- No interpretation or diagnostic generation  
+- Still no interpretation or diagnostic generation
 - No weighting between different types of tags  
 - No integration with other modules  
 
