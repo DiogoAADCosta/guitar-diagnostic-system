@@ -63,6 +63,9 @@ Controlled refinement → Cleaner implementation → Iterator-based sequencing
 
 ## Note
 
+
+This is currently the most stable version of the behavioral engine.
+
 After Version 9, development continues in a separate module:
 
 `validation_engine/v1`
