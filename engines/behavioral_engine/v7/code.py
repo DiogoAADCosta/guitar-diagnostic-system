@@ -1,3 +1,24 @@
+# Version 7 - Attempted Connector Abstraction
+#
+# Goal:
+# Attempt to reduce code repetition by abstracting connector logic into functions.
+#
+# In this version:
+# - Introduced functions to handle sentence connectors
+# - Attempted to centralize connector selection logic
+# - Partial reduction of direct conditional usage
+#
+# Additionally:
+# - Debug statements were added to track connector behavior
+# - A hybrid approach was used (functions + manual conditions)
+#
+# Limitation:
+# - Connector counters do not update outside function scope
+# - The abstraction does not work as intended
+# - Code complexity increased instead of decreasing
+#
+# Focus:
+# Experiment with abstraction → exposes limitations in state management
 
 from collections import Counter
 from random import choice
