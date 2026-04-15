@@ -65,7 +65,5 @@ Where:
 
 ## Key Insight
 
-## Key Insight
-
 Once the data structure is well-defined,  
 simple techniques like counting can produce meaningful behavioral insights.
