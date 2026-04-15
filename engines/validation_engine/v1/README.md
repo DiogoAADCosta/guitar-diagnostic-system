@@ -67,8 +67,3 @@ Key differences:
 
 These differences reflect two distinct approaches:  
 objective validation vs behavioral interpretation.
-
-- Behavioral Engine → pattern interpretation and diagnostic generation  
-- Validation Engine (V1) → objective validation of individual answers  
-
-This distinction defines two complementary approaches within the system.
