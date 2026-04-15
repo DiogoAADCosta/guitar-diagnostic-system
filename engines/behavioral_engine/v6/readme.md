@@ -20,16 +20,11 @@ Improve the quality and fluency of diagnostic text generation, making feedback m
 
 ## How It Works
 
-1. User answers questions  
-2. Tags are collected (limitations and capabilities)  
-3. Tag frequency is calculated using `Counter`  
-4. Only dominant tags with frequency >= 2 are considered  
-5. User level is determined based on balance between limitations and capabilities  
-6. System attempts to match a predefined profile  
-7. If no profile matches → fallback diagnostic is generated  
-8. Sentences are dynamically constructed using connectors  
-9. Additional observations are appended in separate sections  
+This version builds directly on Version 5.
 
+The diagnostic pipeline remains unchanged,  
+but sentence construction is now handled through dynamic connectors,  
+allowing variation and more natural phrasing.
 ---
 
 ## Impact
