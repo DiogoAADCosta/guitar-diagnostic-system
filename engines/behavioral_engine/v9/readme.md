@@ -18,16 +18,10 @@ Simplify connector handling by replacing index-based control with iterator-based
 
 ## How It Works
 
-1. User answers questions  
-2. Tags are collected (limitations and capabilities)  
-3. Tag frequency is calculated using `Counter`  
-4. Only dominant tags with frequency >= 2 are considered  
-5. User level is determined based on balance between limitations and capabilities  
-6. System attempts to match a predefined profile  
-7. If no profile matches → fallback diagnostic is generated  
-8. Sentence connectors are retrieved using iterators (`next()`), ensuring continuous flow  
-9. Connector lists are dynamically adjusted based on narrative context (presence of strengths)  
-10. Additional observations are appended in structured sections  
+This version replaces index-based connector control with iterator-based sequencing.
+
+Connectors are retrieved dynamically using `next()`,  
+ensuring continuous flow without manual index handling.
 
 ---
 
