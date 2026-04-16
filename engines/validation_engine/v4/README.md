@@ -9,7 +9,7 @@ Version 4 integrates two previously independent systems:
 
 This is the first fully functional version of the test,
 where user responses directly drive both performance tracking
-and level progression.
+and level progression in real time.
 
 ---
 
@@ -76,7 +76,7 @@ to ensure each level is evaluated independently.
 
 ## Key Insight
 
-The main advancement in Version 4 is integration.
+The main advancement in Version 4 is system integration.
 
 By combining validation and progression into a single flow,
-the system becomes capable of real interaction and adaptation.
+the system becomes capable of real interaction and adaptive behavior.
