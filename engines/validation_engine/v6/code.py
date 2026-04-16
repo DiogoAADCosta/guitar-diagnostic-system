@@ -9,10 +9,10 @@
 # - Mapping between tags and their musical contexts
 
 # Only elements with frequency >= 2 are considered relevant
-# to filter out isolated or non-recurring signals
+# to filter out isolated or non-recurring signals and highlight consistent patterns
 
-# This version transforms collected data into structured diagnostic signals,
-# representing the first step toward automated diagnostic interpretation.
+# This version transforms collected response data into structured diagnostic signals,
+# identifying consistent patterns in user performance
 
 from random import shuffle
 from collections import Counter
