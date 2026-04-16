@@ -14,7 +14,7 @@ it was trying to identify patterns and move toward structured diagnostic output.
 
 During testing, multiple simulations were performed using different user profiles.
 
-The results revealed a critical issue:
+The results revealed a structural issue:
 
 * The generated data did not match expected user profiles consistently
 * In many cases, the results were confusing and difficult to interpret
