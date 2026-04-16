@@ -1,17 +1,13 @@
-'''====================================================================================================================================================================================================
-Versão 7 - Construção de diagnóstico - Construindo as regras para análise dos resultados. Gerando diagnósticos em forma de frases.
-====================================================================================================================================================================================================
-'''
-from random import shuffle, choice
+
+from random import shuffle
 from collections import Counter
-from itertools import chain, repeat
 
 
 lista_perguntas = [
     {'id': '2-1',
     'nível': 2,
     'numero_pergunta': 1,
-    'pergunta': 'Numa música temos os seguintes acordes: G e Bm. Que acordes são esses? ',       # Pipeline: Ler cifra -> Fundamental Acordes -> Qualidade acordes
+    'pergunta': 'Numa música temos os seguintes acordes: G e Bm. Que acordes são esses? ',    
     'contexto': ['triades_simples'],
     'interface': ['leitura_cifras'],
     'alternativas': [{'correção': True, 'tag': [['capacidade', 'leitura_cifras']], 'texto': 'Sol Maior e Si Menor'},
@@ -19,16 +15,15 @@ lista_perguntas = [
                      {'correção': False, 'tag': [['limitador', 'fundamental_acorde'], ['limitador', 'base']], 'texto': 'Dó Maior e Si Menor'},
                      {'correção': False, 'tag': [['limitador', 'fundamental_acorde'], ['limitador', 'qualidade_acorde'], ['limitador', 'base']], 'texto': 'Lá Maior e Mi Maior'},
                      {'correção': False, 'tag': [['limitador', 'fundamental_acorde'], ['limitador', 'base']], 'texto': 'Dó Maior e Ré Menor'},
-                     {'correção': False, 'tag': [['limitador', 'base']], 'texto': 'Não sei', 'tipo': 'nao_sei'}            # Adicionando o tipo
+                     {'correção': False, 'tag': [['limitador', 'base']], 'texto': 'Não sei', 'tipo': 'nao_sei'}        
                      ]
     },
     {'id': '2-2',
     'nível': 2,
     'numero_pergunta': 2,
-    'pergunta': '(Figura do Braço - Am D) Quais cifras correspondem a esses acordes? ',            # Pipeline: Diagrama braço -> Fundamental Acordes -> Qualidade acordes -> Leitura Cifras
-    'contexto': ['triades_simples'],
+    'pergunta': '(Figura do Braço - Am D) Quais cifras correspondem a esses acordes? ',        
     'interface': ['diagrama_braco', 'leitura_cifras'],
-    'alternativas': [{'correção': True, 'tag': [['capacidade', 'diagrama_braco'], ['capacidade', 'leitura_cifras']], 'texto': 'Am, D'},  # preciso de leitura de cifras?
+    'alternativas': [{'correção': True, 'tag': [['capacidade', 'diagrama_braco'], ['capacidade', 'leitura_cifras']], 'texto': 'Am, D'},  
                      {'correção': False, 'tag': [['limitador', 'qualidade_acorde'], ['limitador', 'base']], 'texto': 'A, Dm'},
                      {'correção': False, 'tag': [['limitador', 'qualidade_acorde'], ['limitador', 'base']], 'texto': 'A, D'},
                      {'correção': False, 'tag': [['limitador', 'leitura_cifras'], ['limitador', 'base']], 'texto': 'Lá Menor e Ré Maior'},
@@ -40,7 +35,7 @@ lista_perguntas = [
     {'id': '2-3',
      'nível': 2,
      'numero_pergunta': 3,
-     'pergunta': 'Qual das opções representa um Power Chord B5? (DIAGRAMA BRAÇO NAS RESPOSTAS)',    # Pipeline: Ler Cifra -> Fundamental acorde -> Qualidade Acorde -> Montar no braço -> Associar ao diagrama
+     'pergunta': 'Qual das opções representa um Power Chord B5? (DIAGRAMA BRAÇO NAS RESPOSTAS)',   
      'contexto': ['power_chords'],
      'interface': ['diagrama_braco', 'leitura_cifras'],
      'alternativas': [
@@ -56,7 +51,7 @@ lista_perguntas = [
     {'id': '2-4',
     'nível': 2,
     'numero_pergunta': 4,
-    'pergunta': '(Tablatura com notas na corda 6) Você toca isso em qual corda? (TABLATURA)',       # Pipeline: Ler tablatura -> Saber a ordem das cordas
+    'pergunta': '(Tablatura com notas na corda 6) Você toca isso em qual corda? (TABLATURA)',      
     'contexto': ['leitura_tablatura_basica'],
     'interface': ['leitura_tablatura'],
     'alternativas': [{'correção': True, 'tag': [['capacidade', 'leitura_tablatura']], 'texto': 'Na mais grossa'},
@@ -68,7 +63,7 @@ lista_perguntas = [
     {'id': '2-5',
     'nível': 2,
     'numero_pergunta': 5,
-    'pergunta': 'Qual das opções representa um Dó Maior e um Ré Menor? (GRAFIA CIFRAS)',    # Pipeline: Recebe acorde -> Traduz nota fundamental -> traduz qualidade acorde
+    'pergunta': 'Qual das opções representa um Dó Maior e um Ré Menor? (GRAFIA CIFRAS)',    
     'contexto': ['triades_simples'],
     'interface': ['leitura_cifras'],
     'alternativas': [{'correção': True, 'tag': [['capacidade', 'leitura_cifras']], 'texto': 'C, Dm'},
@@ -82,7 +77,7 @@ lista_perguntas = [
     {'id': '2-6',
      'nível': 2,
      'numero_pergunta': 6,
-     'pergunta': '(Figura do Braço - dois acordes - menor maior) Esses acordes são, respectivamente: (DIAGRAMA BRAÇO)',   # Pipeline: Diagrama -> qualidade acorde
+     'pergunta': '(Figura do Braço - dois acordes - menor maior) Esses acordes são, respectivamente: (DIAGRAMA BRAÇO)',   
      'contexto': ['triades_simples'],
      'interface': ['diagrama_braco'],
      'alternativas': [
@@ -97,7 +92,7 @@ lista_perguntas = [
     {'id': '2-7',
      'nível': 2,
      'numero_pergunta': 7,
-     'pergunta': 'Qual das opções temos um acorde Menor? (DIAGRAMA  BRAÇO NAS RESPOSTAS)',   # Pipeline: Diagrama -> qualidade acorde
+     'pergunta': 'Qual das opções temos um acorde Menor? (DIAGRAMA  BRAÇO NAS RESPOSTAS)', 
      'contexto': ['triades_simples'],
      'interface': ['diagrama_braco'],
      'alternativas': [{'correção': True, 'tag': [['capacidade', 'diagrama_braco'], ['capacidade', 'qualidade_acorde']], 'texto': 'Diagrama do braço - Am'},
@@ -112,7 +107,7 @@ lista_perguntas = [
     {'id': '2-8',
      'nível': 2,
      'numero_pergunta': 8,
-     'pergunta': '(Tablatura do acorde F5) Que Power Chord é esse? (TABLATURA)',    # Pipeline: leitura tablatura -> Fundamental acorde -> Leitura Cifra
+     'pergunta': '(Tablatura do acorde F5) Que Power Chord é esse? (TABLATURA)',   
      'contexto': ['power_chords'],
      'interface': ['leitura_tablatura', 'leitura_cifras'],
      'alternativas': [
@@ -128,7 +123,7 @@ lista_perguntas = [
     {'id': '3-1',
      'nível': 3,
      'numero_pergunta': 1,
-     'pergunta': 'Quais cifras correspondem aos acordes Si Bemol Menor e Fá Sustenido Maior? (GRAFIA CIFRAS)',   # Pipeline:  Acordes -> Fundamental Acorde -> Qualidade acorde
+     'pergunta': 'Quais cifras correspondem aos acordes Si Bemol Menor e Fá Sustenido Maior? (GRAFIA CIFRAS)', 
      'contexto': ['triades_simples'],
      'interface': ['leitura_cifras'],
      'alternativas': [{'correção': True, 'tag': [['capacidade', 'leitura_cifras']], 'texto': 'Bbm, F#'},
@@ -141,8 +136,7 @@ lista_perguntas = [
     {'id': '3-2',
      'nível': 3,
      'numero_pergunta': 2,
-     'pergunta': '(Figura do Braço - C7M, Dm7 - shapes simples) Quais cifras correspondem a esses acordes? (DIAGRAMA BRAÇO)',   # Pipeline: Diagrama -> Fundamental Acordes -> Qualidade acordes -> Leitura Cifras
-     'contexto': ['tetrades_simples'],
+     'pergunta': '(Figura do Braço - C7M, Dm7 - shapes simples) Quais cifras correspondem a esses acordes? (DIAGRAMA BRAÇO)',  
      'interface': ['diagrama_braco', 'leitura_cifras'],
      'alternativas': [{'correção': True, 'tag': [['capacidade', 'diagrama_braco'], ['capacidade', 'leitura_cifras']], 'texto': 'C7M, Dm7'},
                       {'correção': False, 'tag': [['limitador', 'fundamental_acorde']], 'texto': 'C7M, Em7'},
@@ -157,7 +151,7 @@ lista_perguntas = [
     {'id': '3-3',
      'nível': 3,
      'numero_pergunta': 3,
-     'pergunta': 'Marque a opção que temos o mesmo acorde representado de maneiras diferentes (DIAGRAMA BRAÇO NAS RESPOSTAS)',  # Pipeline: Leitura de tudo
+     'pergunta': 'Marque a opção que temos o mesmo acorde representado de maneiras diferentes (DIAGRAMA BRAÇO NAS RESPOSTAS)', 
      'contexto': ['triades_simples'],
      'interface': ['leitura_cifras', 'diagrama_braco', 'leitura_tablatura'],
      'alternativas': [
@@ -173,7 +167,7 @@ lista_perguntas = [
     {'id': '3-4',
      'nível': 3,
      'numero_pergunta': 4,
-     'pergunta': 'Qual das opções representa um D7M? (TABLATURA)',   # Pipeline Leitura Cifra -> Fundamental -> Qualidade acorde -> Tablatura
+     'pergunta': 'Qual das opções representa um D7M? (TABLATURA)',   
      'contexto': ['tetrades_simples'],
      'interface': ['leitura_tablatura', 'leitura_cifras'],
      'alternativas': [{'correção': True, 'tag': [['capacidade', 'leitura_tablatura'], ['capacidade', 'leitura_cifras']], 'texto': 'Tablatura - D7M shape D'},
@@ -188,7 +182,7 @@ lista_perguntas = [
     {'id': '3-5',
      'nível': 3,
      'numero_pergunta': 5,
-     'pergunta': '(Figura do Braço - G7, Am7) Esses diagramas representam acordes: (DIAGRAMA BRAÇO)',  # Pipeline: Diagrama -> Qualidade Acorde
+     'pergunta': '(Figura do Braço - G7, Am7) Esses diagramas representam acordes: (DIAGRAMA BRAÇO)',  
      'contexto': ['tetrades_simples'],
      'interface': ['diagrama_braco'],
      'alternativas': [{'correção': True, 'tag': [['capacidade', 'diagrama_braco'], ['capacidade', 'qualidade_acorde']], 'texto': 'Maior com sétima, Menor com sétima'},
@@ -203,7 +197,7 @@ lista_perguntas = [
     {'id': '3-6',
      'nível': 3,
      'numero_pergunta': 6,
-     'pergunta': 'Em qual opção temos os acordes F7M e Fm7? (TABLATURA)',  # Pipeline: Leitura Cifra -> Fundamental -> Qualidade -> Tablatura
+     'pergunta': 'Em qual opção temos os acordes F7M e Fm7? (TABLATURA)',
      'contexto': ['tetrades_simples'],
      'interface': ['leitura_tablatura', 'leitura_cifras'],
      'alternativas': [
@@ -219,7 +213,7 @@ lista_perguntas = [
     {'id': '3-7',
      'nível': 3,
      'numero_pergunta': 7,
-     'pergunta': 'O acorde Cm7 pode ser escrito como: (DIAGRAMA BRAÇO NAS RESPOSTAS)',  # Pipeline: leitura Cifra -> fundamental -> qualidade -> diagrama
+     'pergunta': 'O acorde Cm7 pode ser escrito como: (DIAGRAMA BRAÇO NAS RESPOSTAS)',  
      'contexto': ['tetrades_simples'],
      'interface': ['diagrama_braco', 'leitura_cifras'],
      'alternativas': [{'correção': True, 'tag': [['capacidade', 'diagrama_braco'], ['capacidade', 'leitura_cifras']], 'texto': '(dois diagramas) - Cm7 shape E, Cm7 shape A'},
@@ -232,7 +226,7 @@ lista_perguntas = [
      },
     {'id': '3-8',
      'nível': 3,
-     'numero_pergunta': 8,                   # Pipeline: Tablatura -> Fundamental -> Qualidade -> Leitura cifras -> intervalos
+     'numero_pergunta': 8,              
      'pergunta': '(Tablatura G7M shape E) Partindo do acorde na tablatura - 1. Que acorde é esse? 2. Em qual corda devemos mudar a casa para ter um acorde Maior com sétima? (TABLATURA)',
      'contexto': ['tetrades_simples'],
      'interface': ['leitura_tablatura', 'leitura_cifras'],
@@ -249,7 +243,7 @@ lista_perguntas = [
      },
     {'id': '4-1',
      'nível': 4,
-     'numero_pergunta': 1,                      # Pipeline: Cifra -> Interpretação
+     'numero_pergunta': 1,                   
      'pergunta': 'Você está tocando uma música junto com um baixista e de repente aparece na cifra o acorde D/C. Você toca qual acorde?',
      'contexto': ['inversoes'],
      'interface': ['leitura_cifras'],
@@ -261,7 +255,7 @@ lista_perguntas = [
     {'id': '4-2',
      'nível': 4,
      'numero_pergunta': 2,
-     'pergunta': 'Quais outras opções para tocar esse mesmo acorde? (Figura do braço com C shape C)',   # Pipeline: diagrama -> Fundamental -> Qualidade -> Diagrama
+     'pergunta': 'Quais outras opções para tocar esse mesmo acorde? (Figura do braço com C shape C)',  
      'contexto': ['shapes_caged_triades'],
      'interface': ['diagrama_braco'],
      'alternativas': [{'correção': True, 'tag': [['capacidade', 'diagrama_braco'], ['capacidade', 'qualidade_acorde'], ['capacidade', 'fundamental_acorde']], 'texto': 'Diagramas do braço - C shape A, C shape G, C shape D'},
@@ -276,7 +270,7 @@ lista_perguntas = [
     {'id': '4-3',
      'nível': 4,
      'numero_pergunta': 3,
-     'pergunta': '(Diagrama do braço - Lá maior com pestana e corda solta) Esses dois shapes representam quais acordes?',   # Pipeline: diagrama -> fundamental -> qualidade -> Leitura cifras
+     'pergunta': '(Diagrama do braço - Lá maior com pestana e corda solta) Esses dois shapes representam quais acordes?',  
      'contexto': ['shapes_caged_triades'],
      'interface': ['diagrama_braco', 'leitura_cifras'],
      'alternativas': [
@@ -292,7 +286,7 @@ lista_perguntas = [
     {'id': '4-4',
      'nível': 4,
      'numero_pergunta': 4,
-     'pergunta': '(Tab com bend, slide e hammer-on) Qual dessas opções descreve corretamente a execução dessa frase??',    # Pipeline: Leitura tablatura -> Interpretação símbolos
+     'pergunta': '(Tab com bend, slide e hammer-on) Qual dessas opções descreve corretamente a execução dessa frase??',   
      'contexto': ['leitura_tablatura_articulacoes'],
      'interface': ['leitura_tablatura'],
      'alternativas': [{'correção': True, 'tag': [['capacidade', 'leitura_tablatura']], 'texto': 'Bend, Slide e Hammer-On'},
@@ -305,7 +299,7 @@ lista_perguntas = [
     {'id': '4-5',
      'nível': 4,
      'numero_pergunta': 5,
-     'pergunta': 'Na cifra aparece E/G#. O que isso significa? ',     # Pipeline: leitura cifra -> Interpretação Cifra
+     'pergunta': 'Na cifra aparece E/G#. O que isso significa? ',   
      'contexto': ['inversoes'],
      'interface': ['leitura_cifras'],
      'alternativas': [{'correção': True, 'tag': [['capacidade', 'leitura_cifras']], 'texto': 'Acorde E com G# no baixo'},
@@ -319,7 +313,7 @@ lista_perguntas = [
     {'id': '4-6',
      'nível': 4,
      'numero_pergunta': 6,
-     'pergunta': '(Diagrama braço - Ab shape G, F# shape C) Que acordes são esses?',   # Pipeline: Diagrama -> fundamental -> Qualidade -> Leitura Cifras
+     'pergunta': '(Diagrama braço - Ab shape G, F# shape C) Que acordes são esses?',  
      'contexto': ['shapes_caged_triades'],
      'interface': ['diagrama_braco', 'leitura_cifras'],
      'alternativas': [
@@ -336,7 +330,7 @@ lista_perguntas = [
     {'id': '4-7',
      'nível': 4,
      'numero_pergunta': 7,
-     'pergunta': 'Qual das opções corresponde aos acordes Eb, Fm e Bm(b5)',    # Pipeline: Leitura Cifras -> Qualidade -> Fundamentais -> Diagrama
+     'pergunta': 'Qual das opções corresponde aos acordes Eb, Fm e Bm(b5)', 
      'contexto': ['shapes_caged_triades'],
      'interface': ['diagrama_braco', 'leitura_cifras'],
      'alternativas': [{'correção': True, 'tag': [['capacidade', 'diagrama_braco'], ['capacidade', 'leitura_cifras']], 'texto': '(três diagramas) - Eb shape C, Fm shape E, Bm(b5) shape A'},
@@ -351,7 +345,7 @@ lista_perguntas = [
     {'id': '4-8',
      'nível': 4,
      'numero_pergunta': 8,
-     'pergunta': 'Qual dessas posições representa C/E e Dm/C?',     # Pipeline:  Leitura Cifras  -> interpretar baixo -> encontrar nota baixo no braço -> combinar com acorde shapes CAGED -> leitura tablatura
+     'pergunta': 'Qual dessas posições representa C/E e Dm/C?',   
      'contexto': ['inversoes'],
      'interface': ['leitura_tablatura', 'leitura_cifras'],
      'alternativas': [
@@ -367,8 +361,7 @@ lista_perguntas = [
     {'id': '5-1',
      'nível': 5,
      'numero_pergunta': 1,
-     'pergunta': 'Você está tocando sozinho em casa e se depara com a cifra F/G. Qual acorde você toca?',    # Pipeline: Leitura cifras -> interpretar baixo -> interpretar intervalos -> construção acorde -> leitura cifras
-     'contexto': ['inversoes', 'extensoes'],
+     'pergunta': 'Você está tocando sozinho em casa e se depara com a cifra F/G. Qual acorde você toca?',  
      'interface': ['leitura_cifras'],
      'alternativas': [{'correção': True, 'tag': [['capacidade', 'leitura_cifras'], ['capacidade', 'intervalos']], 'texto': 'G7sus4(9)'},
                       {'correção': False, 'tag': [['limitador', 'fundamental_acorde']], 'texto': 'F'},
@@ -382,7 +375,7 @@ lista_perguntas = [
     {'id': '5-2',
      'nível': 5,
      'numero_pergunta': 2,
-     'pergunta': '(Figura do braço = F#7M(#11)) Este acorde possui:',       # Pipeline: Diagrama -> Qualidade + intervalos (extensões)
+     'pergunta': '(Figura do braço = F#7M(#11)) Este acorde possui:',     
      'contexto': ['extensoes'],
      'interface': ['diagrama_braco'],
      'alternativas': [{'correção': True, 'tag': [['capacidade', 'diagrama_braco']], 'texto': '7ª maior e #11'},
@@ -398,7 +391,7 @@ lista_perguntas = [
     {'id': '5-3',
      'nível': 5,
      'numero_pergunta': 3,
-     'pergunta': 'Qual opção corresponde ao acorde C7(9) e G7(13)?  (DIAGRAMA BRAÇO NAS RESPOSTAS)',    # Pipeline: Leitura Cifras -> Qualidade + intervalos (extensões) -> diagrama
+     'pergunta': 'Qual opção corresponde ao acorde C7(9) e G7(13)?  (DIAGRAMA BRAÇO NAS RESPOSTAS)',   
      'contexto': ['extensoes'],
      'interface': ['diagrama_braco', 'leitura_cifras'],
      'alternativas': [
@@ -414,7 +407,7 @@ lista_perguntas = [
     {'id': '5-4',
      'nível': 5,
      'numero_pergunta': 4,
-     'pergunta': '(Tablatura - acorde D meio diminuto shape C) Que acorde é esse?',    # Pipeline: Tablatura -> shapes caged -> construção acordes qualidade (intervalos) -> Leitura Cifras
+     'pergunta': '(Tablatura - acorde D meio diminuto shape C) Que acorde é esse?',   
      'contexto': ['shapes_caged_tetrades'],
      'interface': ['leitura_tablatura', 'leitura_cifras'],
      'alternativas': [{'correção': True, 'tag': [['capacidade', 'leitura_tablatura'], ['capacidade', 'leitura_cifras']], 'texto': 'DØ'},
@@ -429,7 +422,7 @@ lista_perguntas = [
     {'id': '5-5',
      'nível': 5,
      'numero_pergunta': 5,
-     'pergunta': '(Figura do braço - Am7(9)/C  x35200) Qual cifra corresponde a esse acorde?',     # Pipeline: diagrama -> qualidade acorde, intervalos (extensões) -> nota do baixo -> leitura cifras
+     'pergunta': '(Figura do braço - Am7(9)/C  x35200) Qual cifra corresponde a esse acorde?',    
      'contexto': ['inversoes', 'extensoes'],
      'interface': ['diagrama_braco', 'leitura_cifras'],
      'alternativas': [{'correção': True, 'tag': [['capacidade', 'leitura_cifras'], ['capacidade', 'diagrama_braco']], 'texto': 'Am7(9)/C'},
@@ -445,7 +438,7 @@ lista_perguntas = [
     {'id': '5-6',
      'nível': 5,
      'numero_pergunta': 6,
-     'pergunta': 'Qual desses acordes possui 9 maior e 13 maior?',   # Pipeline: intervalos -> qualidade + extensões -> diagrama braço
+     'pergunta': 'Qual desses acordes possui 9 maior e 13 maior?',  
      'contexto': ['extensoes'],
      'interface': ['diagrama_braco'],
      'alternativas': [
@@ -460,7 +453,7 @@ lista_perguntas = [
     {'id': '5-7',
      'nível': 5,
      'numero_pergunta': 7,
-     'pergunta': 'Em qual opção temos apenas o acorde D7?',     # Pipeline:  Leitura cifras -> qualidade acorde -> diagramas
+     'pergunta': 'Em qual opção temos apenas o acorde D7?',    
      'contexto': ['shapes_caged_tetrades'],
      'interface': ['diagrama_braco'],
      'alternativas': [{'correção': True, 'tag': [['capacidade', 'diagrama_braco'], ['capacidade', 'leitura_cifras']], 'texto': '(três diagramas) - D7 shapes - A, D, C'},
@@ -474,7 +467,7 @@ lista_perguntas = [
     {'id': '5-8',
      'nível': 5,
      'numero_pergunta': 8,
-     'pergunta': '(tablatura E7M(#11) shape C) Qual cifra corresponde a esse acorde?',   # Pipeline: tablatura -> qualidade acorde + intervalos -> leitura cifra
+     'pergunta': '(tablatura E7M(#11) shape C) Qual cifra corresponde a esse acorde?',  
      'contexto': ['shapes_caged_tetrades', 'extensoes'],
      'interface': ['leitura_tablatura', 'leitura_cifras'],
      'alternativas': [
