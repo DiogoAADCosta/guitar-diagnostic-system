@@ -595,48 +595,36 @@ while rodada < 4:
             alternativas_para_mostrar = alternativas_para_embaralhar + alternativas_nao_sei
 
 
-            # Dicionário onde vamos guardar as letras das alternativas (A, B, C, etc) com as tags certo/errado para poder contabilizar os acertos.
+            # Maps option letters to answer data
             mapa_respostas = {}
 
-            # Mostra as alternativas da lista embaralhada com as letras em ordem
             for numero, resposta in enumerate(alternativas_para_mostrar):
                 letra = lista_alternativas[numero]
                 mapa_respostas[letra] = resposta
                 print(f'{letra} - {resposta["texto"]}')
-            # print(mapa_respostas)
 
-            # Guarda a resposta do usuário - Aqui não vamos validar a resposta do usuário pois na versão final terão botões com as alternativas. Dessa forma não terá como inserir uma resposta inválida.
             resposta_usuario = input('\nQual a resposta certa? ').strip().upper()
 
-            #Corrige a resposta do usuário
             if mapa_respostas[resposta_usuario]['correção']:
                 print('Você ACERTOU')
                 acertos += 1
-                # Guarda a tag e contexto correspondentes ao acerto do usuário
+                # Collects capability tags and links them to their context
                 for tipo, tag in mapa_respostas[resposta_usuario]['tag']:
-                    # Lista apenas de tags mais frequentes
                     lista_capacidades_respostas_usuario.append(tag)
-                    # Para vincular tags com contexto
                     for contexto in questao['contexto']:
                         conexao_contexto_capacidades.append((tag, contexto))
-                # Para listar apenas os contextos únicos de cada pergunta
                 for contexto in questao['contexto']:
                     lista_contexto_capacidades.append(contexto)
             else:
                 print('Você ERROU')
                 erros += 1
                 for tipo, tag in mapa_respostas[resposta_usuario]['tag']:
-                    # Lista apenas de tags mais frequentes
                     lista_limitadores_respostas_usuario.append(tag)
-                    # Para vincular tags com contexto
                     for contexto in questao['contexto']:
                         conexao_contexto_limitadores.append((tag, contexto))
-                # Para listar apenas os contextos únicos de cada pergunta
                 for contexto in questao['contexto']:
                     lista_contexto_limitadores.append(contexto)
 
-            # Conferir a pontuação caso chegue na pergunta limite da rodada - para saber se troca de nível, continua ou confirma
-            # if questao['numero_pergunta'] == pergunta_limite:
             if perguntas_restantes <= 0:
                 print('CONFERIR SCORE')
                 taxa_acertos = (acertos / total_perguntas) * 100
@@ -654,13 +642,13 @@ while rodada < 4:
                 print(f'Lista de contextos capacidades(CONTEXTO): {lista_contexto_capacidades}')
                 print(f'Lista de contextos limitadores (CONTEXTO): {lista_contexto_limitadores}')
 
-                # Rodar as condições na lista de regras
+                # Evaluates rule set for current round and applies first matching action
                 for condicao, acao in regras[rodada]:
                     if condicao(taxa_acertos):
                         nivel_anterior = nivel
                         nivel, rodada, perguntas_restantes, ja_subiu_nivel, ja_desceu_nivel = acao(nivel, rodada, ja_subiu_nivel, ja_desceu_nivel)
                         if nivel != nivel_anterior:
-                            # Zera o número de acertos e erros apenas quando troca de nível
+                            # Resets performance metrics when level changes
                             acertos = 0
                             erros = 0
                             total_perguntas = 0
