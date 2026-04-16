@@ -3,7 +3,7 @@
 ## Overview
 
 Version 7 represents an attempt to build a diagnostic system
-based on collected data from the test (tags, context, and interface).
+based on collected data from the test (tags, contexts, and interfaces).
 
 At this stage, the system was no longer only collecting data —
 it was trying to identify patterns and move toward structured diagnostic output.
@@ -86,7 +86,7 @@ This restructuring is necessary to enable reliable diagnostic interpretation.
 
 ## About This Version
 
-This version represents an **interrupted stage of development**.
+This version represents an **interrupted and exploratory stage of development**.
 
 The code included here was cleaned to:
 
@@ -95,6 +95,9 @@ The code included here was cleaned to:
 
 For reference and transparency, a **complete version of the original v7 code**,
 including experimental and unused parts, will be available in:
+
+For full reference, the complete experimental version of the code
+(including unfinished and exploratory logic) is available here:
 
 👉 [Full experimental version (v7_full_code.py)](./dev_notes/v7_full_code.py)
 
@@ -123,4 +126,4 @@ Version 7 was the turning point.
 It revealed that the main limitation was not the analysis logic,
 but the structure of the test itself.
 
-This realization led to a necessary redesign of the system.
+This realization led to a complete redesign of the test structure.
