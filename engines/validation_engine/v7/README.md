@@ -96,7 +96,7 @@ The code included here was cleaned to:
 For reference and transparency, a **complete version of the original v7 code**,
 including experimental and unused parts, will be available in:
 
-👉 `v7/dev_notes/` (full experimental version)
+👉 `v7/dev_notes/v7_full_code.py` (full experimental version)
 
 ---
 
