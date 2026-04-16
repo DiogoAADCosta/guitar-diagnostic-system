@@ -742,8 +742,6 @@ nivel_real = nivel
 print(f'Nível real confirmado: {nivel_real}')
 print(f'Nível autoavaliação: {autoavaliacao_nivel}')
 
-# CONTABILIZANDO RESULTADOS ===============================================================================================================================================================
-# =========================================================================================================================================================================================
 
 print(f'{" CONSTRUÇÃO DE DIAGNÓSTICO ":=^150}')
 # Leitura dos dados
@@ -786,21 +784,6 @@ contador_conexao_interface_limitadores = Counter(conexao_interface_limitadores)
 contador_conexao_interface_capacidades = Counter(conexao_interface_capacidades)
 contador_conexao_interface_contexto_limitadores = Counter(conexao_interface_contexto_limitadores)
 contador_conexao_interface_contexto_capacidades = Counter(conexao_interface_contexto_capacidades)
-
-print('\n\nCONTADORES')
-print(f'Limitadores: {contador_limitadores}')
-print(f'Capacidades: {contador_capacidades}')
-print(f'Contexto Limitadores: {contador_contexto_limitadores}')
-print(f'Contexto Capacidades: {contador_contexto_capacidades}')
-print(f'Interface Limitadores: {contador_interface_limitadores}')
-print(f'Interface Capacidades: {contador_interface_capacidades}')
-print(f'Conexão Contexto Limitadores: {contador_conexao_contexto_limitadores}')
-print(f'Conexão Contexto Capacidades: {contador_conexao_contexto_capacidades}')
-print(f'Conexão Interface Limitadores: {contador_conexao_interface_limitadores}')
-print(f'Conexão Interface Capacidades: {contador_conexao_interface_capacidades}')
-print(f'Conexão Interface Contexto Limitadores: {contador_conexao_interface_contexto_limitadores}')
-print(f'Conexão Interface Contexto Capacidades: {contador_conexao_interface_contexto_capacidades}')
-
 
 # Pega apenas os valores dos dicionários contador_ e qual o valor máximo presente
 maior_frequencia_limitadores = max(contador_limitadores.values(), default=0)
