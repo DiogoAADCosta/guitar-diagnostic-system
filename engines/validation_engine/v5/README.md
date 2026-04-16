@@ -147,7 +147,7 @@ Version 5 is the first version where:
 
 are all working together in a single system.
 
-The test is no longer just adaptive — it is now **diagnostic-ready**.
+The test is no longer just adaptive — it now builds a structured foundation for diagnostic generation.
 
 ---
 
