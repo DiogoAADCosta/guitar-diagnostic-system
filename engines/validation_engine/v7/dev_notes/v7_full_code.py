@@ -1,25 +1,13 @@
 """
-Version 7 — Experimental Diagnostic Construction
+Version 7 — Full Experimental Code
 
-This version represents an attempt to build a diagnostic system
-based on user performance data (tags, contexts, and interfaces).
+This file contains the complete experimental version of the diagnostic system
+developed during Version 7.
 
-At this stage, the system tries to identify patterns from collected data,
-but the results proved to be inconsistent and difficult to interpret.
+It includes unfinished, exploratory, and unused parts of the code.
 
-Key issue:
-The diagnostic instability is caused by mixing multiple dimensions
-(tags, context, interface) within the same questions,
-generating noisy and ambiguous signals.
-
-This file contains:
-- The full experimental diagnostic logic
-- Partial analysis rules (interface, tag, context)
-- Diagnostic structure (not finalized)
-
-Note:
-This version was not completed and serves as a reference
-for understanding the limitations that led to a redesign.
+This is not the official cleaned version of v7.
+Refer to the main README for the structured version and explanation.
 """
 
 from random import shuffle
@@ -832,7 +820,7 @@ print(f'O item mais frequente em Conexão - Limitadores - Contexto - Interface �
 print(f'O item mais frequente em Conexão - Capacidades - Contexto - Interface é: {conexao_interface_contexto_capacidades_mais_frequentes}')
 
 
-# Experimental diagnostic layer
+# Experimental diagnostic layer (core problem area of v7)
 # This section attempts to extract patterns from user performance data.
 # Tests revealed noisy outputs caused by excessive dimensional combinations
 # (tags, context, interface), not by the counting logic itself.
@@ -1046,6 +1034,7 @@ alterar_lista = True
 if alterar_lista:
     conectores_lim = conectores_lim_original.copy()
     if conectores_cap_contador == 0: 
+        conectores_lim.pop(1)
     else:
         conectores_lim.pop(0)
     iter_lim = chain(conectores_lim, repeat(conectores_lim[-1]))
@@ -1122,7 +1111,6 @@ print(interface_limitadores_mais_frequentes)
 # Map tags associated with each potential limiting interface
 tags_interface_limitador = {}
 for tag, interface in conexao_interface_limitadores:
-    print(tag)
     if interface in possivel_interface_limitador:
         if interface not in tags_interface_limitador:
             tags_interface_limitador[interface] = []
@@ -1136,9 +1124,6 @@ for interface, tags in tags_interface_limitador.items():
     contador = Counter(tags)
     tag_mais_comum, freq = contador.most_common(1)[0]
     total = len(tags)
-    print(contador)
-    print(tag_mais_comum)
-    print(freq)
     dominancia = freq / total
     diversidade = len(contador)
     print(dominancia)
@@ -1201,7 +1186,6 @@ tags_limitador_interface = {}
 tags_limitador_contexto = {}
 
 for tag, interface in conexao_interface_limitadores:
-    print(tag)
     if tag in possivel_tag_limitador:
         if tag not in tags_limitador_interface:
             tags_limitador_interface[tag] = []
@@ -1209,7 +1193,6 @@ for tag, interface in conexao_interface_limitadores:
 print(f'Tag x variedade Interfaces: {tags_limitador_interface}')
 
 for tag, contexto in conexao_contexto_limitadores:
-    print(tag)
     if tag in possivel_tag_limitador:
         if tag not in tags_limitador_contexto:
             tags_limitador_contexto[tag] = []
@@ -1227,12 +1210,8 @@ for tags, interface in tags_limitador_interface.items():
     contador = Counter(interface)
     interface_mais_comum, freq = contador.most_common(1)[0]
     total = len(interface)
-    print(contador)
-    print(interface_mais_comum)
-    print(freq)
     dominancia = freq / total
     diversidade = len(contador)
-    print(dominancia)
     if diversidade >=3:
         resultado_parcial_tag_interface[tags] = True
         print(f'Muitas INTERFACES em uma mesma TAG: Possível problema de TAG - {tags} ')
@@ -1249,12 +1228,8 @@ for tags, contexto in tags_limitador_contexto.items():
     contador = Counter(contexto)
     contexto_mais_comum, freq = contador.most_common(1)[0]
     total = len(contexto)
-    print(contador)
-    print(contexto_mais_comum)
-    print(freq)
     dominancia = freq / total
     diversidade = len(contador)
-    print(dominancia)
     if diversidade >=3:
         resultado_parcial_tag_contexto[tags] = True
         print(f'Muitos CONTEXTOS em uma mesma TAG: Possível problema de TAG - {tags} ')
@@ -1272,7 +1247,8 @@ print()
 for tag, resultado in resultado_parcial_tag_interface.items():
     print(f'Possível problema de {tag}: {resultado}')
 
-# Partial diagnosis — tag vs contextprint()
+# Partial diagnosis — tag vs context
+print()
 for tag, resultado in resultado_parcial_tag_contexto.items():
     print(f'Possível problema de {tag}: {resultado}')
 
@@ -1292,8 +1268,6 @@ possivel_contexto_limitador = []
 possivel_contexto_capacidade = []
 
 for contexto, quantidade in contador_contexto_limitadores.items():
-    print(contexto)
-    print(quantidade)
     cap = contador_contexto_capacidades.get(contexto, 0)
     diferenca = quantidade - cap
     if diferenca >= 2:
@@ -1309,13 +1283,9 @@ print(f'\nComparação possível contexto limitador com limitadores mais frequen
 print(possivel_contexto_limitador)
 print(contexto_limitadores_mais_frequentes)
 
-for contexto in conexao_contexto_limitadores:
-    print(contexto)
-
 # Map tags associated with each limiting context
 tags_contexto_limitador = {}
 for tag, contexto in conexao_contexto_limitadores:
-    print(tag)
     if contexto in possivel_contexto_limitador:
         if contexto not in tags_contexto_limitador:
             tags_contexto_limitador[contexto] = []
@@ -1329,12 +1299,8 @@ for contexto, tags in tags_contexto_limitador.items():
     contador = Counter(tags)
     tag_mais_comum, freq = contador.most_common(1)[0]
     total = len(tags)
-    print(contador)
-    print(tag_mais_comum)
-    print(freq)
     dominancia = freq / total
     diversidade = len(contador)
-    print(dominancia)
     if diversidade >=3:
         resultado_parcial_contexto[contexto] = True
         print(f'Muitas TAGS em um mesmo contexto: Possível problema de contexto - {contexto} ')
