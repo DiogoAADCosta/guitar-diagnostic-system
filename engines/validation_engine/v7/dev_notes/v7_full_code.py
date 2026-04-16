@@ -1,3 +1,26 @@
+"""
+Version 7 — Experimental Diagnostic Construction
+
+This version represents an attempt to build a diagnostic system
+based on user performance data (tags, contexts, and interfaces).
+
+At this stage, the system tries to identify patterns from collected data,
+but the results proved to be inconsistent and difficult to interpret.
+
+Key issue:
+The diagnostic instability is caused by mixing multiple dimensions
+(tags, context, interface) within the same questions,
+generating noisy and ambiguous signals.
+
+This file contains:
+- The full experimental diagnostic logic
+- Partial analysis rules (interface, tag, context)
+- Diagnostic structure (not finalized)
+
+Note:
+This version was not completed and serves as a reference
+for understanding the limitations that led to a redesign.
+"""
 
 from random import shuffle
 from collections import Counter
@@ -656,7 +679,6 @@ while rodada < 4:
                 acertos += 1
                 # Guarda a tag e contexto correspondentes ao acerto do usuário
                 for tipo, tag in mapa_respostas[resposta_usuario]['tag']:
-                    # Lista apenas de tags mais frequentes
                     lista_capacidades_respostas_usuario.append(tag)
                     # Para vincular tags com contexto
                     for contexto in questao['contexto']:
@@ -678,7 +700,6 @@ while rodada < 4:
                 print('Você ERROU')
                 erros += 1
                 for tipo, tag in mapa_respostas[resposta_usuario]['tag']:
-                    # Lista apenas de tags mais frequentes
                     lista_limitadores_respostas_usuario.append(tag)
                     # Para vincular tags com contexto
                     for contexto in questao['contexto']:
@@ -746,29 +767,12 @@ print(f'Nível autoavaliação: {autoavaliacao_nivel}')
 print(f'{" CONSTRUÇÃO DE DIAGNÓSTICO ":=^150}')
 # Leitura dos dados
 print(f'Taxa de acertos: {taxa_acertos:.1f}%')
+print(f'Acertos: {acertos_final} | Erros: {erros_final} | Total: {total_perguntas_final}')
 
-print(f'Você acertou {acertos_final} respostas de um total de {total_perguntas_final} perguntas. Você acertou {taxa_acertos:.1f}%.')
-print(f'Total erros: {erros_final}')
-
-print('\n\nLISTAS DE TAGS E CONTEXTOS')
+print('\n\nDEBUG - LISTAS DE TAGS E CONTEXTOS')
 
 print(f'Lista de limitadores do usuário (TAGS): {lista_limitadores_respostas_usuario}')
 print(f'Lista de capacidades do usuário (TAGS): {lista_capacidades_respostas_usuario}')
-
-print(f'Lista de contextos limitadores (CONTEXTO): {lista_contexto_limitadores}')
-print(f'Lista de contextos capacidades(CONTEXTO): {lista_contexto_capacidades}')
-
-print(f'Lista de interfaces limitadores (INTERFACES): {lista_interface_limitadores}')
-print(f'Lista de interfaces capacidades(INTERFACES): {lista_interface_capacidades}')
-
-print(f'Lista de limitadores do usuário em contexto (TAGS + CONTEXTO): {conexao_contexto_limitadores}')
-print(f'Lista de capacidades do usuário em contexto (TAGS + CONTEXTO): {conexao_contexto_capacidades}')
-
-print(f'Lista de limitadores do usuário em interface (TAGS + INTERFACES): {conexao_interface_limitadores}')
-print(f'Lista de capacidades do usuário em interface (TAGS + INTERFACES): {conexao_interface_capacidades}')
-
-print(f'Lista de limitadores do usuário em contexto e interface (TAGS + CONTEXTO + INTERFACES): {conexao_interface_contexto_limitadores}')
-print(f'Lista de capacidades do usuário em contexto e interface (TAGS + CONTEXTO + INTERFACES): {conexao_interface_contexto_capacidades}')
 
 
 # Contabiliza a quantidade que cada tag apareceu
@@ -799,21 +803,6 @@ maior_frequencia_conexao_interface_capacidades = max(contador_conexao_interface_
 maior_frequencia_conexao_interface_contexto_limitadores = max(contador_conexao_interface_contexto_limitadores.values(), default=0)
 maior_frequencia_conexao_interface_contexto_capacidades = max(contador_conexao_interface_contexto_capacidades.values(), default=0)
 
-print('\n\nMAIORES VALORES')
-print(f'Limitadores: {maior_frequencia_limitadores}')
-print(f'Capacidades: {maior_frequencia_capacidades}')
-print(f'Contexto Limitadores: {maior_frequencia_contexto_limitadores}')
-print(f'Contexto Capacidades: {maior_frequencia_contexto_capacidades}')
-print(f'Interface Limitadores: {maior_frequencia_interface_limitadores}')
-print(f'Interface Capacidades: {maior_frequencia_interface_capacidades}')
-print(f'Conexão Contexto Limitadores: {maior_frequencia_conexao_contexto_limitadores}')
-print(f'Conexão Contexto Capacidades: {maior_frequencia_conexao_contexto_capacidades}')
-print(f'Conexão Interface Limitadores: {maior_frequencia_conexao_interface_limitadores}')
-print(f'Conexão Interface Capacidades: {maior_frequencia_conexao_interface_capacidades}')
-print(f'Conexão Interface Contexto Limitadores: {maior_frequencia_conexao_interface_contexto_limitadores}')
-print(f'Conexão Interface Contexto Capacidades: {maior_frequencia_conexao_interface_contexto_capacidades}')
-
-
 # Lista com os mais frequentes
 limitadores_mais_frequentes = [item for item, quantidade in contador_limitadores.items() if (quantidade == maior_frequencia_limitadores and quantidade >= 2)]
 capacidades_mais_frequentes = [item for item, quantidade in contador_capacidades.items() if (quantidade == maior_frequencia_capacidades and quantidade >= 2)]
@@ -843,12 +832,16 @@ print(f'O item mais frequente em Conexão - Limitadores - Contexto - Interface �
 print(f'O item mais frequente em Conexão - Capacidades - Contexto - Interface é: {conexao_interface_contexto_capacidades_mais_frequentes}')
 
 
-# Montando a estrutura do diagnóstico =====================================================================================================================================================
-# =========================================================================================================================================================================================
+# Experimental diagnostic layer
+# This section attempts to extract patterns from user performance data.
+# Tests revealed noisy outputs caused by excessive dimensional combinations
+# (tags, context, interface), not by the counting logic itself.
+
+# Diagnostic text data (used to generate user feedback)
 lista_diagnostico = {
 
     # =========================
-    # TAGS (HABILIDADES)
+    # TAGS (SKILLS)
     # =========================
 
     'leitura_cifras': {
@@ -907,7 +900,7 @@ lista_diagnostico = {
 
 
     # =========================
-    # CONTEXTOS
+    # CONTEXTS
     # =========================
 
     'triades_simples': {
@@ -967,6 +960,8 @@ lista_diagnostico = {
     }
 }
 '''
+# Future implementation (not used in v7)
+# Level classification system (placeholder)
 lista_nivel = {
     'iniciante': [ # 3 opções para escolher uma usando random.choice
         'Você ainda está construindo os fundamentos do instrumento, e isso faz com que várias etapas da execução pareçam mais difíceis do que deveriam.',
@@ -985,15 +980,16 @@ lista_nivel = {
     ]
 }
 
-# Criando diferentes perfis baseados nas combinações entre tags
+# Experimental / not integrated in v7
+# Profile system based on tag combinations
 perfis = {
     'perfil_equilibrado': {
-        'capacidades': {'troca_de_acorde', 'ritmo', 'montagem_de_acorde'},  # Diagnóstico: Desenvolvimento consistente, pronto para avançar - usando entre {} pois é um set, não depende de ordem
+        'capacidades': {'troca_de_acorde', 'ritmo', 'montagem_de_acorde'},  
         'limitadores': set(),
         'descricao': 'Você já é um guitarrista bem equilibrado, capaz de tocar várias músicas com fluidez.'
     },
     'perfil_falso_avancado': {
-        'capacidades': {'troca_de_acorde', 'ritmo', 'montagem_de_acorde'}, # Consegue executar, mas sem entender 👉 Diagnóstico: Vai travar ao tentar evoluir
+        'capacidades': {'troca_de_acorde', 'ritmo', 'montagem_de_acorde'}, 
         'limitadores': {'base'},
         'descricao': 'Você consegue tocar músicas inteiras sem se perder, porém ainda tem lacunas nos conhecimentos de base e isso pode travar sua evolução logo mais.'
     },
@@ -1010,7 +1006,7 @@ perfis = {
     }
 }
 '''
-# Lista de conectores de frases
+# Sentence connectors used to build diagnostic text
 conectores_cap = [
     'Você já ',
     'Você também ',
@@ -1033,25 +1029,6 @@ conectores_causa_efeito = [
     '. Acaba que por conta disso ',
 ]
 
-
-
-# # Lista das principais tags. As outras são adicionais e entram como considerações adicionais
-# limitadores_principais = ['base', 'troca_de_acorde', 'ritmo', 'montagem_de_acorde']
-# capacidades_principais = ['troca_de_acorde', 'ritmo', 'montagem_de_acorde']
-
-
-'''
-# Definindo se iniciante, intermediário ou avançado baseado na diferença da quantidade de tags entre limitadores e capacidades
-# Ainda fazer isso, mas agora ver se rola pelo número do nivel_real
-nivel = ''
-if (len(lista_limitadores_respostas_usuario) - len(lista_capacidades_respostas_usuario)) >= 2:
-        nivel = 'iniciante'
-elif abs(len(lista_limitadores_respostas_usuario) - len(lista_capacidades_respostas_usuario)) <= 1:
-        nivel = 'intermediario'
-elif (len(lista_limitadores_respostas_usuario) - len(lista_capacidades_respostas_usuario)) <= -2:
-        nivel = 'avancado'
-'''
-
 # Diagnóstico final
 print()
 print('=' * 100)
@@ -1060,110 +1037,75 @@ print('=' * 100)
 print()
 
 
-# indicadores que irão alterar os inícios e conectores de frases
-conectores_cap_contador = 0                              # Retirei os contadores pois agora irei utilizar itertools
-# conectores_lim_contador = 0
+# Controls sentence structure and connector sequencing
+conectores_cap_contador = 0                           
 iter_cap = chain(conectores_cap, repeat(conectores_cap[-1]))
 alterar_lista = True
 
-# alterando a lista de prefixos da lista conectores_lim após ter passado todas as capacidades
+# Adjust connector list depending on whether capacities were already displayed
 if alterar_lista:
     conectores_lim = conectores_lim_original.copy()
-    if conectores_cap_contador == 0:  # Consegui simplificar bastante o uso dos conectores limitadores apenas tirando o conector certo dependendo se já foram mostradas capacidades ou não
-        conectores_lim.pop(1)
+    if conectores_cap_contador == 0: 
     else:
         conectores_lim.pop(0)
     iter_lim = chain(conectores_lim, repeat(conectores_lim[-1]))
     alterar_lista = False
 
 
-'''===============================================================
-    REGRAS E ORDEM PARA SEGUIR A ANÁLISE
-    
-1 - BASE - SE A TAG DOMINA NEM PRECISA DO RESTO
-    - Checar se tag 'base' domina dentro da lista de limitadores
-2 - INTERFACE - VERIFICAR QUANTIDADE DE ERROS E ACERTOS NELA
-    - Checar na lista interfaces a contagem de erros e acertos de cada interface (não somente do mais frequente). 
-    - Comparar a habilidade/limitações entre interfaces.
-        SE TIVER PARELHO ERROS E ACERTOS NA INTERFACE - possivelmente NÃO É PROBLEMA DE INTERFACE
-        Se erra muito mais do que acerta - possível problema de interface
-    - Após isso, checar pra cada interface, quais tags temos em cada uma delas através da lista tags+interface. Ignorar contextos nesse ponto?
-    - gerar um diagnóstico parcial de interface
-    - TIPO DE TAG DENTRO DA INTERFACE 
-        - MUITAS TAGS NA MESMA INTERFACE - possível PROBLEMA DE INTERFACE
-        - MESMA TAG NA MESMA OU DIFERENTES INTERFACES - possível PROBLEMA DE TAG
-3 - TAG DOMINA EM VÁRIOS CONTEXTOS E INTERFACES - possível PROBLEMA DE TAG 
-    - Checar na lista de tags a contagem de erros e acertos
-        Se tem muito erro e pouco acerto - possível problema de tag
-        Se tá parelho - possível problema de interface ou contexto
-    - Checar na lista de tags mais frequentes (talvez pegar as 2 tags mais frequentes) quais os contextos e interfaces presentes, através da lista tags+contexto e tags+interface.
-        Gerar um diagnóstico parcial de tags+interface e cruzar com diagnóstico parcial de interface. Gerar um diagnóstico parcial de tags+contexto
-    - MUITAS TAGS IGUAIS OU DIFERENTES NO MESMO CONTEXTO - possível PROBLEMA DE CONTEXTO
-4 - CONTEXTO - VER QUAL CONTEXTO MAIS FREQUENTE - QUAIS TAGS PRESENTES NELE
-    - Checar na lista contexto a contagem de erros e acertos de cada contexto (não somente do mais frequente)
-        Se tem muito erro e pouco acerto - possível problema de contexto
-        Se fica parelho - Não é problema de contexto
-    - Checar na lista de contexto mais frequente e ver quais tags tem junto com ele cruzando com tags+contexto. Gerar um diagnóstico parcial de contexto e cruzar com diagnóstico parcial de tags+contexto.
-    - CONTEXTO COM MUITAS TAGS - possível PROBLEMA CONTEXTO
-    - CONTEXTO COM TAGS REPETIDAS - possível PROBLEMA TAG
-5 - OS DIAGNÓSTICOS PARCIAIS FAZEM SENTIDO?
-    - cruzar resultados com a lista tags+contexto+interface
-    - Criação de diagnóstico geral
+'''
+===============================================================
+ANALYSIS RULES AND ORDER
+
+1 - BASE
+    If 'base' is dominant, skip all further analysis
+
+2 - INTERFACE
+    Compare errors vs correct answers per interface
+    - Balanced → likely not an interface problem
+    - More errors → possible interface issue
+    - Analyze tag distribution within each interface
+
+3 - TAG
+    Tag dominance across contexts and interfaces
+    - Many errors → possible tag issue
+    - Balanced → possible interface or context issue
+
+4 - CONTEXT
+    Analyze most frequent contexts and associated tags
+    - Many tags in same context → possible context issue
+    - Repeated tag → possible tag issue
+
+5 - VALIDATION
+    Cross all partial diagnostics and generate final result
+===============================================================
 '''
 
 
 
 
-#
-# 1 - BASE - SE A TAG DOMINA NEM PRECISA DO RESTO
-#     - Checar se tag 'base' domina dentro da lista de limitadores - Primeiro Filtro - Se tem problema de base, ignora todo o resto
+# Rule 1 — Base dominance
+# If 'base' is dominant among limitations, skip all further analysis
 if 'base' in limitadores_mais_frequentes:
     print(next(iter_lim), end='')
     print(f'{lista_diagnostico["base"]["descricao_limitacao"]}{choice(conectores_causa_efeito)}{lista_diagnostico["base"]["efeito_negativo"]}.')
     # exit()
 
 
-
-'''
-2 - INTERFACE - VERIFICAR QUANTIDADE DE ERROS E ACERTOS NELA
-    - Checar na lista interfaces a contagem de erros e acertos de cada interface (não somente do mais frequente). 
-    - Comparar a habilidade/limitações entre interfaces.
-        SE TIVER PARELHO ERROS E ACERTOS NA INTERFACE - possivelmente NÃO É PROBLEMA DE INTERFACE
-        Se erra muito mais do que acerta - possível problema de interface
-    - Após isso, checar pra cada interface, quais tags temos em cada uma delas através da lista tags+interface. Ignorar contextos nesse ponto?
-    - gerar um diagnóstico parcial de interface
-    - TIPO DE TAG DENTRO DA INTERFACE 
-        - MUITAS TAGS NA MESMA INTERFACE - possível PROBLEMA DE INTERFACE
-        - MESMA TAG NA MESMA OU DIFERENTES INTERFACES - possível PROBLEMA DE TAG
-'''
-
-
-# REGRA 2 ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-
-
-# 2 - INTERFACE - VERIFICAR QUANTIDADE DE ERROS E ACERTOS NELA
-#     - Checar na lista interfaces a contagem de erros e acertos de cada interface (não somente do mais frequente).
-#     - Comparar a habilidade/limitações entre interfaces.
-#         SE TIVER PARELHO ERROS E ACERTOS NA INTERFACE - possivelmente NÃO É PROBLEMA DE INTERFACE
-#         Se erra muito mais do que acerta - possível problema de interface
-#     - Após isso, checar pra cada interface, quais tags temos em cada uma delas através da lista tags+interface. Ignorar contextos nesse ponto?
-#     - gerar um diagnóstico parcial de interface
-#     - TIPO DE TAG DENTRO DA INTERFACE
-#         - MUITAS TAGS NA MESMA INTERFACE - possível PROBLEMA DE INTERFACE
-#         - MESMA TAG NA MESMA OU DIFERENTES INTERFACES - possível PROBLEMA DE TAG
-
-#     - Checar na lista interfaces a contagem de erros e acertos de cada interface (não somente do mais frequente).
+# Rule 2 — Interface analysis
+# - Compare number of errors and correct answers per interface
+# - Balanced results → likely not an interface issue
+# - More errors → possible interface issue
+# - Analyze which tags appear within each interface
+# - Generate partial interface diagnosis
+# - Many different tags → possible interface problem
+# - Same tag across interfaces → possible tag problem
 
 possivel_interface_limitador = []
 possivel_interface_capacidade = []
 
 for interface, quantidade in contador_interface_limitadores.items():
-    print(interface)
-    print(quantidade)
     cap = contador_interface_capacidades.get(interface, 0)
-    print(cap)
     diferenca = quantidade - cap
-    print(diferenca)
     if diferenca >= 3:
         possivel_interface_limitador.append(interface)
         print(f'Possível interface limitador {possivel_interface_limitador}')
@@ -1177,10 +1119,7 @@ print(f'\nComparação possível interface limitador com limitadores mais freque
 print(possivel_interface_limitador)
 print(interface_limitadores_mais_frequentes)
 
-for interface in conexao_interface_limitadores:
-    print(interface)
-
-# checar pra cada possível interface limitadora, quais tags temos em cada uma delas através da lista tags+interface
+# Map tags associated with each potential limiting interface
 tags_interface_limitador = {}
 for tag, interface in conexao_interface_limitadores:
     print(tag)
@@ -1191,65 +1130,51 @@ for tag, interface in conexao_interface_limitadores:
 print(f'Interface x variedade Tags: {tags_interface_limitador}')
 
 resultado_parcial_interface = {}
-# Checar a diversidade/dominância de tag dentro da lista de tags para cada possível interface limitadora
+# Evaluate whether a single tag dominates or if multiple tags are spread within the interface
 for interface, tags in tags_interface_limitador.items():
     print(f'\n\nPossível Interface limitadora {interface}')
-    # Conta quantas tags tem na lista de possíveis interfaces limitadoras
     contador = Counter(tags)
-    # Pega a tag mais frequente
     tag_mais_comum, freq = contador.most_common(1)[0]
     total = len(tags)
     print(contador)
     print(tag_mais_comum)
     print(freq)
-    # Calcula a frequência da tag em porcentagem
     dominancia = freq / total
-    # Quantidade de tags diferentes dentro de uma mesma interface limitadora
     diversidade = len(contador)
     print(dominancia)
     if diversidade >=3:
-        # Trocar depois por True/False para o diagnóstico final
         resultado_parcial_interface[interface] = True
-        # resultado_parcial_interface[interface] = f'Muitas TAGS em uma mesma interface: Possível problema de interface - {interface} '
         print(f'Muitas TAGS em uma mesma interface: Possível problema de interface - {interface} ')
     elif dominancia >= 0.7:
         resultado_parcial_interface[interface] = False
-        # resultado_parcial_interface[interface] = f'Predominância de uma mesma tag na mesma interface: Não é problema de interface - Talvez seja tag - {tag_mais_comum}'
         print(f'Predominância de uma mesma tag na mesma interface: Não é problema de interface - Talvez seja tag - {tag_mais_comum}')
     else:
         resultado_parcial_interface[interface] = 'Inconclusivo'
         print('Inconclusivo')
 
-# Diagnóstico parcial interface
+# Partial interface diagnosis
 print()
 for interface, resultado in resultado_parcial_interface.items():
     print(f'Possível problema de {interface}: {resultado}')
 
-'''--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-3 - TAG DOMINA EM VÁRIOS CONTEXTOS E INTERFACES - possível PROBLEMA DE TAG 
-    - Checar na lista de tags a contagem de erros e acertos
-        Se tem muito erro e pouco acerto - possível problema de tag
-        Se tá parelho - possível problema de interface ou contexto
-    - Checar na lista de tags mais frequentes (talvez pegar as 2 tags mais frequentes) quais os contextos e interfaces presentes, através da lista tags+contexto e tags+interface.
-        Gerar um diagnóstico parcial de tags+interface e cruzar com diagnóstico parcial de interface. Gerar um diagnóstico parcial de tags+contexto
-    - MUITAS TAGS IGUAIS OU DIFERENTES NO MESMO CONTEXTO - possível PROBLEMA DE CONTEXTO
+'''
+Rule 3 — Tag dominance analysis
+
+- Compare error vs correct counts per tag
+- Many errors → possible tag issue
+- Balanced → possible interface or context issue
+- Analyze contexts and interfaces associated with dominant tags
+- Many different tags in same context → possible context issue
 '''
 
 possivel_tag_limitador = []
 possivel_tag_capacidade = []
 
-
-
-
 print()
-#     - Checar na lista de tags a contagem de erros e acertos de cada TAG (não somente do mais frequente).
+# Compare error vs correct counts per tag
 for tags, quantidade in contador_limitadores.items():
-    print(tags)
-    print(quantidade)
     cap = contador_capacidades.get(tags, 0)
-    print(cap)
     diferenca = quantidade - cap
-    print(diferenca)
     if diferenca >= 2:
         possivel_tag_limitador.append(tags)
         print(f'Possível Tag limitador {possivel_tag_limitador}')
@@ -1263,9 +1188,6 @@ print(possivel_tag_limitador)
 print(limitadores_mais_frequentes)
 
 
-
-
-# checar pra cada possível tag limitadora, quais interfaces/contextos temos em cada uma delas através da lista tags+interface e tags+contexto
 print('\nConexão Interface Limitadores')
 for interface in conexao_interface_limitadores:
     print(interface)
@@ -1299,59 +1221,45 @@ print()
 resultado_parcial_tag_interface = {}
 resultado_parcial_tag_contexto = {}
 
-# Checar a diversidade/dominância de interface dentro da lista de interfaces para cada possível tag limitadora
+# Evaluate interface dominance for each limiting tag
 for tags, interface in tags_limitador_interface.items():
     print(f'\n\nPossível Tag limitadora {tags}')
-    # Conta quantas interfaces tem na lista de possíveis tags limitadoras
     contador = Counter(interface)
-    # Pega a interface mais frequente
     interface_mais_comum, freq = contador.most_common(1)[0]
     total = len(interface)
     print(contador)
     print(interface_mais_comum)
     print(freq)
-    # Calcula a frequência da tag em porcentagem
     dominancia = freq / total
-    # Quantidade de tags diferentes dentro de uma mesma interface limitadora
     diversidade = len(contador)
     print(dominancia)
     if diversidade >=3:
-        # Trocar depois por True/False para o diagnóstico final
         resultado_parcial_tag_interface[tags] = True
-        # resultado_parcial_interface[interface] = f'Muitas INTERFACES em uma mesma TAG: Possível problema de interface - {interface} '
         print(f'Muitas INTERFACES em uma mesma TAG: Possível problema de TAG - {tags} ')
     elif dominancia >= 0.7:
         resultado_parcial_tag_interface[tags] = False
-        # resultado_parcial_interface[interface] = f'Predominância de uma mesma tag na mesma interface: Não é problema de interface - Talvez seja tag - {contexto_mais_comum}'
         print(f'Predominância de uma mesma interface na mesma tag: Não é problema de tag - Talvez seja interface - {interface_mais_comum}')
     else:
         resultado_parcial_tag_interface[tags] = 'Inconclusivo'
         print('Inconclusivo')
 
-# Checar a diversidade/dominância de contexto dentro da lista de contextos para cada possível tag limitadora
+# Evaluate context dominance for each limiting tag
 for tags, contexto in tags_limitador_contexto.items():
     print(f'\n\nPossível Tag limitadora {tags}')
-    # Conta quantas interfaces tem na lista de possíveis tags limitadoras
     contador = Counter(contexto)
-    # Pega a interface mais frequente
     contexto_mais_comum, freq = contador.most_common(1)[0]
     total = len(contexto)
     print(contador)
     print(contexto_mais_comum)
     print(freq)
-    # Calcula a frequência da tag em porcentagem
     dominancia = freq / total
-    # Quantidade de tags diferentes dentro de uma mesma interface limitadora
     diversidade = len(contador)
     print(dominancia)
     if diversidade >=3:
-        # Trocar depois por True/False para o diagnóstico final
         resultado_parcial_tag_contexto[tags] = True
-        # resultado_parcial_interface[interface] = f'Muitos CONTEXTOS em uma mesma TAG: Possível problema de contexto - {interface} '
         print(f'Muitos CONTEXTOS em uma mesma TAG: Possível problema de TAG - {tags} ')
     elif dominancia >= 0.7:
         resultado_parcial_tag_contexto[tags] = False
-        # resultado_parcial_interface[interface] = f'Predominância de uma mesma tag na mesma interface: Não é problema de contexto - Talvez seja tag - {contexto_mais_comum}'
         print(f'Predominância de uma mesma interface na mesma tag: Não é problema de tag - Talvez seja contexto - {contexto_mais_comum}')
     else:
         resultado_parcial_tag_contexto[tags] = 'Inconclusivo'
@@ -1359,26 +1267,27 @@ for tags, contexto in tags_limitador_contexto.items():
 
 
 
-# Diagnóstico parcial tag x interface
+# Partial diagnosis — tag vs interface
 print()
 for tag, resultado in resultado_parcial_tag_interface.items():
     print(f'Possível problema de {tag}: {resultado}')
 
-# Diagnóstico parcial tag x contexto
-print()
+# Partial diagnosis — tag vs contextprint()
 for tag, resultado in resultado_parcial_tag_contexto.items():
     print(f'Possível problema de {tag}: {resultado}')
 
 
-'''---------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-4 - CONTEXTO - VER QUAL CONTEXTO MAIS FREQUENTE - QUAIS TAGS PRESENTES NELE
-    - Checar na lista contexto a contagem de erros e acertos de cada contexto (não somente do mais frequente)
-        Se tem muito erro e pouco acerto - possível problema de contexto
-        Se fica parelho - Não é problema de contexto
-    - Checar na lista de contexto mais frequente e ver quais tags tem junto com ele cruzando com tags+contexto. Gerar um diagnóstico parcial de contexto e cruzar com diagnóstico parcial de tags+contexto.
-    - CONTEXTO COM MUITAS TAGS - possível PROBLEMA CONTEXTO
-    - CONTEXTO COM TAGS REPETIDAS - possível PROBLEMA TAG
 '''
+Rule 4 — Context analysis
+
+- Compare error vs correct counts per context
+- Many errors → possible context issue
+- Balanced → likely not a context issue
+- Analyze tags within dominant contexts
+- Many tags → possible context problem
+- Repeated tag → possible tag problem
+'''
+
 possivel_contexto_limitador = []
 possivel_contexto_capacidade = []
 
@@ -1386,9 +1295,7 @@ for contexto, quantidade in contador_contexto_limitadores.items():
     print(contexto)
     print(quantidade)
     cap = contador_contexto_capacidades.get(contexto, 0)
-    print(cap)
     diferenca = quantidade - cap
-    print(diferenca)
     if diferenca >= 2:
         possivel_contexto_limitador.append(contexto)
         print(f'Possível contexto limitador {possivel_contexto_limitador}')
@@ -1405,7 +1312,7 @@ print(contexto_limitadores_mais_frequentes)
 for contexto in conexao_contexto_limitadores:
     print(contexto)
 
-# checar pra cada possível interface limitadora, quais tags temos em cada uma delas através da lista tags+interface
+# Map tags associated with each limiting context
 tags_contexto_limitador = {}
 for tag, contexto in conexao_contexto_limitadores:
     print(tag)
@@ -1416,30 +1323,23 @@ for tag, contexto in conexao_contexto_limitadores:
 print(f'Contexto x variedade Tags: {tags_contexto_limitador}')
 
 resultado_parcial_contexto = {}
-# Checar a diversidade/dominância de tag dentro da lista de tags para cada possível interface limitadora
+# Evaluate tag dominance within each context
 for contexto, tags in tags_contexto_limitador.items():
     print(f'\n\nPossível Contexto limitador {contexto}')
-    # Conta quantas tags tem na lista de possíveis interfaces limitadoras
     contador = Counter(tags)
-    # Pega a tag mais frequente
     tag_mais_comum, freq = contador.most_common(1)[0]
     total = len(tags)
     print(contador)
     print(tag_mais_comum)
     print(freq)
-    # Calcula a frequência da tag em porcentagem
     dominancia = freq / total
-    # Quantidade de tags diferentes dentro de uma mesma interface limitadora
     diversidade = len(contador)
     print(dominancia)
     if diversidade >=3:
-        # Trocar depois por True/False para o diagnóstico final
         resultado_parcial_contexto[contexto] = True
-        # resultado_parcial_interface[interface] = f'Muitas TAGS em uma mesma interface: Possível problema de interface - {interface} '
         print(f'Muitas TAGS em um mesmo contexto: Possível problema de contexto - {contexto} ')
     elif dominancia >= 0.7:
         resultado_parcial_contexto[contexto] = False
-        # resultado_parcial_interface[interface] = f'Predominância de uma mesma tag na mesma interface: Não é problema de interface - Talvez seja tag - {tag_mais_comum}'
         print(f'Predominância de uma mesma tag no mesmo contexto: Não é problema de contexto - Talvez seja tag - {tag_mais_comum}')
     else:
         resultado_parcial_contexto[contexto] = 'Inconclusivo'
@@ -1452,9 +1352,12 @@ for contexto, resultado in resultado_parcial_contexto.items():
     print(f'{contexto}: Possível problema de contexto: {resultado}')
 
 
-'''5 - OS DIAGNÓSTICOS PARCIAIS FAZEM SENTIDO?
-    - cruzar resultados com a lista tags+contexto+interface
-    - Criação de diagnóstico geral'''
+'''
+Rule 5 — Validation
+
+- Cross all partial diagnoses
+- Generate final diagnostic result
+'''
 
 
 
@@ -1491,115 +1394,4 @@ for contexto, resultado in resultado_parcial_contexto.items():
 
 
 
-#
-# # Terceiro filtro - Validar contexto - Contexto tem que aparecer em moda lim e moda contexto lim para ser considerado válido. Além disso deve aparecer mais em lim e pouco (ou nenhuma) em cap.
-# # Talvez tirar contexto válido 1.
-# contexto_valido_1 = [item for item in contexto_limitadores_mais_frequentes if any(item in conexao for conexao in conexao_contexto_limitadores_mais_frequentes)]
-# contexto_valido_2 = []
-# for item in contexto_limitadores_mais_frequentes:
-#     # print(item)
-#     lim = contador_contexto_limitadores.get(item, 0)
-#     cap = contador_contexto_capacidades.get(item, 0)
-#     diferenca = lim - cap
-#     if diferenca >= 2:
-#         contexto_valido_2.append(item)
-#
-# # Mostrando contexto
-# if (contexto_valido_1 and contexto_valido_2) and (contexto_valido_1 == contexto_valido_2):
-#     for item in contexto_valido_1:
-#         # print(item)
-#         print(next(iter_lim), end='')
-#         print(f'{lista_diagnostico[item]["descricao_limitacao"]}{choice(conectores_causa_efeito)}{lista_diagnostico[item]["efeito_negativo"]}.')
-# # FAZER O MESMO PARA CAPACIDADES
 
-
-'''
-# Primeiro Filtro - Se tem problema de base, ignora todo o resto
-# Diagnóstico baseado em perfis
-perfil = ''
-for tipo, descricao in perfis.items():
-    if descricao['capacidades'] == set(capacidades_mais_frequentes) and descricao['limitadores'] == set(limitadores_mais_frequentes):
-        perfil = tipo
-        print('\n1 - PERFIS ----------------\n')
-        print(descricao['descricao'])   # Exemplo: 'Você já é um guitarrista bem equilibrado, capaz de tocar várias músicas com fluidez.'
-
-
-# Considerações adicionais
-print('\n3 - CONSIDERAÇÕES ADICIONAIS PARTE 1------------------\n')
-if 'resistencia' in lista_capacidades_respostas_usuario:
-    print(next(iter_cap), end='')
-    print(f'{lista_diagnostico["resistencia"]["descricao_capacidade"]}{choice(conectores_causa_efeito)}{lista_diagnostico["resistencia"]["efeito_positivo"]}.')
-    conectores_cap_contador += 1
-if 'continuidade' in lista_capacidades_respostas_usuario:
-    print(next(iter_cap), end='')
-    print(f'{lista_diagnostico["continuidade"]["descricao_capacidade"]}{choice(conectores_causa_efeito)}{lista_diagnostico["continuidade"]["efeito_positivo"]}.')
-    conectores_cap_contador += 1
-
-
-
-
-# Caso não se encaixe em nenhum perfil
-print('\n2 - DIAGNÓSTICOS ISOLADOS -----------------------\n')
-if perfil == '':
-    for capacidade in capacidades_mais_frequentes:
-        print(next(iter_cap), end='')
-        print(f'{lista_diagnostico[capacidade]["descricao_capacidade"]}{choice(conectores_causa_efeito)}{lista_diagnostico[capacidade]["efeito_positivo"]}.')
-        conectores_cap_contador += 1
-    # alterando a lista de prefixos da lista conectores_lim após ter passado todas as capacidades
-    if alterar_lista:
-        conectores_lim = conectores_lim_original.copy()
-        if conectores_cap_contador == 0:  # Consegui simplificar bastante o uso dos conectores limitadores apenas tirando o conector certo dependendo se já foram mostradas capacidades ou não
-            conectores_lim.pop(1)
-        else:
-            conectores_lim.pop(0)
-        iter_lim = chain(conectores_lim, repeat(conectores_lim[-1]))
-        alterar_lista = False
-    #frase combinação e causa/efeito
-    if 'montagem_de_acorde' in limitadores_mais_frequentes and 'troca_de_acorde' in limitadores_mais_frequentes:
-        print(next(iter_lim), end='')
-        print('está consolidando a montagem dos acordes, o que impacta diretamente na velocidade de troca. A dificuldade na troca vem da montagem dos acordes ainda não estar automática.')
-    elif 'montagem_de_acorde' in limitadores_mais_frequentes and 'ritmo' in limitadores_mais_frequentes:
-        print(next(iter_lim), end='')
-        print('tem dificuldade na montagem dos acordes e isso acaba interferindo no seu ritmo.')
-    elif 'troca_de_acorde' in limitadores_mais_frequentes and 'ritmo' in limitadores_mais_frequentes:
-        print(next(iter_lim), end='')
-        print('tem dificuldade tanto na troca de acordes quanto em manter o ritmo, o que faz você se perder facilmente nas músicas. Você perde o ritmo pois ainda tem dificuldades na troca de acordes.')
-    else:
-        for limitador in limitadores_mais_frequentes:
-            print(next(iter_lim), end='')
-            print(f'{lista_diagnostico[limitador]["descricao_limitacao"]}{choice(conectores_causa_efeito)}{lista_diagnostico[limitador]["efeito_negativo"]}.')
-
-# Se não passar pelo bloco 2 - diagnósticos isolados (perfil != '') trocamos os prefixos da lista conectores_lim aqui
-if alterar_lista:
-    conectores_lim = conectores_lim_original.copy()
-    if conectores_cap_contador == 0:  # Consegui simplificar bastante o uso dos conectores limitadores apenas tirando o conector certo dependendo se já foram mostradas capacidades ou não
-        conectores_lim.pop(1)
-    else:
-        conectores_lim.pop(0)
-    iter_lim = chain(conectores_lim, repeat(conectores_lim[-1]))
-    alterar_lista = False
-
-# Considerações adicionais
-print('\n3 - CONSIDERAÇÕES ADICIONAIS PARTE 2------------------\n')
-if 'resistencia' in lista_limitadores_respostas_usuario:
-    print(next(iter_lim), end='')
-    print(f'{lista_diagnostico["resistencia"]["descricao_limitacao"]}{choice(conectores_causa_efeito)}{lista_diagnostico["resistencia"]["efeito_negativo"]}.')
-if 'nao_consegue_pestana' in lista_limitadores_respostas_usuario:
-    print(next(iter_lim), end='')
-    print(f'{lista_diagnostico["nao_consegue_pestana"]["descricao_limitacao"]}{choice(conectores_causa_efeito)}{lista_diagnostico["nao_consegue_pestana"]["efeito_negativo"]}.')
-if 'continuidade' in lista_limitadores_respostas_usuario:
-    print(next(iter_lim), end='')
-    print(f'{lista_diagnostico["continuidade"]["descricao_limitacao"]}{choice(conectores_causa_efeito)}{lista_diagnostico["continuidade"]["efeito_negativo"]}.')
-
-
-
-
-# Diagnóstico do nível
-print('\n4 - NÍVEL ------------\n')
-print('Considerando seus pontos fortes e limitações, você se encontra no seguinte estágio:')
-print(choice(lista_nivel[nivel]))
-
-
-
-
-'''
