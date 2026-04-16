@@ -409,7 +409,6 @@ def confirma_nivel(nivel, rodada):
     rodada = 4
     return nivel, rodada, 0
 
-# Rule set controlling level progression based on accuracy per round
 regras = {
     1: [
         (lambda t: t >= 80, subir_nivel),
@@ -431,15 +430,13 @@ regras = {
     ]
 }
 
-# Definindo qual será a pergunta limite para cada rodada
-rodada = 1
-# limites = {1: 4, 2: 6, 3: 8}
 
-# Definindo contadores de acertos, erros e total de perguntas
+rodada = 1
+
 acertos = 0
 erros = 0
 total_perguntas = 0
-perguntas_restantes = 4   # A primeira rodada sempre começará com 4 perguntas
+perguntas_restantes = 4  
 ultima_pergunta = 0
 
 
@@ -456,18 +453,12 @@ else:
 # Combines level progression (v3) with real answer validation and tag collection (v2)
 # Maximum of 3 rounds per level evaluation
 while rodada < 4:
-    # Definindo qual será a pergunta limite para cada rodada
-    # pergunta_limite = limites[rodada]
-    # Pega sempre o valor correspondente à chave e retorna zero caso a chave não exista
-    # limite_anterior = limites.get(rodada - 1, 0)
 
     print(f'{" INICIANDO NÍVEL " + str(nivel) + " ":=^50}')
 
-    # Mostrar as perguntas, as alternativas, coletar e salvar as respostas e contabilizar acertos, erros e tags
+# Select and present questions based on current level and progression sequence
     for questao in lista_perguntas:
-        # Compara o nível definido pelo usuário para mostrar apenas perguntas de mesmo nível. Pula as perguntas repetidas na nova repetição.
         if questao['nível'] == nivel and questao['numero_pergunta'] > ultima_pergunta:
-            # Mostra a pergunta
             print()
             print(f'Nível: {questao["nível"]}')
             print(questao['pergunta'])
@@ -476,13 +467,11 @@ while rodada < 4:
             perguntas_restantes -= 1
             ultima_pergunta = questao['numero_pergunta']
 
-            # Cria uma cópia da lista de alternativas e embaralha
             alternativas_embaralhadas = (questao['alternativas'])[:]
             shuffle(alternativas_embaralhadas)
 
             mapa_respostas = {}
 
-            # Mostra as alternativas da lista embaralhada com as letras em ordem
             for numero, resposta in enumerate(alternativas_embaralhadas):
                 letra = lista_alternativas[numero]
                 mapa_respostas[letra] = resposta
@@ -490,11 +479,10 @@ while rodada < 4:
 
             resposta_usuario = input('\nQual a resposta certa? ').strip().upper()
 
-            # Evaluate answer correctness and collect associated tags
+            # Validate answer and update performance and tag data
             if mapa_respostas[resposta_usuario]['correção']:
                 print('Você ACERTOU')
                 acertos += 1
-                # Guarda a tag correspondente ao acerto do usuário
                 for tipo, tag in mapa_respostas[resposta_usuario]['tag']:
                     lista_capacidades_respostas_usuario.append(tag)
             else:
@@ -503,8 +491,7 @@ while rodada < 4:
                 for tipo, tag in mapa_respostas[resposta_usuario]['tag']:
                     lista_limitadores_respostas_usuario.append(tag)
 
-            # Conferir a pontuação caso chegue na pergunta limite da rodada - para saber se troca de nível, continua ou confirma
-            # if questao['numero_pergunta'] == pergunta_limite:
+            # Check if current round reached its question limit
             if perguntas_restantes == 0:
                 print('CONFERIR SCORE')
                 taxa_acertos = (acertos / total_perguntas) * 100
@@ -522,7 +509,7 @@ while rodada < 4:
                         nivel_anterior = nivel
                         nivel, rodada, perguntas_restantes = acao(nivel, rodada)
                         if nivel != nivel_anterior:
-                            # Zera o número de acertos e erros apenas quando troca de nível
+                            # Reset performance tracking when level changes
                             acertos = 0
                             erros = 0
                             total_perguntas = 0
