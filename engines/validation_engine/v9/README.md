@@ -17,7 +17,7 @@ In Version 8, the system introduced a structural separation between:
 - Interface evaluation  
 - Context-based evaluation (planned)
 
-Version 9 implements this second stage.
+Version 9 implements the context-based evaluation stage.
 
 ---
 
@@ -48,11 +48,9 @@ For each context, the test:
 
 ## Key Insight
 
-With the introduction of context-based evaluation,
-the system begins to associate user performance
-with specific musical situations.
-
-This is a necessary step toward meaningful diagnostic interpretation.
+Separating evaluation by context allows the system to generate
+more precise and interpretable signals,
+reducing ambiguity introduced by mixed-dimension questions.
 
 ---
 
