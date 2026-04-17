@@ -14,7 +14,7 @@ the system now separates the test into distinct stages, starting with a dedicate
 The main issue identified in Version 7 was not the analysis logic,  
 but how the data was generated.
 
-Each question was evaluating multiple dimensions simultaneously:
+Each question evaluated multiple dimensions simultaneously:
 
 - Tags (capabilities and limitations)  
 - Context  
@@ -50,7 +50,7 @@ This stage includes:
 The second stage reuses the progression logic from previous versions,  
 but with an important change:
 
-- Instead of changing levels, the system changes context  
+- Instead of changing levels, the system changes context.  
 
 This allows the test to evaluate specific musical situations  
 without mixing different dimensions in the same question.
