@@ -531,24 +531,24 @@ lista_perguntas_teste_contexto = [
     },
 ]
 
-# Autoavaliação de Nível
+# User self-assessment of level
 def definir_nivel():
     autoavaliacao_nivel = int(input('Qual seu nível (1 a 5)? '))
     if autoavaliacao_nivel == 1:
-        # Necessário pois as pessoas no nível 1 e 2 começarão pelo mesmo teste nível 2.
+        # Level 1 is adjusted to level 2 to align with test entry point
         return 2
     else:
         return autoavaliacao_nivel
 
 
-# Define se faz teste interface completo ou simplificado
+# Define whether to run complete or simplified interface test
 def tipo_teste_interface(nivel):
     if nivel <= 3:
         return 'completo'
     else:
         return 'simplificado'
 
-# Define qual lista de perguntas utilizar
+# Select question list based on test type
 def lista_de_perguntas(tipo_teste):
     if tipo_teste == 'completo':
         return lista_perguntas_teste_interface_completo.copy()
@@ -556,7 +556,7 @@ def lista_de_perguntas(tipo_teste):
         return lista_perguntas_teste_interface_simplificado.copy()
 
 def mostrar_alternativas(pergunta, letras_alternativas):
-        # Embaralhar alternativas
+        # Separate "I don't know" option and shuffle remaining alternatives
         alternativas_para_embaralhar =[]
         alternativas_nao_sei = []
         for alternativa in pergunta['alternativas']:
@@ -569,29 +569,27 @@ def mostrar_alternativas(pergunta, letras_alternativas):
 
 
         mapa_respostas = {}
-        # Mostrar alternativas
+        # Map displayed letters to alternatives for user input validation
         for numero, alternativa in enumerate(alternativas_para_mostrar):
             print(f"{letras_alternativas[numero]} - {alternativa['texto']}")
             letra = letras_alternativas[numero]
             mapa_respostas[letra] = alternativa
         return mapa_respostas
 
-# Executa o teste de interface
+# Execute interface test
 def executar_teste_interface(lista_perguntas, tipo_teste):
     letras_alternativas = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M']
     acertos_interface = []
     erros_interface = []
     acertos = 0
     erros = 0
-    # Mostrar pergunta
     for pergunta in lista_perguntas:
         print(pergunta['pergunta'])
 
         # DUPLICATION (temporary)
-        # This logic is duplicated from mostrar_alternativas.
-        # It was originally implemented for context testing.
-        # Will be refactored in future versions.
-        # Embaralhar alternativas
+        # This block replicates the logic from mostrar_alternativas.
+        # It was implemented before the function was reused here.
+        # Will be refactored in future versions to avoid duplication.
         alternativas_para_embaralhar =[]
         alternativas_nao_sei = []
         for alternativa in pergunta['alternativas']:
@@ -604,12 +602,10 @@ def executar_teste_interface(lista_perguntas, tipo_teste):
 
 
         mapa_respostas = {}
-        # Mostrar alternativas
         for numero, alternativa in enumerate(alternativas_para_mostrar):
             print(f"{letras_alternativas[numero]} - {alternativa['texto']}")
             letra = letras_alternativas[numero]
             mapa_respostas[letra] = alternativa
-            # Guardar resposta
 
         resposta_usuario = input('Resposta: ').strip().upper()
 
@@ -626,23 +622,20 @@ def executar_teste_interface(lista_perguntas, tipo_teste):
         else:
             print('Você errou')
             erros += 1
-            # Se erra no teste simplificado é direcionado para o teste completo
+            # If user fails simplified test, switch to complete test
             erros_interface.append(guardar)
             if tipo_teste == 'simplificado':
                 return 'erro no teste simplificado', acertos_interface, erros_interface
     return 'teste ok', acertos_interface, erros_interface
 
 
-# Rodar o teste de interface dinâmico, ou seja, se a pessoa errar no teste simplificado, é direcionada imediatamente para o completo.
+# Run interface test with fallback from simplified to complete
 def rodar_teste_interface(nivel):
-    # Define se faz teste interface completo ou simplificado
     tipo_teste = tipo_teste_interface(nivel)
 
     while True:
-        # Define qual lista de perguntas utilizar
         lista_perguntas = lista_de_perguntas(tipo_teste)
 
-        # Executa o teste de interface
         resultado, acertos_interface, erros_interface = executar_teste_interface(lista_perguntas, tipo_teste)
 
         if resultado == 'erro no teste simplificado':
@@ -651,7 +644,7 @@ def rodar_teste_interface(nivel):
 
         return acertos_interface, erros_interface
 
-# Calcular_score()
+# Calculate interface reading ability based on errors
 def calcular_score_teste_completo(erros_interface):
     cont_cifra = 0
     cont_diagrama = 0
@@ -680,7 +673,7 @@ lista_contextos = [
     'triades_simples'
 ]
 
-# Executa o teste de contexto + tags
+# Execute context-based test with tag collection
 def executar_teste_contexto_unico(lista_contextos, nivel, ja_subiu_nivel, ja_desceu_nivel):
     letras_alternativas = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M']
     acertos_por_contexto = []
@@ -696,7 +689,6 @@ def executar_teste_contexto_unico(lista_contextos, nivel, ja_subiu_nivel, ja_des
     contexto = lista_contextos[indice_contexto]
     lista_perguntas = lista_perguntas_teste_contexto
 
-    # Mostrar pergunta
     for pergunta in lista_perguntas:
         if pergunta['contexto'][0] == contexto:
             print(f"Contexto: {pergunta['contexto']} - {pergunta['pergunta']}")
@@ -704,10 +696,9 @@ def executar_teste_contexto_unico(lista_contextos, nivel, ja_subiu_nivel, ja_des
             total_perguntas += 1
             mapa_respostas = mostrar_alternativas(pergunta, letras_alternativas)
 
-            # Guardar resposta
             resposta_usuario = input('Resposta: ').strip().upper()
 
-            # Guardar_acertos_erros_interface()
+            # Extract tags and store result (context + interface + tag)
             tag = [tag['tag'] for tag in mapa_respostas[resposta_usuario]['tag']]
             guardar = {
                 'interface': pergunta['interface'][0],
@@ -722,7 +713,6 @@ def executar_teste_contexto_unico(lista_contextos, nivel, ja_subiu_nivel, ja_des
             else:
                 print('Você errou')
                 erros += 1
-                # Se erra no teste simplificado é direcionado para o teste completo
                 erros_geral.append(guardar)
                 erros_por_contexto.append(guardar)
 
@@ -731,7 +721,6 @@ def executar_teste_contexto_unico(lista_contextos, nivel, ja_subiu_nivel, ja_des
                 taxa_acertos = (acertos / total_perguntas) * 100
                 print(f'Taxa de acertos: {taxa_acertos:.1f}%')
 
-                # Para guardar os resultados e mostrar ao final do teste antes de zerar.
                 # NOT USED YET (planned for final result output)
                 acertos_final = acertos
                 erros_final = erros
@@ -776,7 +765,7 @@ def descer_nivel(nivel, rodada, ja_subiu_nivel, ja_desceu_nivel):
         rodada = 4
     return nivel, rodada, 4, ja_subiu_nivel, ja_desceu_nivel
 
-# Criei as outras funções para que funcionem direto dentro da lista de regras de troca de nível
+# Helper functions used by rule-based progression system
 def mais_2(nivel, rodada, ja_subiu_nivel, ja_desceu_nivel):
     print('Mais 2 perguntas')
     print(f'Rodada: {rodada}\n')
@@ -795,7 +784,7 @@ def confirma_nivel(nivel, rodada, ja_subiu_nivel, ja_desceu_nivel):
     rodada = 4
     return nivel, rodada, 0, ja_subiu_nivel, ja_desceu_nivel
 
-# Regras para subir, continuar, descer, confirmar nível, de acordo com cada rodada
+# Rule set for progression decisions based on accuracy and round
 regras = {
     1: [
         (lambda t: t >= 80, subir_nivel),
@@ -819,7 +808,7 @@ regras = {
 
 
 def rodar_condicoes(taxa_acertos, rodada, nivel, ja_subiu_nivel, ja_desceu_nivel):
-    # Rodar as condições na lista de regras
+    # Execute rule set based on accuracy and current round
     for condicao, acao in regras[rodada]:
         if condicao(taxa_acertos):
             nivel_anterior = nivel
@@ -828,7 +817,7 @@ def rodar_condicoes(taxa_acertos, rodada, nivel, ja_subiu_nivel, ja_desceu_nivel
             # This block handles level transitions, but level change is not active in this version.
             # The logic is preserved for future implementation.
             if nivel != nivel_anterior:
-                # Zera o número de acertos e erros apenas quando troca de nível
+                # Reset counters when level changes
                 acertos = 0
                 erros = 0
                 total_perguntas = 0
@@ -836,26 +825,26 @@ def rodar_condicoes(taxa_acertos, rodada, nivel, ja_subiu_nivel, ja_desceu_nivel
             return nivel, rodada, perguntas_restantes, ja_subiu_nivel, ja_desceu_nivel
 
 
-# Autoavaliação de Nível
+
 nivel = definir_nivel()
 
-# Contadores para não repetir teste em nível já feito
+# Flags to prevent repeated level transitions
 ja_subiu_nivel = False
 ja_desceu_nivel = False
 
-
-# Rodar o teste de interface dinâmico, ou seja, se a pessoa errar no teste simplificado, é direcionada imediatamente para o completo.
+# Run interface test with fallback from simplified to complete
 acertos_interface, erros_interface = rodar_teste_interface(nivel)
 
 print(acertos_interface)
 print(erros_interface)
 
-# Calcular_score()
+# Calculate interface reading ability based on errors
 sabe_ler_cifra, sabe_ler_diagrama, sabe_ler_tablatura = calcular_score_teste_completo(erros_interface)
 
-# Mostrar resultados de Interface
+# Display interface test results
 print(f'\nSabe ler cifra: {sabe_ler_cifra}\nSabe ler diagrama: {sabe_ler_diagrama}\nSabe ler tablatura: {sabe_ler_tablatura}')
 
+# Execute context-based test with tag collection
 acertos_geral, erros_geral, acertos_por_contexto, erros_por_contexto = executar_teste_contexto_unico(lista_contextos, nivel, ja_subiu_nivel, ja_desceu_nivel)
 
 print(acertos_geral)
