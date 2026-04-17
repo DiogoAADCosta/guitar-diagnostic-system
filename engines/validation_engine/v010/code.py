@@ -1,7 +1,23 @@
-'''====================================================================================================================================================================================================
-Versão 10 - Adicionando lógica do teste de contexto para analisar score intermediário e mostrar mais perguntas baseado na taxa de acertos (apenas para confirmar contextos - sem troca de contexto ainda)
-====================================================================================================================================================================================================
-'''
+"""
+Version 10 — Context Score Evaluation and Adaptive Question Flow
+
+This version introduces adaptive behavior within the context-based test.
+
+The system now evaluates user performance during execution,
+using intermediate accuracy to control the number of questions.
+
+The context test now includes:
+
+- Partial score calculation (accuracy rate)
+- Rule-based decision system (rodar_condicoes)
+- Dynamic question extension based on performance
+- Structured result collection (general and per context)
+
+Note:
+- Context switching is not implemented yet
+- Level progression logic exists but is not fully active
+- The system evaluates one context per execution
+"""
 
 from random import shuffle
 
@@ -232,7 +248,7 @@ lista_perguntas_teste_contexto = [
         'id': '1-2',
         'nivel': 1,
         'numero_pergunta': 2,
-        'etapa': 'interface',
+        'etapa': 'contexto',
         'contexto': ['power_chords'],
         'interface': ['leitura_cifras'],
         'pergunta': 'Pergunta_2?',  
@@ -251,7 +267,7 @@ lista_perguntas_teste_contexto = [
         'id': '1-3',
         'nivel': 1,
         'numero_pergunta': 3,
-        'etapa': 'interface',
+        'etapa': 'contexto',
         'contexto': ['power_chords'],
         'interface': ['diagrama_braco'],
         'pergunta': 'Pergunta_3?',  
@@ -270,7 +286,7 @@ lista_perguntas_teste_contexto = [
         'id': '1-4',
         'nivel': 1,
         'numero_pergunta': 4,
-        'etapa': 'interface',
+        'etapa': 'contexto',
         'contexto': ['power_chords'],
         'interface': ['diagrama_braco'],
         'pergunta': 'Pergunta_4?',  
@@ -289,7 +305,7 @@ lista_perguntas_teste_contexto = [
         'id': '1-5',
         'nivel': 1,
         'numero_pergunta': 5,
-        'etapa': 'interface',
+        'etapa': 'contexto',
         'contexto': ['power_chords'],
         'interface': ['diagrama_braco'],
         'pergunta': 'Pergunta_5?',
@@ -308,7 +324,7 @@ lista_perguntas_teste_contexto = [
         'id': '1-6',
         'nivel': 1,
         'numero_pergunta': 6,
-        'etapa': 'interface',
+        'etapa': 'contexto',
         'contexto': ['power_chords'],
         'interface': ['leitura_tablatura'],
         'pergunta': 'Pergunta_6?',  
@@ -327,7 +343,7 @@ lista_perguntas_teste_contexto = [
         'id': '1-7',
         'nivel': 1,
         'numero_pergunta': 7,
-        'etapa': 'interface',
+        'etapa': 'contexto',
         'contexto': ['power_chords'],
         'interface': ['leitura_tablatura'],
         'pergunta': 'Pergunta_7?',  
@@ -346,7 +362,7 @@ lista_perguntas_teste_contexto = [
         'id': '1-8',
         'nivel': 1,
         'numero_pergunta': 8,
-        'etapa': 'interface',
+        'etapa': 'contexto',
         'contexto': ['power_chords'],
         'interface': ['leitura_tablatura'],
         'pergunta': 'Pergunta_8?',  
@@ -384,7 +400,7 @@ lista_perguntas_teste_contexto = [
         'id': '1-10',
         'nivel': 1,
         'numero_pergunta': 2,
-        'etapa': 'interface',
+        'etapa': 'contexto',
         'contexto': ['triades_simples'],
         'interface': ['leitura_cifras'],
         'pergunta': 'Pergunta_10?',  
@@ -403,7 +419,7 @@ lista_perguntas_teste_contexto = [
         'id': '1-11',
         'nivel': 1,
         'numero_pergunta': 3,
-        'etapa': 'interface',
+        'etapa': 'contexto',
         'contexto': ['triades_simples'],
         'interface': ['diagrama_braco'],
         'pergunta': 'Pergunta_11?', 
@@ -422,7 +438,7 @@ lista_perguntas_teste_contexto = [
         'id': '1-12',
         'nivel': 1,
         'numero_pergunta': 4,
-        'etapa': 'interface',
+        'etapa': 'contexto',
         'contexto': ['triades_simples'],
         'interface': ['diagrama_braco'],
         'pergunta': 'Pergunta_12?', 
@@ -441,7 +457,7 @@ lista_perguntas_teste_contexto = [
         'id': '1-13',
         'nivel': 1,
         'numero_pergunta': 5,
-        'etapa': 'interface',
+        'etapa': 'contexto',
         'contexto': ['triades_simples'],
         'interface': ['diagrama_braco'],
         'pergunta': 'Pergunta_13?', 
@@ -460,7 +476,7 @@ lista_perguntas_teste_contexto = [
         'id': '1-14',
         'nivel': 1,
         'numero_pergunta': 6,
-        'etapa': 'interface',
+        'etapa': 'contexto',
         'contexto': ['triades_simples'],
         'interface': ['leitura_tablatura'],
         'pergunta': 'Pergunta_14?', 
@@ -479,7 +495,7 @@ lista_perguntas_teste_contexto = [
         'id': '1-15',
         'nivel': 1,
         'numero_pergunta': 7,
-        'etapa': 'interface',
+        'etapa': 'contexto',
         'contexto': ['triades_simples'],
         'interface': ['leitura_tablatura'],
         'pergunta': 'Pergunta_15?', 
@@ -498,7 +514,7 @@ lista_perguntas_teste_contexto = [
         'id': '1-16',
         'nivel': 1,
         'numero_pergunta': 8,
-        'etapa': 'interface',
+        'etapa': 'contexto',
         'contexto': ['triades_simples'],
         'interface': ['leitura_tablatura'],
         'pergunta': 'Pergunta_16?', 
@@ -555,7 +571,7 @@ def mostrar_alternativas(pergunta, letras_alternativas):
         mapa_respostas = {}
         # Mostrar alternativas
         for numero, alternativa in enumerate(alternativas_para_mostrar):
-            print(f'{letras_alternativas[numero]} - {alternativa['texto']}')
+            print(f"{letras_alternativas[numero]} - {alternativa['texto']}")
             letra = letras_alternativas[numero]
             mapa_respostas[letra] = alternativa
         return mapa_respostas
@@ -571,6 +587,10 @@ def executar_teste_interface(lista_perguntas, tipo_teste):
     for pergunta in lista_perguntas:
         print(pergunta['pergunta'])
 
+        # DUPLICATION (temporary)
+        # This logic is duplicated from mostrar_alternativas.
+        # It was originally implemented for context testing.
+        # Will be refactored in future versions.
         # Embaralhar alternativas
         alternativas_para_embaralhar =[]
         alternativas_nao_sei = []
@@ -586,14 +606,14 @@ def executar_teste_interface(lista_perguntas, tipo_teste):
         mapa_respostas = {}
         # Mostrar alternativas
         for numero, alternativa in enumerate(alternativas_para_mostrar):
-            print(f'{letras_alternativas[numero]} - {alternativa['texto']}')
+            print(f"{letras_alternativas[numero]} - {alternativa['texto']}")
             letra = letras_alternativas[numero]
             mapa_respostas[letra] = alternativa
             # Guardar resposta
 
         resposta_usuario = input('Resposta: ').strip().upper()
 
-        # Guardar_acertos_erros_interface()
+        # Extract tags from selected answer and store result
         tag = [tag['tag'] for tag in mapa_respostas[resposta_usuario]['tag']]
         guardar = {
             'interface': pergunta['interface'][0],
@@ -679,7 +699,7 @@ def executar_teste_contexto_unico(lista_contextos, nivel, ja_subiu_nivel, ja_des
     # Mostrar pergunta
     for pergunta in lista_perguntas:
         if pergunta['contexto'][0] == contexto:
-            print(f'Contexto: {pergunta['contexto']} - {pergunta['pergunta']}')
+            print(f"Contexto: {pergunta['contexto']} - {pergunta['pergunta']}")
             perguntas_restantes -= 1
             total_perguntas += 1
             mapa_respostas = mostrar_alternativas(pergunta, letras_alternativas)
@@ -712,6 +732,7 @@ def executar_teste_contexto_unico(lista_contextos, nivel, ja_subiu_nivel, ja_des
                 print(f'Taxa de acertos: {taxa_acertos:.1f}%')
 
                 # Para guardar os resultados e mostrar ao final do teste antes de zerar.
+                # NOT USED YET (planned for final result output)
                 acertos_final = acertos
                 erros_final = erros
                 total_perguntas_final = total_perguntas
@@ -722,8 +743,10 @@ def executar_teste_contexto_unico(lista_contextos, nivel, ja_subiu_nivel, ja_des
 
     return acertos_geral, erros_geral, acertos_por_contexto, erros_por_contexto
 
-
-# Função de subir nível
+# LEGACY (from previous versions)
+# These functions were reused from earlier versions.
+# Not all of them are actively used in v010.
+# They are kept temporarily for compatibility with progression logic.
 def subir_nivel(nivel, rodada, ja_subiu_nivel, ja_desceu_nivel):
     print('Sobe de nível')
     print(f'Rodada: {rodada}\n')
@@ -738,7 +761,6 @@ def subir_nivel(nivel, rodada, ja_subiu_nivel, ja_desceu_nivel):
         rodada = 4
     return nivel, rodada, 4, ja_subiu_nivel, ja_desceu_nivel
 
-# Função de descer nível
 def descer_nivel(nivel, rodada, ja_subiu_nivel, ja_desceu_nivel):
     print('Desce de nível')
     print(f'Rodada: {rodada}\n')
@@ -802,6 +824,9 @@ def rodar_condicoes(taxa_acertos, rodada, nivel, ja_subiu_nivel, ja_desceu_nivel
         if condicao(taxa_acertos):
             nivel_anterior = nivel
             nivel, rodada, perguntas_restantes, ja_subiu_nivel, ja_desceu_nivel = acao(nivel, rodada, ja_subiu_nivel, ja_desceu_nivel)
+            # LIMITATION (v010)
+            # This block handles level transitions, but level change is not active in this version.
+            # The logic is preserved for future implementation.
             if nivel != nivel_anterior:
                 # Zera o número de acertos e erros apenas quando troca de nível
                 acertos = 0
@@ -836,9 +861,7 @@ acertos_geral, erros_geral, acertos_por_contexto, erros_por_contexto = executar_
 print(acertos_geral)
 print(erros_geral)
 
-
-# Uma forma mais simples de visualizar os acertos gerais
-
+# Convert structured results into simplified lists for display/debugging
 resumo_acertos = []
 resumo_erros = []
 for item in acertos_geral:
