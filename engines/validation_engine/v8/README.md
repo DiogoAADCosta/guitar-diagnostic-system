@@ -66,7 +66,7 @@ The test flow was redesigned to support this separation.
 
 👉 [Complete Flowchart](./dev_notes/complete_test_flowchart.png)
 👉 [Interface Flowchart](./dev_notes/interface_test_flowchart.png)
-👉 [Context Flowchart](./dev_notes/context_test_flowchart.png)
+👉 [Context Flowchart](./dev_notes/context_test_flowchart.jpg)
 
 The new flow ensures:
 
