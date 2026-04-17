@@ -32,7 +32,7 @@ Based on performance, the system may:
 
 - Ask additional questions  
 - Confirm the current level  
-- Prepare for level adjustment (structure in place)  
+- Includes preliminary level adjustment logic (not fully active) 
 
 ---
 
