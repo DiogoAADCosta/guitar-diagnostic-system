@@ -586,6 +586,7 @@ def executar_teste_interface(lista_perguntas, tipo_teste):
     letras_alternativas = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M']
     acertos_interface = []
     erros_interface = []
+    # Counters reserved for future accuracy calculations (not used yet)
     acertos = 0
     erros = 0
     for pergunta in lista_perguntas:
@@ -684,6 +685,7 @@ def executar_teste_contexto_unico(lista_contextos):
     erros_por_contexto = []
     acertos_geral = []
     erros_geral = []
+    # Counters reserved for future accuracy calculations (not used yet)
     acertos = 0
     erros = 0
     indice_contexto = 0
