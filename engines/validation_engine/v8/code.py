@@ -2,7 +2,7 @@
 Versão 8 - Reformulando perguntas e pipeline do teste para isolar habilidades de forma progressiva e facilitar o diagnóstico. Criando primeiro teste de interface
 ====================================================================================================================================================================================================
 '''
-'''
+
 from random import shuffle, choice
 from collections import Counter
 from itertools import chain, repeat
@@ -492,26 +492,26 @@ def calcular_score_teste_completo(erros_interface):
 
 
 # Autoavaliação de Nível
-# nivel = definir_nivel()
-nivel = 2
+nivel = definir_nivel()
+# nivel = 2
 
 
 
-# # Rodar o teste de interface dinâmico, ou seja, se a pessoa errar no teste simplificado, é direcionada imediatamente para o completo.
-# acertos_interface, erros_interface = rodar_teste_interface(nivel)
-#
-# print(acertos_interface)
-# print(erros_interface)
-#
-# # Calcular_score()
-# sabe_ler_cifra, sabe_ler_diagrama, sabe_ler_tablatura = calcular_score_teste_completo(erros_interface)
-#
-# # Mostrar resultados de Interface
-# print(f'\nSabe ler cifra: {sabe_ler_cifra}\nSabe ler diagrama: {sabe_ler_diagrama}\nSabe ler tablatura: {sabe_ler_tablatura}')
+# Rodar o teste de interface dinâmico, ou seja, se a pessoa errar no teste simplificado, é direcionada imediatamente para o completo.
+acertos_interface, erros_interface = rodar_teste_interface(nivel)
 
-acertos_geral, erros_geral, acertos_por_contexto, erros_por_contexto = executar_teste_contexto_unico(lista_contextos)
+print(acertos_interface)
+print(erros_interface)
+
+# Calcular_score()
+sabe_ler_cifra, sabe_ler_diagrama, sabe_ler_tablatura = calcular_score_teste_completo(erros_interface)
+
+# Mostrar resultados de Interface
+print(f'\nSabe ler cifra: {sabe_ler_cifra}\nSabe ler diagrama: {sabe_ler_diagrama}\nSabe ler tablatura: {sabe_ler_tablatura}')
+
+# acertos_geral, erros_geral, acertos_por_contexto, erros_por_contexto = executar_teste_contexto_unico(lista_contextos)
 
 print(acertos_geral)
 print(erros_geral)
 
-'''
+
