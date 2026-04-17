@@ -64,7 +64,9 @@ It is planned as the next step in the system evolution.
 
 The test flow was redesigned to support this separation.
 
-👉 ![Flowchart](dev_notes/flowchart_v8.png)
+👉 [Complete Flowchart](./dev_notes/complete_test_flowchart.png)
+👉 [Interface Flowchart](./dev_notes/interface_test_flowchart.png)
+👉 [Context Flowchart](./dev_notes/context_test_flowchart.png)
 
 The new flow ensures:
 
