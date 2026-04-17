@@ -556,7 +556,7 @@ def lista_de_perguntas(tipo_teste):
         return lista_perguntas_teste_interface_simplificado.copy()
 
 def mostrar_alternativas(pergunta, letras_alternativas):
-        # Separate "I don't know" option and shuffle remaining alternatives
+        # Separate "nao_sei" option and shuffle remaining alternatives
         alternativas_para_embaralhar =[]
         alternativas_nao_sei = []
         for alternativa in pergunta['alternativas']:
@@ -673,7 +673,7 @@ lista_contextos = [
     'triades_simples'
 ]
 
-# Execute context-based test with tag collection
+# Execute context-based test with adaptive question flow and tag collection
 def executar_teste_contexto_unico(lista_contextos, nivel, ja_subiu_nivel, ja_desceu_nivel):
     letras_alternativas = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M']
     acertos_por_contexto = []
@@ -716,12 +716,13 @@ def executar_teste_contexto_unico(lista_contextos, nivel, ja_subiu_nivel, ja_des
                 erros_geral.append(guardar)
                 erros_por_contexto.append(guardar)
 
+            # Trigger intermediate evaluation to decide next action (adaptive flow)
             if perguntas_restantes <= 0:
                 print('CONFERIR SCORE INTERMEDIÁRIO')
                 taxa_acertos = (acertos / total_perguntas) * 100
                 print(f'Taxa de acertos: {taxa_acertos:.1f}%')
 
-                # NOT USED YET (planned for final result output)
+                # NOT USED YET (reserved for final result summary before reset)
                 acertos_final = acertos
                 erros_final = erros
                 total_perguntas_final = total_perguntas
@@ -828,7 +829,7 @@ def rodar_condicoes(taxa_acertos, rodada, nivel, ja_subiu_nivel, ja_desceu_nivel
 
 nivel = definir_nivel()
 
-# Flags to prevent repeated level transitions
+# Flags to control level transition state
 ja_subiu_nivel = False
 ja_desceu_nivel = False
 
