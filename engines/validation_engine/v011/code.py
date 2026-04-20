@@ -1,7 +1,26 @@
-'''====================================================================================================================================================================================================
-Versão 11 - Adicionando lógica do teste de contexto para analisar score intermediário, trocando de contexto para cima ou para baixo
-====================================================================================================================================================================================================
-'''
+"""
+Version 11 — Context Evaluation with Adaptive Flow
+
+This version implements adaptive behavior within the context-based test.
+
+The system evaluates user performance during execution and applies
+rule-based decisions to control the flow of questions.
+
+Key features:
+
+- Context-based evaluation (single context at a time)
+- Intermediate score calculation during execution
+- Rule-driven progression (adjusts number of questions and flow)
+- Tag collection for both correct and incorrect answers
+- Global and per-context result storage
+
+Notes:
+
+- Context switching and level progression are implemented
+- Contexts are evaluated sequentially within each level
+- Diagnostic interpretation is not included yet
+
+"""
 
 from random import shuffle
 
