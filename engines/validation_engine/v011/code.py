@@ -1725,4 +1725,3 @@ def visualizar_resultados(estatisticas_por_contexto, acertos_geral, erros_geral,
 
 estatisticas_por_contexto, acertos_geral, erros_geral, acertos_por_contexto, erros_por_contexto = main(estatisticas_por_contexto, acertos_geral, erros_geral)
 visualizar_resultados(estatisticas_por_contexto, acertos_geral, erros_geral, acertos_por_contexto, erros_por_contexto)
-'''
