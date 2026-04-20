@@ -1451,7 +1451,6 @@ def executar_teste_contexto_unico(nivel, acertos_geral, erros_geral, contexto):
             else:
                 print('Você errou\n')
                 erros += 1
-                # Se erra no teste simplificado é direcionado para o teste completo
                 erros_geral.append(guardar)
                 erros_por_contexto.append(guardar)
                 
