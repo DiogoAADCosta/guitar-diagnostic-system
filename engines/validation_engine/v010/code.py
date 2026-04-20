@@ -567,9 +567,9 @@ def mostrar_alternativas(pergunta, letras_alternativas):
         shuffle(alternativas_para_embaralhar)
         alternativas_para_mostrar = alternativas_para_embaralhar + alternativas_nao_sei
 
-
-        mapa_respostas = {}
         # Map displayed letters to alternatives for user input validation
+        mapa_respostas = {}
+
         for numero, alternativa in enumerate(alternativas_para_mostrar):
             print(f"{letras_alternativas[numero]} - {alternativa['texto']}")
             letra = letras_alternativas[numero]
@@ -807,9 +807,8 @@ regras = {
     ]
 }
 
-
+# Execute rule set based on accuracy and current round
 def rodar_condicoes(taxa_acertos, rodada, nivel, ja_subiu_nivel, ja_desceu_nivel):
-    # Execute rule set based on accuracy and current round
     for condicao, acao in regras[rodada]:
         if condicao(taxa_acertos):
             nivel_anterior = nivel
