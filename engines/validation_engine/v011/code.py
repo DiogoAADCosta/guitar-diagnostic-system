@@ -3,10 +3,7 @@ Versão 11 - Adicionando lógica do teste de contexto para analisar score interm
 ====================================================================================================================================================================================================
 '''
 
-from random import shuffle, choice
-from collections import Counter
-from itertools import chain, repeat
-
+from random import shuffle
 
 
 def lim(tag):
@@ -234,7 +231,7 @@ lista_perguntas_teste_contexto = [
         'id': '2-2',
         'nivel': 2,
         'numero_pergunta': 2,
-        'etapa': 'interface',
+        'etapa': 'contexto',
         'contexto': ['power_chords'],
         'interface': ['leitura_cifras'],
         'pergunta': 'Pergunta_2?', 
@@ -253,7 +250,7 @@ lista_perguntas_teste_contexto = [
         'id': '2-3',
         'nivel': 2,
         'numero_pergunta': 3,
-        'etapa': 'interface',
+        'etapa': 'contexto',
         'contexto': ['power_chords'],
         'interface': ['diagrama_braco'],
         'pergunta': 'Pergunta_3?', 
@@ -272,7 +269,7 @@ lista_perguntas_teste_contexto = [
         'id': '2-4',
         'nivel': 2,
         'numero_pergunta': 4,
-        'etapa': 'interface',
+        'etapa': 'contexto',
         'contexto': ['power_chords'],
         'interface': ['diagrama_braco'],
         'pergunta': 'Pergunta_4?',  
@@ -291,7 +288,7 @@ lista_perguntas_teste_contexto = [
         'id': '2-5',
         'nivel': 2,
         'numero_pergunta': 5,
-        'etapa': 'interface',
+        'etapa': 'contexto',
         'contexto': ['power_chords'],
         'interface': ['diagrama_braco'],
         'pergunta': 'Pergunta_5?', 
@@ -310,7 +307,7 @@ lista_perguntas_teste_contexto = [
         'id': '2-6',
         'nivel': 2,
         'numero_pergunta': 6,
-        'etapa': 'interface',
+        'etapa': 'contexto',
         'contexto': ['power_chords'],
         'interface': ['leitura_tablatura'],
         'pergunta': 'Pergunta_6?',  
@@ -329,7 +326,7 @@ lista_perguntas_teste_contexto = [
         'id': '2-7',
         'nivel': 2,
         'numero_pergunta': 7,
-        'etapa': 'interface',
+        'etapa': 'contexto',
         'contexto': ['power_chords'],
         'interface': ['leitura_tablatura'],
         'pergunta': 'Pergunta_7?',  
@@ -348,7 +345,7 @@ lista_perguntas_teste_contexto = [
         'id': '2-8',
         'nivel': 2,
         'numero_pergunta': 8,
-        'etapa': 'interface',
+        'etapa': 'contexto',
         'contexto': ['power_chords'],
         'interface': ['leitura_tablatura'],
         'pergunta': 'Pergunta_8?',  
@@ -386,7 +383,7 @@ lista_perguntas_teste_contexto = [
         'id': '2-10',
         'nivel': 2,
         'numero_pergunta': 2,
-        'etapa': 'interface',
+        'etapa': 'contexto',
         'contexto': ['triades_simples'],
         'interface': ['leitura_cifras'],
         'pergunta': 'Pergunta_10?',  
@@ -405,7 +402,7 @@ lista_perguntas_teste_contexto = [
         'id': '2-11',
         'nivel': 2,
         'numero_pergunta': 3,
-        'etapa': 'interface',
+        'etapa': 'contexto',
         'contexto': ['triades_simples'],
         'interface': ['diagrama_braco'],
         'pergunta': 'Pergunta_11?',  
@@ -424,7 +421,7 @@ lista_perguntas_teste_contexto = [
         'id': '2-12',
         'nivel': 2,
         'numero_pergunta': 4,
-        'etapa': 'interface',
+        'etapa': 'contexto',
         'contexto': ['triades_simples'],
         'interface': ['diagrama_braco'],
         'pergunta': 'Pergunta_12?', 
@@ -443,7 +440,7 @@ lista_perguntas_teste_contexto = [
         'id': '2-13',
         'nivel': 2,
         'numero_pergunta': 5,
-        'etapa': 'interface',
+        'etapa': 'contexto',
         'contexto': ['triades_simples'],
         'interface': ['diagrama_braco'],
         'pergunta': 'Pergunta_13?', 
@@ -462,7 +459,7 @@ lista_perguntas_teste_contexto = [
         'id': '2-14',
         'nivel': 2,
         'numero_pergunta': 6,
-        'etapa': 'interface',
+        'etapa': 'contexto',
         'contexto': ['triades_simples'],
         'interface': ['leitura_tablatura'],
         'pergunta': 'Pergunta_14?', 
@@ -481,7 +478,7 @@ lista_perguntas_teste_contexto = [
         'id': '2-15',
         'nivel': 2,
         'numero_pergunta': 7,
-        'etapa': 'interface',
+        'etapa': 'contexto',
         'contexto': ['triades_simples'],
         'interface': ['leitura_tablatura'],
         'pergunta': 'Pergunta_15?',  
@@ -500,7 +497,7 @@ lista_perguntas_teste_contexto = [
         'id': '2-16',
         'nivel': 2,
         'numero_pergunta': 8,
-        'etapa': 'interface',
+        'etapa': 'contexto',
         'contexto': ['triades_simples'],
         'interface': ['leitura_tablatura'],
         'pergunta': 'Pergunta_16?',  
@@ -538,7 +535,7 @@ lista_perguntas_teste_contexto = [
         'id': '3-2',
         'nivel': 3,
         'numero_pergunta': 2,
-        'etapa': 'interface',
+        'etapa': 'contexto',
         'contexto': ['tetrades_simples'],
         'interface': ['leitura_cifras'],
         'pergunta': 'Pergunta_10?', 
@@ -557,7 +554,7 @@ lista_perguntas_teste_contexto = [
         'id': '3-3',
         'nivel': 3,
         'numero_pergunta': 3,
-        'etapa': 'interface',
+        'etapa': 'contexto',
         'contexto': ['tetrades_simples'],
         'interface': ['diagrama_braco'],
         'pergunta': 'Pergunta_11?',
@@ -576,7 +573,7 @@ lista_perguntas_teste_contexto = [
         'id': '3-4',
         'nivel': 3,
         'numero_pergunta': 4,
-        'etapa': 'interface',
+        'etapa': 'contexto',
         'contexto': ['tetrades_simples'],
         'interface': ['diagrama_braco'],
         'pergunta': 'Pergunta_12?',
@@ -595,7 +592,7 @@ lista_perguntas_teste_contexto = [
         'id': '3-5',
         'nivel': 3,
         'numero_pergunta': 5,
-        'etapa': 'interface',
+        'etapa': 'contexto',
         'contexto': ['tetrades_simples'],
         'interface': ['diagrama_braco'],
         'pergunta': 'Pergunta_13?',  
@@ -614,7 +611,7 @@ lista_perguntas_teste_contexto = [
         'id': '3-6',
         'nivel': 3,
         'numero_pergunta': 6,
-        'etapa': 'interface',
+        'etapa': 'contexto',
         'contexto': ['tetrades_simples'],
         'interface': ['leitura_tablatura'],
         'pergunta': 'Pergunta_14?', 
@@ -633,7 +630,7 @@ lista_perguntas_teste_contexto = [
         'id': '3-7',
         'nivel': 3,
         'numero_pergunta': 7,
-        'etapa': 'interface',
+        'etapa': 'contexto',
         'contexto': ['tetrades_simples'],
         'interface': ['leitura_tablatura'],
         'pergunta': 'Pergunta_15?', 
@@ -652,7 +649,7 @@ lista_perguntas_teste_contexto = [
         'id': '3-8',
         'nivel': 3,
         'numero_pergunta': 8,
-        'etapa': 'interface',
+        'etapa': 'contexto',
         'contexto': ['tetrades_simples'],
         'interface': ['leitura_tablatura'],
         'pergunta': 'Pergunta_16?',  
@@ -690,7 +687,7 @@ lista_perguntas_teste_contexto = [
         'id': '4-2',
         'nivel': 4,
         'numero_pergunta': 2,
-        'etapa': 'interface',
+        'etapa': 'contexto',
         'contexto': ['shapes_caged_triades'],
         'interface': ['leitura_cifras'],
         'pergunta': 'Pergunta_10?',  
@@ -709,7 +706,7 @@ lista_perguntas_teste_contexto = [
         'id': '4-3',
         'nivel': 4,
         'numero_pergunta': 3,
-        'etapa': 'interface',
+        'etapa': 'contexto',
         'contexto': ['shapes_caged_triades'],
         'interface': ['diagrama_braco'],
         'pergunta': 'Pergunta_11?', 
@@ -728,7 +725,7 @@ lista_perguntas_teste_contexto = [
         'id': '4-4',
         'nivel': 4,
         'numero_pergunta': 4,
-        'etapa': 'interface',
+        'etapa': 'contexto',
         'contexto': ['shapes_caged_triades'],
         'interface': ['diagrama_braco'],
         'pergunta': 'Pergunta_12?', 
@@ -747,7 +744,7 @@ lista_perguntas_teste_contexto = [
         'id': '4-5',
         'nivel': 4,
         'numero_pergunta': 5,
-        'etapa': 'interface',
+        'etapa': 'contexto',
         'contexto': ['shapes_caged_triades'],
         'interface': ['diagrama_braco'],
         'pergunta': 'Pergunta_13?', 
@@ -766,7 +763,7 @@ lista_perguntas_teste_contexto = [
         'id': '4-6',
         'nivel': 4,
         'numero_pergunta': 6,
-        'etapa': 'interface',
+        'etapa': 'contexto',
         'contexto': ['shapes_caged_triades'],
         'interface': ['leitura_tablatura'],
         'pergunta': 'Pergunta_14?',  
@@ -785,7 +782,7 @@ lista_perguntas_teste_contexto = [
         'id': '4-7',
         'nivel': 4,
         'numero_pergunta': 7,
-        'etapa': 'interface',
+        'etapa': 'contexto',
         'contexto': ['shapes_caged_triades'],
         'interface': ['leitura_tablatura'],
         'pergunta': 'Pergunta_15?', 
@@ -804,7 +801,7 @@ lista_perguntas_teste_contexto = [
         'id': '4-8',
         'nivel': 4,
         'numero_pergunta': 8,
-        'etapa': 'interface',
+        'etapa': 'contexto',
         'contexto': ['shapes_caged_triades'],
         'interface': ['leitura_tablatura'],
         'pergunta': 'Pergunta_16?',  
@@ -842,7 +839,7 @@ lista_perguntas_teste_contexto = [
         'id': '4-10',
         'nivel': 4,
         'numero_pergunta': 2,
-        'etapa': 'interface',
+        'etapa': 'contexto',
         'contexto': ['inversoes'],
         'interface': ['leitura_cifras'],
         'pergunta': 'Pergunta_10?',
@@ -861,7 +858,7 @@ lista_perguntas_teste_contexto = [
         'id': '4-11',
         'nivel': 4,
         'numero_pergunta': 3,
-        'etapa': 'interface',
+        'etapa': 'contexto',
         'contexto': ['inversoes'],
         'interface': ['diagrama_braco'],
         'pergunta': 'Pergunta_11?', 
@@ -880,7 +877,7 @@ lista_perguntas_teste_contexto = [
         'id': '4-12',
         'nivel': 4,
         'numero_pergunta': 4,
-        'etapa': 'interface',
+        'etapa': 'contexto',
         'contexto': ['inversoes'],
         'interface': ['diagrama_braco'],
         'pergunta': 'Pergunta_12?', 
@@ -899,7 +896,7 @@ lista_perguntas_teste_contexto = [
         'id': '4-13',
         'nivel': 4,
         'numero_pergunta': 5,
-        'etapa': 'interface',
+        'etapa': 'contexto',
         'contexto': ['inversoes'],
         'interface': ['diagrama_braco'],
         'pergunta': 'Pergunta_13?',  
@@ -918,7 +915,7 @@ lista_perguntas_teste_contexto = [
         'id': '4-14',
         'nivel': 4,
         'numero_pergunta': 6,
-        'etapa': 'interface',
+        'etapa': 'contexto',
         'contexto': ['inversoes'],
         'interface': ['leitura_tablatura'],
         'pergunta': 'Pergunta_14?',  
@@ -937,7 +934,7 @@ lista_perguntas_teste_contexto = [
         'id': '4-15',
         'nivel': 4,
         'numero_pergunta': 7,
-        'etapa': 'interface',
+        'etapa': 'contexto',
         'contexto': ['inversoes'],
         'interface': ['leitura_tablatura'],
         'pergunta': 'Pergunta_15?', 
@@ -956,7 +953,7 @@ lista_perguntas_teste_contexto = [
         'id': '4-16',
         'nivel': 4,
         'numero_pergunta': 8,
-        'etapa': 'interface',
+        'etapa': 'contexto',
         'contexto': ['inversoes'],
         'interface': ['leitura_tablatura'],
         'pergunta': 'Pergunta_16?', 
@@ -994,7 +991,7 @@ lista_perguntas_teste_contexto = [
         'id': '5-2',
         'nivel': 5,
         'numero_pergunta': 2,
-        'etapa': 'interface',
+        'etapa': 'contexto',
         'contexto': ['shapes_caged_tetrades'],
         'interface': ['leitura_cifras'],
         'pergunta': 'Pergunta_10?',  
@@ -1013,7 +1010,7 @@ lista_perguntas_teste_contexto = [
         'id': '5-3',
         'nivel': 5,
         'numero_pergunta': 3,
-        'etapa': 'interface',
+        'etapa': 'contexto',
         'contexto': ['shapes_caged_tetrades'],
         'interface': ['diagrama_braco'],
         'pergunta': 'Pergunta_11?',  
@@ -1032,7 +1029,7 @@ lista_perguntas_teste_contexto = [
         'id': '5-4',
         'nivel': 5,
         'numero_pergunta': 4,
-        'etapa': 'interface',
+        'etapa': 'contexto',
         'contexto': ['shapes_caged_tetrades'],
         'interface': ['diagrama_braco'],
         'pergunta': 'Pergunta_12?', 
@@ -1051,7 +1048,7 @@ lista_perguntas_teste_contexto = [
         'id': '5-5',
         'nivel': 5,
         'numero_pergunta': 5,
-        'etapa': 'interface',
+        'etapa': 'contexto',
         'contexto': ['shapes_caged_tetrades'],
         'interface': ['diagrama_braco'],
         'pergunta': 'Pergunta_13?', 
@@ -1070,7 +1067,7 @@ lista_perguntas_teste_contexto = [
         'id': '5-6',
         'nivel': 5,
         'numero_pergunta': 6,
-        'etapa': 'interface',
+        'etapa': 'contexto',
         'contexto': ['shapes_caged_tetrades'],
         'interface': ['leitura_tablatura'],
         'pergunta': 'Pergunta_14?', 
@@ -1089,7 +1086,7 @@ lista_perguntas_teste_contexto = [
         'id': '5-7',
         'nivel': 5,
         'numero_pergunta': 7,
-        'etapa': 'interface',
+        'etapa': 'contexto',
         'contexto': ['shapes_caged_tetrades'],
         'interface': ['leitura_tablatura'],
         'pergunta': 'Pergunta_15?', 
@@ -1108,7 +1105,7 @@ lista_perguntas_teste_contexto = [
         'id': '5-8',
         'nivel': 5,
         'numero_pergunta': 8,
-        'etapa': 'interface',
+        'etapa': 'contexto',
         'contexto': ['shapes_caged_tetrades'],
         'interface': ['leitura_tablatura'],
         'pergunta': 'Pergunta_16?',
@@ -1146,7 +1143,7 @@ lista_perguntas_teste_contexto = [
         'id': '5-10',
         'nivel': 5,
         'numero_pergunta': 2,
-        'etapa': 'interface',
+        'etapa': 'contexto',
         'contexto': ['extensoes'],
         'interface': ['leitura_cifras'],
         'pergunta': 'Pergunta_10?', 
@@ -1165,7 +1162,7 @@ lista_perguntas_teste_contexto = [
         'id': '5-11',
         'nivel': 5,
         'numero_pergunta': 3,
-        'etapa': 'interface',
+        'etapa': 'contexto',
         'contexto': ['extensoes'],
         'interface': ['diagrama_braco'],
         'pergunta': 'Pergunta_11?',  
@@ -1184,7 +1181,7 @@ lista_perguntas_teste_contexto = [
         'id': '5-12',
         'nivel': 5,
         'numero_pergunta': 4,
-        'etapa': 'interface',
+        'etapa': 'contexto',
         'contexto': ['extensoes'],
         'interface': ['diagrama_braco'],
         'pergunta': 'Pergunta_12?', 
@@ -1203,7 +1200,7 @@ lista_perguntas_teste_contexto = [
         'id': '5-13',
         'nivel': 5,
         'numero_pergunta': 5,
-        'etapa': 'interface',
+        'etapa': 'contexto',
         'contexto': ['extensoes'],
         'interface': ['diagrama_braco'],
         'pergunta': 'Pergunta_13?', 
@@ -1222,7 +1219,7 @@ lista_perguntas_teste_contexto = [
         'id': '5-14',
         'nivel': 5,
         'numero_pergunta': 6,
-        'etapa': 'interface',
+        'etapa': 'contexto',
         'contexto': ['extensoes'],
         'interface': ['leitura_tablatura'],
         'pergunta': 'Pergunta_14?',
@@ -1241,7 +1238,7 @@ lista_perguntas_teste_contexto = [
         'id': '5-15',
         'nivel': 5,
         'numero_pergunta': 7,
-        'etapa': 'interface',
+        'etapa': 'contexto',
         'contexto': ['extensoes'],
         'interface': ['leitura_tablatura'],
         'pergunta': 'Pergunta_15?',  
@@ -1260,7 +1257,7 @@ lista_perguntas_teste_contexto = [
         'id': '5-16',
         'nivel': 5,
         'numero_pergunta': 8,
-        'etapa': 'interface',
+        'etapa': 'contexto',
         'contexto': ['extensoes'],
         'interface': ['leitura_tablatura'],
         'pergunta': 'Pergunta_16?',  
@@ -1333,25 +1330,6 @@ def executar_teste_interface(lista_perguntas, tipo_teste,  nivel):
 
         #Agora sim, tirei a duplicação e direcionei para a função. Duplicação está como comentário logo abaixo
         mapa_respostas = mostrar_alternativas(pergunta, letras_alternativas)
-
-        # # Embaralhar alternativas
-        # alternativas_para_embaralhar =[]
-        # alternativas_nao_sei = []
-        # for alternativa in pergunta['alternativas']:
-        #     if alternativa.get('tipo') == 'nao_sei':
-        #         alternativas_nao_sei.append(alternativa)
-        #     else:
-        #         alternativas_para_embaralhar.append(alternativa)
-        # # shuffle(alternativas_para_embaralhar)
-        # alternativas_para_mostrar = alternativas_para_embaralhar + alternativas_nao_sei
-        #
-        #
-        # mapa_respostas = {}
-        # # Mostrar alternativas
-        # for numero, alternativa in enumerate(alternativas_para_mostrar):
-        #     print(f'{letras_alternativas[numero]} - {alternativa['texto']}')
-        #     letra = letras_alternativas[numero]
-        #     mapa_respostas[letra] = alternativa
 
         resposta_usuario = input('Resposta: ').strip().upper()
 
@@ -1468,7 +1446,6 @@ def executar_teste_contexto_unico(nivel, acertos_geral, erros_geral, contexto):
                 nivel, rodada, perguntas_restantes = rodar_condicoes(taxa_acertos, rodada, nivel)
                 if perguntas_restantes <= 0:
                     return acertos_geral, erros_geral, acertos_por_contexto, erros_por_contexto, taxa_acertos
-                    break
 
 # Execute rule set based on accuracy and current round
 def rodar_condicoes(taxa_acertos, rodada, nivel):
@@ -1516,6 +1493,7 @@ def executar_teste_contexto_em_nivel_unico(nivel, dicionario_contextos, estatist
                                                     acertos_geral,
                                                     erros_geral,
                                                     contexto)
+        estatisticas = {}
         estatisticas['pontuação'] = taxa_acertos
         estatisticas['acertos'] = acertos_por_contexto
         estatisticas['erros'] = erros_por_contexto
@@ -1631,7 +1609,6 @@ acertos_geral = []
 erros_geral = []
 
 estatisticas_por_contexto = {}
-estatisticas = {}
 
 
 def main(estatisticas_por_contexto, acertos_geral, erros_geral):
