@@ -17,7 +17,7 @@ Version 10 introduced adaptive behavior within a single context.
 Version 11 extends this by:
 
 - Evaluating all contexts within a level  
-- Aggregating performance across contexts  
+- Evaluating performance across multiple contexts within a level
 - Applying level progression logic based on results  
 
 ---
