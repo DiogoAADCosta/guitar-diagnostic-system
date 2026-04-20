@@ -14,7 +14,7 @@ This repository is organized as a system evolution log:
 
 ## Main Project
 
-### 🎸 Guitar Skill Assessment System
+### 🎸 Guitar Diagnostic System
 
 A behavioral-based diagnostic system designed to evaluate guitar skills using structured questions and rule-based analysis.
 
@@ -30,7 +30,7 @@ The system follows a structured decision flow:
    - Musical Understanding
    - Ear Training
    - Technique
-   - (Future) Musical Phrasing
+   - (Planned) Musical Phrasing
 
 3. The user performs a self-assessment to indicate their current level
 
@@ -63,6 +63,10 @@ The system is built around reusable engines:
 
 These engines are designed to be reused across different goals and skill pillars.
 
+## 🚀 Latest Stable Versions
+- [Behavioral Engine (v009)](./engines/behavioral_engine/v009/code.py)
+- [Validation Engine (v011)](./engines/validation_engine/v011/code.py)
+
 ## Project Evolution
 
 Each version of the system improves:
@@ -73,6 +77,7 @@ Each version of the system improves:
 - Scalability
 
 All versions are documented to show the evolution of the system.
+Note: As I am currently progressing through my Software Engineering studies, this repository intentionally preserves previous versions (v1, v2, etc.) to document the evolution of the system's architecture and my growth as a developer.
 
 ---
 
