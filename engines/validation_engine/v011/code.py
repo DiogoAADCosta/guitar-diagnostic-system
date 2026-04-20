@@ -1302,7 +1302,6 @@ def definir_nivel():
     else:
         return autoavaliacao_nivel
 
-
 # Define whether to run complete or simplified interface test
 def tipo_teste_interface(nivel):
     if nivel <= 3:
@@ -1347,7 +1346,6 @@ def executar_teste_interface(lista_perguntas, tipo_teste,  nivel):
     for pergunta in lista_perguntas:
         print(f'Nível: {nivel} - Interface: {pergunta['interface']} - {pergunta['pergunta']}')
 
-        #Agora sim, tirei a duplicação e direcionei para a função. Duplicação está como comentário logo abaixo
         mapa_respostas = mostrar_alternativas(pergunta, letras_alternativas)
 
         resposta_usuario = input('Resposta: ').strip().upper()
@@ -1435,6 +1433,10 @@ def executar_teste_contexto_unico(nivel, acertos_geral, erros_geral, contexto):
 
             # Extract tags and store result (context + interface + tag)
             tag = [tag['tag'] for tag in mapa_respostas[resposta_usuario]['tag']]
+            # Store result as structured data for later aggregation:
+            # - interface
+            # - context (when applicable)
+            # - associated tags
             guardar = {
                 'interface': pergunta['interface'][0],
                 'contexto': pergunta['contexto'][0],
@@ -1473,27 +1475,27 @@ def rodar_condicoes(taxa_acertos, rodada, nivel):
             nivel, rodada, perguntas_restantes = acao(nivel, rodada)
             return nivel, rodada, perguntas_restantes
 
-# Função para trocar de contexto antecipadamente dependendo da pontuação
+# Change context based on performance
 def altera_contexto(nivel, rodada):
     print('Alterando contexto...')
     print(f'Rodada: {rodada}\n')
     return nivel, rodada, 0
 
-# Mais 2 perguntas no teste de contexto
+# Add 2 more questions
 def mais_2(nivel, rodada):
     print('Mais 2 perguntas')
     print(f'Rodada: {rodada}\n')
     rodada += 1
     return nivel, rodada, 2
 
-# Mais 4 perguntas no teste de contexto
+# Add 4 more questions
 def mais_4(nivel, rodada):
     print('Mais 4 perguntas')
     print(f'Rodada: {rodada}\n')
     rodada += 1
     return nivel, rodada, 4
 
-# Confirma o nível no teste de contexto
+# Confirm level
 def confirma_nivel(nivel, rodada):
     print('Confirma nível')
     print(f'Rodada: {rodada}\n')
@@ -1501,7 +1503,7 @@ def confirma_nivel(nivel, rodada):
     return nivel, rodada, 0
 
 
-# Executa o teste de contexto em todos os contextos de um único nível e salva as estatísticas
+# Execute context test for all contexts within a single level and store statistics
 def executar_teste_contexto_em_nivel_unico(nivel, dicionario_contextos, estatisticas_por_contexto, acertos_geral, erros_geral):
     for contexto in dicionario_contextos[nivel]:
         (acertos_geral,
@@ -1519,7 +1521,7 @@ def executar_teste_contexto_em_nivel_unico(nivel, dicionario_contextos, estatist
         estatisticas_por_contexto[contexto] = estatisticas.copy()
     return estatisticas_por_contexto, acertos_geral, erros_geral, acertos_por_contexto, erros_por_contexto
 
-# Função de subir nível
+# Increase level
 def subir_nivel(nivel, rodada, ja_subiu_nivel, ja_desceu_nivel):
     print('Sobe de nível')
     print(f'Rodada: {rodada}\n')
@@ -1533,7 +1535,7 @@ def subir_nivel(nivel, rodada, ja_subiu_nivel, ja_desceu_nivel):
         rodada = 4
     return nivel, rodada, ja_subiu_nivel, ja_desceu_nivel
 
-# Função de descer nível
+# Decrease level
 def descer_nivel(nivel, rodada, ja_subiu_nivel, ja_desceu_nivel):
     print('Desce de nível')
     print(f'Rodada: {rodada}\n')
@@ -1549,6 +1551,9 @@ def descer_nivel(nivel, rodada, ja_subiu_nivel, ja_desceu_nivel):
     return nivel, rodada, ja_subiu_nivel, ja_desceu_nivel
 
 # Rule set for progression decisions based on accuracy and round
+# Rules define adaptive behavior per round.
+# Each round contains (condition, action) pairs.
+# The first matching condition determines the next action.
 regras = {
     1: [
         (lambda t: t >= 80, altera_contexto),
@@ -1570,8 +1575,12 @@ regras = {
     ]
 }
 
-# Executar troca de nível dos testes
+# Execute context test with level progression
 def executar_teste_contexto_com_troca_de_niveis(nivel, dicionario_contextos, ja_subiu_nivel, ja_desceu_nivel, estatisticas_por_contexto, acertos_geral, erros_geral, rodada):
+    # Round-based control system:
+    # Round 1 → initial evaluation
+    # Round 2–3 → adaptive questioning based on performance
+    # Round 4 → final decision (level confirmed or changed)
     while rodada < 4:
         (estatisticas_por_contexto,
          acertos_geral,
@@ -1583,20 +1592,20 @@ def executar_teste_contexto_com_troca_de_niveis(nivel, dicionario_contextos, ja_
                                                                       acertos_geral,
                                                                       erros_geral)
 
-        # Análise para subir, descer ou confirmar nível
+        # Decide whether to increase, decrease or confirm level
         pontuacao = []
         for contexto in dicionario_contextos[nivel]:
             pontuacao.append(estatisticas_por_contexto[contexto]['pontuação'])
         print(pontuacao)
         if min(pontuacao) >= 75:
             nivel, rodada, ja_subiu_nivel, ja_desceu_nivel = subir_nivel(nivel, rodada, ja_subiu_nivel, ja_desceu_nivel)
-            # Evitar voltar para níveis repetidos
+            # Prevent returning to previously visited levels
             if ja_subiu_nivel and ja_desceu_nivel:
                 break
             continue
         elif max(pontuacao) < 35:
             nivel, rodada, ja_subiu_nivel, ja_desceu_nivel = descer_nivel(nivel, rodada, ja_subiu_nivel, ja_desceu_nivel)
-            # Evitar voltar para níveis repetidos
+            # Prevent returning to previously visited levels
             if ja_subiu_nivel and ja_desceu_nivel:
                 break
             continue
@@ -1631,10 +1640,10 @@ estatisticas_por_contexto = {}
 
 
 def main(estatisticas_por_contexto, acertos_geral, erros_geral):
-    # Autoavaliação de Nível
+    # User self-assessment of level
     nivel = definir_nivel()
 
-# Run interface test with fallback from simplified to complete
+    # Run interface test with fallback from simplified to complete
     acertos_interface, erros_interface = rodar_teste_interface(nivel)
 
     print(acertos_interface)
@@ -1646,7 +1655,7 @@ def main(estatisticas_por_contexto, acertos_geral, erros_geral):
     # Display interface test results
     print(f'\nSabe ler cifra: {sabe_ler_cifra}\nSabe ler diagrama: {sabe_ler_diagrama}\nSabe ler tablatura: {sabe_ler_tablatura}')
 
-    # Executa o teste de contexto completo, com trocas de contextos e trocas de níveis
+    # Execute full context test with context and level transitions
     (estatisticas_por_contexto,
      acertos_geral,
      erros_geral,
@@ -1663,7 +1672,7 @@ def main(estatisticas_por_contexto, acertos_geral, erros_geral):
     return estatisticas_por_contexto, acertos_geral, erros_geral, acertos_por_contexto, erros_por_contexto
 
 def visualizar_resultados(estatisticas_por_contexto, acertos_geral, erros_geral, acertos_por_contexto, erros_por_contexto):
-    # Visualização de resultados
+    # Display results
     print(estatisticas_por_contexto)
     print(acertos_geral)
     print(erros_geral)
@@ -1686,27 +1695,13 @@ def visualizar_resultados(estatisticas_por_contexto, acertos_geral, erros_geral,
     for item in resumo_acertos:
         print(item)
 
-    # Extraindo lista de acertos - interface, contexto, tag - para ficar visualmente mais fácil de analisar - Com isso eu posso apagar resumo_acertos, resumo_erros, acertos_geral, erros_geral ->
-    # Eles continuarão existindo apenas a título de checar os resultados durante a fase de testes.
+    # Extract (interface, context, tag) for debugging and analysis
     print('\n\nAcertos Gerais - vindo do dicionário de estatísticas')
     lista_interface_contexto_tag_acertos = [[acerto['interface'], acerto['contexto'], acerto['tag']]
         for item in estatisticas_por_contexto.values()
         for acerto in item['acertos']
         ]
 
-    # O jeito mais bruto de fazer o passo acima:
-    # lista = []
-    # for contexto, item in estatisticas_por_contexto.items():
-    #     # print(item['acertos'])
-    #     for grupo in item['acertos']:
-    #         # print(grupo)
-    #         for tipo, resultado in grupo.items():
-    #             # print(resultado)
-    #             lista.append(resultado)
-    #         # print(lista)
-    #         lista2.append(list(lista))
-    #         lista = []
-    # # print(lista2)
 
     for item in lista_interface_contexto_tag_acertos:
         print(item)
