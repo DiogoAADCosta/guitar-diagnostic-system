@@ -64,8 +64,8 @@ The system is built around reusable engines:
 These engines are designed to be reused across different goals and skill pillars.
 
 ## 🚀 Latest Stable Versions
-- [Behavioral Engine (v009)](./engines/behavioral_engine/v009/code.py)
-- [Validation Engine (v011)](./engines/validation_engine/v011/code.py)
+- [Behavioral Engine (v009)](./engines/behavioral_engine/v009_latest_stable/code.py)
+- [Validation Engine (v011)](./engines/validation_engine/v011_latest_stable/code.py)
 
 ## Project Evolution
 
