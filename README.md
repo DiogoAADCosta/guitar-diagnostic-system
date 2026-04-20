@@ -1,7 +1,7 @@
 # Guitar Diagnostic System
 
 This repository contains the development of a rule-based guitar diagnostic system,
-focused on structured evaluation, adaptive testing, and behavioral analysis.
+focused on structured evaluation, adaptive test flow, and behavioral analysis.
 
 ---
 
@@ -47,10 +47,13 @@ through structured tests and rule-based analysis.
 
 ## Engines
 
-The system is built around two core engines:
+The system is built around two core engines that operate independently:
 
 - Behavioral Engine → interprets response patterns  
 - Validation Engine → evaluates correctness and controls test flow  
+
+Each engine produces its own structured output,  
+and both results are combined in the final diagnostic.
 
 ---
 
