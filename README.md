@@ -1,4 +1,4 @@
-# Guitar Skill Assessment System
+# Guitar Diagnostic System
 
 This repository documents the development of a real-world system as I build my programming and software engineering skills, with a focus on logic, problem-solving, and system design.
 
