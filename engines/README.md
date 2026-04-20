@@ -1,15 +1,11 @@
 # Engines
 
-This folder contains the core logic engines used in the system.
+This folder contains the core execution layers of the system.
 
-Each engine is responsible for a different type of evaluation:
+Each engine is responsible for a distinct part of the diagnostic process:
 
-- Behavioral engine (captures user patterns and tendencies)
-- Validation engine (checks correctness of answers)
+- Behavioral Engine → interprets response patterns  
+- Validation Engine → evaluates correctness and controls test flow  
 
-Each engine evolves through multiple versions to improve:
-
-- Code structure
-- Data modeling
-- Logic clarity
-- Scalability
+Both engines evolve independently through versioned iterations,  
+improving structure, logic, and scalability over time.
