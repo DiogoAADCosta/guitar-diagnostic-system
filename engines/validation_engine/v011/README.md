@@ -1,63 +1,61 @@
-# Version 11 — Context Evaluation with Adaptive Flow
+# Version 11 — Adaptive Context Evaluation with Level Progression
 
 ## Overview
 
-Version 11 implements adaptive behavior within the context-based test.
+Version 11 expands the adaptive system by integrating
+context-based evaluation with level progression.
 
-The system now evaluates user performance during execution
-and dynamically adjusts the flow of questions based on accuracy.
+The test now evaluates multiple contexts within a level
+and uses aggregated performance to determine level transitions.
 
 ---
 
 ## What Changed
 
-Previous versions introduced the structure for context-based evaluation.
+Version 10 introduced adaptive behavior within a single context.
 
-Version 11 adds a rule-driven system that:
+Version 11 extends this by:
 
-- Calculates intermediate score during execution  
-- Applies conditional rules to control progression  
-- Adjusts the number of questions dynamically  
+- Evaluating all contexts within a level  
+- Aggregating performance across contexts  
+- Applying level progression logic based on results  
 
 ---
 
-## Adaptive Context Evaluation
+## Context Evaluation
 
-During the test, the system:
+The system now:
+
+- Runs multiple contexts per level  
+- Collects results per context  
+- Stores structured statistics for each context  
+
+---
+
+## Adaptive Behavior
+
+During execution, the system:
 
 - Tracks correct and incorrect answers  
-- Calculates accuracy after a set of questions  
-- Uses a rule system to determine the next step  
+- Calculates intermediate accuracy  
+- Applies rule-based decisions per round  
 
-Possible actions include:
+These rules control:
 
-- Adding more questions  
-- Changing context  
-- Confirming the current level  
-
----
-
-## Rule System
-
-The adaptive behavior is controlled by a rule set (`regras`):
-
-- Each round contains condition–action pairs  
-- The first matching condition defines the next action  
-- Actions modify flow and progression state  
+- Question flow within each context  
+- Transition between contexts  
 
 ---
 
 ## Level Progression
 
-The system evaluates performance across contexts within a level.
+After evaluating all contexts in a level, the system:
 
-Based on results:
+- Increases level if performance is consistently high  
+- Decreases level if performance is consistently low  
+- Confirms level otherwise  
 
-- The level may increase  
-- The level may decrease  
-- The level may be confirmed  
-
-A control mechanism prevents infinite loops between levels.
+A control mechanism prevents repeated level loops.
 
 ---
 
@@ -65,9 +63,9 @@ A control mechanism prevents infinite loops between levels.
 
 This version includes:
 
-- Context-based adaptive evaluation  
-- Rule-driven progression logic  
-- Level transition system  
+- Multi-context evaluation per level  
+- Rule-driven adaptive flow  
+- Functional level progression system  
 - Structured data collection (interface, context, tags)  
 
 This version does not include:
@@ -79,8 +77,8 @@ This version does not include:
 
 ## Key Takeaway
 
-Version 11 marks the transition from static execution
-to adaptive and decision-based test behavior.
+Version 11 marks the transition from isolated adaptive behavior
+to a complete adaptive evaluation system.
 
-The system now reacts to user performance in real time,
-providing a more structured foundation for future diagnostics.
+The test now combines context evaluation and level progression,
+forming a coherent and scalable foundation for diagnostics.
