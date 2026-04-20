@@ -104,13 +104,45 @@ not to validate execution.
 
 ## Relationship with Other Modules
 
-The behavioral engine is one of the analysis engines in the system.
+The behavioral engine works alongside other system components,
+such as the validation engine, which is responsible for
+collecting and validating user responses.
 
-It operates independently from specific skill domains (pillars),  
-and can be applied wherever user response interpretation is required.
+While the validation layer focuses on data collection,
+the behavioral engine focuses on interpretation and pattern analysis.
 
-Other engines, such as the validation engine,  
-may be used alongside it to evaluate different aspects of playing.
+---
 
-Together, these engines support a broader diagnostic system  
-that adapts to different learning goals and contexts.
+## Evolution
+
+This section highlights the main structural changes in the behavioral engine across versions.
+
+### Pre-v007 (Early Development)
+- Initial experiments with question flow and data collection
+- No structured behavioral analysis yet
+
+### v007 — Initial Diagnostic Attempt
+- First implementation of pattern-based diagnostic
+- Mixed evaluation dimensions (tags, context, interface)
+- Results were inconsistent and difficult to interpret
+
+### v008 — Structural Redesign
+- Separation of evaluation stages
+- Introduction of interface-first testing approach
+- Foundation for clearer signal collection
+
+### v009 — Context-Based Evaluation
+- First implementation of context-based test execution
+- Data collection structured per context
+- No adaptive behavior yet
+
+### v010 — Adaptive Flow Introduction
+- Rule-based system for intermediate evaluation
+- Dynamic control of question flow based on performance
+- Adaptive behavior within a single context
+
+### v011 — Multi-Context Evaluation and Level Progression
+- Evaluation across multiple contexts within a level
+- Aggregated performance used for decision-making
+- Functional level progression system implemented
+- Prepares structured data for future diagnostic interpretation
